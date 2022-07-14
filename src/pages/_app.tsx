@@ -1,8 +1,7 @@
 import { AppProps } from 'next/app';
+import { ThemeProvider } from 'next-themes';
 
 import '@/styles/globals.css';
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
-import '@/styles/colors.css';
 
 /**
  * !STARTERCONF info
@@ -10,7 +9,11 @@ import '@/styles/colors.css';
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider attribute='class' defaultTheme='system'>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 }
 
 export default MyApp;
