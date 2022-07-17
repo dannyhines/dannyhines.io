@@ -1,69 +1,71 @@
+import clsx from 'clsx';
 import * as React from 'react';
 
-import Header from '@/components/layout/Header';
+import developerMessage from '@/lib/developerMessage';
+import useLoaded from '@/hooks/useLoaded';
+
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
-import Vercel from '~/svg/Vercel.svg';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
+let saidHi = false;
 export default function HomePage() {
+  const isLoaded = useLoaded();
+
+  if (!saidHi) {
+    developerMessage();
+    saidHi = true;
+  }
+
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
       <Seo />
-      <Header />
       <main>
-        <section className='bg-white dark:bg-dark'>
+        <section
+          className={clsx(
+            'min-h-main -mt-20 mb-20 flex flex-col justify-center',
+            isLoaded && 'fade-in-start'
+          )}
+        >
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-            <Vercel className='text-5xl' />
-            <h1 className='mt-4'>
-              Next.js + Tailwind CSS + TypeScript Starter
-            </h1>
-            <p className='mt-2 text-sm text-gray-800 dark:text-gray-200'>
-              A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-              Import, Seo, Link component, pre-configured with Husky{' '}
-            </p>
-            <p className='mt-2 text-sm text-gray-700'>
-              <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-                See the repository
-              </ArrowLink>
-            </p>
+            <div className='flex flex-col items-start justify-start'>
+              <h1 className='mt-4 text-4xl' data-fade='1'>
+                Hi, I&apos;m Danny
+              </h1>
+              <p className='mt-2 text-sm md:text-lg 2xl:text-xl' data-fade='2'>
+                Senior Software Engineer at Capital One.
+              </p>
+              <p className='mt-2 text-sm md:text-lg 2xl:text-xl' data-fade='3'>
+                Fullstack engineer with a background in AWS and React, with a
+                strong interest in UI/UX.
+              </p>
+              <p className='text-md mt-2' data-fade='4'>
+                <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
+                  See the repository
+                </ArrowLink>
+              </p>
+              <ButtonLink
+                className='mt-6'
+                href='/projects'
+                variant='light'
+                data-fade='5'
+              >
+                View my Projects
+              </ButtonLink>
+            </div>
 
-            <ButtonLink className='mt-6' href='/components' variant='light'>
-              See all components
-            </ButtonLink>
-
-            <UnstyledLink
+            {/* <UnstyledLink
               href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
               className='mt-4'
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 width='92'
                 height='32'
                 src='https://vercel.com/button'
                 alt='Deploy with Vercel'
               />
-            </UnstyledLink>
-
-            <footer className='absolute bottom-2 text-gray-700'>
-              © {new Date().getFullYear()} By{' '}
-              <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-                Theodorus Clarence
-              </UnderlineLink>
-            </footer>
+            </UnstyledLink> */}
           </div>
         </section>
       </main>
