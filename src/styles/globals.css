@@ -4,7 +4,6 @@
 
 :root {
   /* #region  /**=========== Primary Color =========== */
-  /* !STARTERCONF Customize these variable, copy and paste from /styles/colors.css for list of colors */
   --tw-color-primary-50: 245 243 255;
   --tw-color-primary-100: 237 233 254;
   --tw-color-primary-200: 221 214 254;
@@ -77,8 +76,7 @@
   /* #endregion  /**======== Typography =========== */
 
   .layout {
-    /* 1100px */
-    max-width: 68.75rem;
+    max-width: 50rem;
     @apply mx-auto w-11/12;
   }
 

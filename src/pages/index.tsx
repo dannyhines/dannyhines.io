@@ -28,20 +28,19 @@ export default function HomePage() {
             isLoaded && 'fade-in-start'
           )}
         >
-          <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-            <div className='flex flex-col items-start justify-start'>
-              <h1 className='mt-4 text-4xl' data-fade='1'>
+          <div className='layout flex min-h-screen flex-col items-center justify-center '>
+            <div className='flex flex-col items-center text-center md:items-start md:text-left'>
+              <h1 className='my-4 text-4xl' data-fade='1'>
                 Hi, I&apos;m Danny
               </h1>
-              <p className='mt-2 text-sm md:text-lg 2xl:text-xl' data-fade='2'>
+              <p className='mt-4 text-sm md:text-lg 2xl:text-xl' data-fade='2'>
                 Senior Software Engineer at Capital One.
-              </p>
-              <p className='mt-2 text-sm md:text-lg 2xl:text-xl' data-fade='3'>
+                <br />
                 Fullstack engineer with a background in AWS and React, with a
                 strong interest in UI/UX.
               </p>
-              <p className='text-md mt-2' data-fade='4'>
-                <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
+              <p className='text-md mt-8' data-fade='4'>
+                <ArrowLink href='https://github.com/danielchines/dannyhines.io'>
                   See the repository
                 </ArrowLink>
               </p>
