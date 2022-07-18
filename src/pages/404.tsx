@@ -3,6 +3,7 @@ import { RiAlarmWarningFill } from 'react-icons/ri';
 
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
+import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
 export default function NotFoundPage() {
@@ -19,11 +20,13 @@ export default function NotFoundPage() {
             />
             <h1 className='mt-8 text-4xl md:text-6xl'>Page Not Found</h1>
             <p className='my-8'>
-              Hi, I am an Albanian virus but because of poor technology in my
-              country unfortunately I am not able to harm your computer. Please
-              be so kind to delete one of your important files yourself and then
-              forward me other users. Many thanks for your cooperation! Best
-              regards, Albanian virus
+              *Slow clap* Well well well... Here we are. The 404 error page.
+              You&apos;re a curious one huh? Messing with the url, sneakin&apos;
+              around on my website lookin for a hidden page. I would never
+              create a easter egg like that
+              <UnstyledLink href='harambe'>.</UnstyledLink> Or did I create a
+              link to a page that doesn&apos;t exist? If it&apos;s the latter,
+              my bad I didn&apos;t mean to get all accusatory.
             </p>
             <ArrowLink className='mt-4 md:text-lg' href='/'>
               Back to Home
