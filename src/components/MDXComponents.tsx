@@ -1,6 +1,7 @@
 import { ImageProps } from 'next/image';
 
-import PrimaryLink from '@/components/links/UnderlineLink';
+import CustomCode, { Pre } from '@/components/Code';
+import PrimaryLink from '@/components/links/PrimaryLink';
 import NextImage from '@/components/NextImage';
 
 const HeaderImage = (props: ImageProps) => {
@@ -20,6 +21,8 @@ const MDXComponents = {
   a: PrimaryLink,
   Image: NextImage,
   HeaderImage,
+  pre: Pre,
+  code: CustomCode,
 };
 
 export default MDXComponents;
