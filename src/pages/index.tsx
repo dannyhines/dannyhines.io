@@ -24,24 +24,26 @@ export default function HomePage() {
       <main>
         <section
           className={clsx(
-            'min-h-main -mt-20 mb-20 flex flex-col justify-center',
+            'min-h-main mt-20 mb-20 flex flex-col',
             isLoaded && 'fade-in-start'
           )}
         >
-          <div className='layout flex min-h-screen flex-col items-center justify-center '>
-            <div className='flex flex-col items-center text-center md:items-start md:text-left'>
-              <h1 className='my-4 text-4xl' data-fade='1'>
-                Hi, I&apos;m Danny
+          <div className='layout flex flex-col items-center justify-center text-center md:items-start md:text-left'>
+            <div className=''>
+              <h1 className='' data-fade='1'>
+                Danny Hines
               </h1>
-              <p className='mt-4 text-sm md:text-lg 2xl:text-xl' data-fade='2'>
-                Senior Software Engineer at Capital One.
-                <br />
-                Fullstack engineer with a background in AWS and React, with a
-                strong interest in UI/UX.
+              <p
+                className='my-4 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
+                data-fade='2'
+              >
+                I&apos;m a fullstack engineer with experience building the
+                entire stack for web and mobile apps. I made this site to teach
+                others and practice using TailwindCSS.
               </p>
-              <p className='text-md mt-8' data-fade='4'>
+              <p className='text-md mt-4' data-fade='4'>
                 <ArrowLink href='https://github.com/danielchines/dannyhines.io'>
-                  See the repository
+                  See this code on Github
                 </ArrowLink>
               </p>
               <ButtonLink
@@ -52,6 +54,10 @@ export default function HomePage() {
               >
                 View my Projects
               </ButtonLink>
+
+              <div className='mt-24' data-fade='6'>
+                <h2 className=''>My Projects</h2>
+              </div>
             </div>
 
             {/* <UnstyledLink
