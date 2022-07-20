@@ -8,6 +8,7 @@ import { getFileBySlug, getFiles } from '@/lib/mdx';
 
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/PrimaryLink';
+import UnderlineLink from '@/components/links/UnderlineLink';
 import MDXComponents from '@/components/MDXComponents';
 import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
@@ -54,7 +55,7 @@ export default function ProjectPage({ code, meta }: ProjectType) {
             </div>
 
             <section>
-              <article className='prose projects mdx dark:prose-dark mx-auto w-full transition-colors'>
+              <article className='projects mdx dark:prose-dark prose mx-auto w-full transition-colors'>
                 <Component
                   components={
                     {
@@ -65,12 +66,13 @@ export default function ProjectPage({ code, meta }: ProjectType) {
                 />
               </article>
             </section>
+
             {meta.github && (
-              <div className='inline-flex items-center gap-2'>
+              <div className='flex w-full flex-row items-center justify-center gap-2'>
                 <SiGithub className='text-lg text-gray-800 dark:text-white' />
-                <CustomLink href={meta.github} className='mt-1'>
-                  Repository
-                </CustomLink>
+                <UnderlineLink href={meta.github} className='mt-1'>
+                  View the code on Github
+                </UnderlineLink>
               </div>
             )}
             {/* 
