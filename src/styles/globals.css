@@ -71,13 +71,6 @@
     @apply font-primary text-sm md:text-base;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply mt-4 mb-2 md:mt-8 md:mb-4;
-  }
-
   /* #endregion  /**======== Typography =========== */
 
   .layout {
