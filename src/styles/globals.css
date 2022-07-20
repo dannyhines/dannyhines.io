@@ -37,11 +37,25 @@
     src: url('/fonts/inter-var-latin.woff2') format('woff2');
   }
 
-  .cursor-newtab {
-    cursor: url('/images/new-tab.png') 10 10, pointer;
+  #__next {
+    @apply bg-gray-50 dark:bg-dark;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   /* #region  /**=========== Typography =========== */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    @apply text-gray-900 dark:text-gray-50;
+  }
+
   .h0 {
     @apply font-primary text-3xl font-bold md:text-5xl;
   }
@@ -105,18 +119,27 @@
     background-size: 100% 2px, 0 2px;
     background-position: 100% 100%, 0 100%;
     background-repeat: no-repeat;
+    transition: 0.3s ease;
+    transition-property: background-size, color, background-color, border-color;
   }
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: reduce) {
     .animated-underline {
-      transition: 0.3s ease;
-      transition-property: background-size, color, background-color,
-        border-color;
+      transition: none;
     }
   }
   .animated-underline:hover,
-  .animated-underline:focus-visible {
+  .animated-underline:focus-visible,
+  .project-card:hover .animated-underline,
+  .project-card:focus-visible .animated-underline {
     background-size: 0 2px, 100% 2px;
   }
+
+  /* #region  /**=========== Animate Shadow =========== */
+  .animate-shadow {
+    @apply after:absolute after:inset-0 after:z-[-1] after:opacity-0 after:transition-opacity hover:after:opacity-100;
+    @apply after:shadow-md dark:after:shadow-none;
+  }
+  /* #endregion  /**======== Animate Shadow =========== */
 }
 
 /* #region  /**=========== Fade In =========== */

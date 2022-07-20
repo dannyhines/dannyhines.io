@@ -27,7 +27,7 @@ export default function Header() {
   }
 
   return (
-    <header className='sticky top-0 z-50 bg-white dark:bg-dark'>
+    <header className='sticky top-0 z-50 bg-gray-50 dark:bg-dark'>
       <div className='layout flex h-14 items-center justify-between'>
         <nav>
           <ul className='flex items-start justify-between space-x-8'>

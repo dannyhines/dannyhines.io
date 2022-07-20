@@ -8,7 +8,7 @@ const HeaderImage = (props: ImageProps) => {
   return (
     <NextImage
       alt={props.alt ?? 'header image'}
-      className={'w-full' + props.className}
+      className={`w-full rounded-md ${props.className}`}
       imgClassName='rounded-md'
       width={props.width ?? '100%'}
       height={props.height ?? 'auto'}
