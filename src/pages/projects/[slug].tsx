@@ -4,11 +4,8 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import * as React from 'react';
 import { SiGithub } from 'react-icons/si';
 
-// import { trackEvent } from '@/lib/analytics';
 import { getFileBySlug, getFiles } from '@/lib/mdx';
 
-// import useContentMeta from '@/hooks/useContentMeta';
-// import Comment from '@/components/content/Comment';
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/PrimaryLink';
 import MDXComponents from '@/components/MDXComponents';
@@ -19,8 +16,6 @@ import { ProjectType } from '@/types/Post';
 
 export default function ProjectPage({ code, meta }: ProjectType) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
-  // const contentSlug = `p_${meta.slug}`;
-  // const viewMetaData = useContentMeta(contentSlug, { runIncrement: true });
 
   return (
     <Layout>
@@ -55,13 +50,10 @@ export default function ProjectPage({ code, meta }: ProjectType) {
               </div>
               <p className='min-w-32 mt-2 text-sm text-gray-600 dark:text-gray-400 md:mt-0'>
                 Posted {format(new Date(meta.publishedAt), 'MMMM dd, yyyy')}
-                {/* <ViewCounter slug={post.slug} /> */}
               </p>
             </div>
 
-            {/* <hr className='mt-4 dark:border-gray-600' /> */}
-
-            <section className=''>
+            <section>
               <article className='prose projects mdx dark:prose-dark mx-auto w-full transition-colors'>
                 <Component
                   components={
