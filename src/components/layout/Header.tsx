@@ -29,17 +29,14 @@ export default function Header() {
   return (
     <header className='sticky top-0 z-50 bg-white dark:bg-dark'>
       <div className='layout flex h-14 items-center justify-between'>
-        {/* <UnstyledLink href='/' className='font-bold hover:text-gray-600'>
-          Home
-        </UnstyledLink> */}
         <nav>
-          <ul className='flex items-start justify-between space-x-4'>
+          <ul className='flex items-start justify-between space-x-8'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
                   href={href}
                   className={clsx(
-                    'hover:text-gray-600',
+                    'text-gray-700 hover:text-gray-600 dark:text-gray-300 ',
                     href === '/' && 'font-bold'
                   )}
                 >
