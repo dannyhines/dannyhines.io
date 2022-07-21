@@ -210,7 +210,7 @@ pre[class*='language-'] {
   background: var(--background);
   border-radius: 0.5em;
   padding: 1em;
-  margin: 0.5em 0;
+  margin: 1em 0;
   overflow: auto;
   height: auto;
 }

@@ -62,7 +62,7 @@
 }
 
 .prose p {
-  @apply my-4;
+  @apply my-6;
 }
 
 .prose > :first-child {

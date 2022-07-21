@@ -34,6 +34,7 @@ export default function NextImage({
   const [status, setStatus] = React.useState(
     useSkeleton ? 'loading' : 'complete'
   );
+  // TODO: should be if (num of 'max-w') < (num of 'w-')
   const widthIsSet = className?.includes('w-') ?? false;
 
   return (
