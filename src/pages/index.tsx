@@ -2,15 +2,20 @@ import clsx from 'clsx';
 import * as React from 'react';
 
 import developerMessage from '@/lib/developerMessage';
+import { getPostsByType } from '@/lib/mdx';
 import useLoaded from '@/hooks/useLoaded';
 
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
+import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
 
+import { ProjectType } from '@/types/Post';
+
 let saidHi = false;
-export default function HomePage() {
+
+export default function HomePage(props: { projects: ProjectType[] }) {
   const isLoaded = useLoaded();
 
   if (!saidHi) {
@@ -34,12 +39,12 @@ export default function HomePage() {
                 Danny Hines
               </h1>
               <p
-                className='my-4 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
+                className='my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
                 data-fade='2'
               >
                 I&apos;m a fullstack engineer with experience building the
-                entire stack for web and mobile apps. I made this site to teach
-                others and practice using TailwindCSS.
+                entire stack for web and mobile apps. <br />I built this site
+                with NextJS and Tailwind CSS, and deployed it using Vercel.
               </p>
               <p className='text-md mt-4' data-fade='4'>
                 <ArrowLink href='https://github.com/danielchines/dannyhines.io'>
@@ -48,15 +53,15 @@ export default function HomePage() {
               </p>
               <ButtonLink
                 className='mt-6'
-                href='/projects'
+                href='/about'
                 variant='light'
                 data-fade='5'
               >
-                View my Projects
+                About me
               </ButtonLink>
 
-              <div className='mt-24' data-fade='6'>
-                <h2 className=''>My Projects</h2>
+              <div className='mt-24 w-full' data-fade='6'>
+                <ProjectsSection projects={props.projects} />
               </div>
             </div>
 
@@ -76,4 +81,11 @@ export default function HomePage() {
       </main>
     </Layout>
   );
+}
+
+export async function getStaticProps() {
+  const projects = await getPostsByType('projects');
+  return {
+    props: { projects },
+  };
 }

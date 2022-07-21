@@ -6,10 +6,8 @@ import { getPostsByType } from '@/lib/mdx';
 import useLoaded from '@/hooks/useLoaded';
 
 import Layout from '@/components/layout/Layout';
-import ProjectCard from '@/components/ProjectCard';
+import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
-
-import { ProjectContent } from '@/types/Post';
 
 export default function ProjectsPage({
   projects,
@@ -24,25 +22,9 @@ export default function ProjectsPage({
       />
 
       <main>
-        <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='layout py-12'>
-            <h1 className='text-3xl md:text-5xl' data-fade='0'>
-              Projects
-            </h1>
-            <p data-fade='1' className='mt-2 text-gray-600 dark:text-gray-300'>
-              Some stuff I&apos;ve been working on.
-            </p>
-
-            <ul
-              data-fade='2'
-              className='mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'
-            >
-              {projects.map((project: ProjectContent) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </ul>
-          </div>
-        </section>
+        <div className={clsx(isLoaded && 'fade-in-start')}>
+          <ProjectsSection projects={projects} fadeIn={true} />
+        </div>
       </main>
     </Layout>
   );
