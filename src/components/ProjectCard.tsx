@@ -39,6 +39,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
         <NextImage
           layout='intrinsic'
           className='pointer-events-none mt-3 w-full'
+          imgClassName='rounded-md'
           src={`/images/${project.headerImg}`}
           alt={project.title}
           width={300}

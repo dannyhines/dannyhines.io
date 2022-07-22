@@ -11,7 +11,7 @@ const defaultMeta = {
   url: 'https://dannyhines.io',
   type: 'website',
   robots: 'follow, index',
-  /** No need to be filled, will be populated with openGraph function */
+  /** This is populated with openGraph function */
   image: '',
 };
 
