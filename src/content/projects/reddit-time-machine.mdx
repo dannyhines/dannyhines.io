@@ -1,6 +1,6 @@
 ---
 title: 'Reddit Time Machine'
-description: 'View the most popular news, pictures and memes from a day in Reddit history.'
+description: 'A simple website to view the most popular news, pictures and memes from a day in Reddit history.'
 category: 'Side Project'
 publishedAt: '2021-11-24'
 techs: 'react,nextjs,ux'
@@ -16,24 +16,170 @@ link: 'https://reddit-time-machine.com'
   height={1020}
 />
 
-## Short Explanation
+## Reddit
 
-I love Reddit, and I've always wondered about what the internet was talking about on a particular day in the past. So I created Reddit Time Machine, a way to view the most popular news, pictures and memes from a day in Reddit history.
+As _the front page of the internet_, Reddit is the ultimate collection of internet lore.
+I'm a big fan of memes, copy-pastas and stories like [Bean Dad](https://www.refinery29.com/en-us/2021/01/10247075/what-is-bean-dad-story-twitter-meaning).
+There are hundreds of thousands of posts per day, with hundreds of millions of active users.
+Because it's been a top website for over a decade, I realized I could make a sort of time capsule
+to show what the internet found the most funny/interesting/infuriating at a particular point in time.
 
-## Material UI
+> I originally called the project **_Reddit Time Capsule_** and used it to get familiar with [AWS CDK](https://aws.amazon.com/cdk/).
+> After I discovered NextJS and Vercel, I changed the name to **_Reddit Time Machine_** and made changes to improve SEO.
 
-[Material UI](https://mui.com/), or MUI, is yet another React framework that helps you build UI faster. It gives you dozens (hundreds?) of customizable components, which cover just about any UI appearance imaginable while keeping your UI consistent.
+Instead of using Reddit's own API, I found an even better search functionality in [pushshift.io](https://pushshift.io/api-parameters/).
+The Pushshift API was created by a legend named Jason Baumgartner, who basically scraped the entire
+Reddit dataset and built an API on top of it. As far as I can tell it's funded by donations (I donated)
+and [r/pushshift](https://www.reddit.com/r/pushshift/) is an active community for using the API.
 
+## AWS CDK
+
+<MdxRow>
+<MdxCol>
+AWS's [Cloud Development Kit](https://aws.amazon.com/cdk/) launched in 2019 as _"a code-first approach to defining cloud application infrastructure"_.
+In other words, it's a library of components and a CLI to create and deploy Cloudformation stacks in your language of choice.
+It's a lot more powerful than it sounds.<br /><br/>
+In AWS fashion, the first iteration was like a pocketknife that was too big to fit in your pocket.
+After suffering through mild [npm version hell](https://stackoverflow.com/questions/66565550/how-to-solve-cdk-cli-version-mismatch),
+I was able to build all AWS resources necessary to deploy a website.
+
+</MdxCol>
+
+<MdxCol>
 <Image
-  src='/images/reddit-time-machine/mui.gif'
-  alt='Material UI'
-  width={600}
-  height={337}
+  src='/images/reddit-time-machine/aws-cdk-meme.jpg'
+  alt='aws cdk meme'
+  className='rounded-md mx-auto'
+  imgClassName='rounded-md'
+  width={300}
+  height={300}
+/>
+</MdxCol>
+</MdxRow>
+## AWS Resources (as code)
+
+<RoundedImage
+  src='/images/reddit-time-machine/architecture.png'
+  alt='architecture'
+  width={776}
+  height={296}
 />
 
-### Consideration for UX
+The only prerequisite is that you'll need to buy a domain from Route53 (around $12 for most domains).
+You'll also want to make sure the associated S3 bucket name (i.e. 'google.com') isn't taken.
 
-## Lessons Learned
+The CDK creates a whole directory for the archtiecture.
+Inside the `bin` directory you have the executeable(s) that run during commands with the CDK CLI tool.
 
-After this project, I felt more comfortable working with NextJS.
-Before, it seems jarring to set up the routes.
+The `bin/infrastructure.ts` file looks something like this:
+
+```ts
+import { StaticSiteStack } from '../lib/static-site';
+
+const app = new cdk.App();
+
+new StaticSiteStack(app, 'RedditTimeCapsule', {
+  env: { account: 'accountId', region: 'us-east-1' },
+  domainName: 'reddit-time-capsule.com',
+});
+```
+
+This makes a Stack that takes in two parameters: the default `env` is the AWS account you're using,
+and I added `domainName` as a custom parameter for my StaticSiteStack.
+
+### The Stack
+
+Inside the `lib/` folder we include the stacks, which are created using Components from the npm library.
+
+Here's the empty stack:
+
+```ts
+export interface StaticSiteProps extends cdk.StackProps {
+  domainName: string;
+}
+
+export class StaticSiteStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props: StaticSiteProps) {
+    super(scope, id, props);
+    const { domainName } = props;
+    ...
+  }
+```
+
+We'll start by making the hosted zone, S3 bucket, and TLS certificate:
+
+```ts
+// Add hosted zone
+const zone = route53.HostedZone.fromLookup(this, 'Zone', {
+  domainName: domainName,
+});
+
+// Add S3 Bucket
+const s3Site = new s3.Bucket(this, `reddit-tc-bucket`, {
+  bucketName: domainName,
+  publicReadAccess: true,
+  websiteIndexDocument: 'index.html',
+  websiteErrorDocument: 'index.html',
+});
+this.enableCorsOnBucket(s3Site);
+
+// TLS certificate
+const certificateArn = new acm.DnsValidatedCertificate(
+  this,
+  'reddit-tc-site-certificate',
+  { domainName: domainName, hostedZone: zone, region: 'us-east-1' }
+).certificateArn;
+```
+
+Then let's create a Cloudfront distribution and attach the certificate we made in the previous step (so we can use SSL).
+Then we can create a Route53 alias record that points to the disribution:
+
+```ts
+// Create a new CloudFront Distribution
+const distribution = new cloudFront.CloudFrontWebDistribution(
+  this,
+  `reddit-tc-cf-distribution`,
+  {
+    aliasConfiguration: {
+      acmCertRef: certificateArn,
+      names: [domainName],
+      sslMethod: cloudFront.SSLMethod.SNI,
+      securityPolicy: cloudFront.SecurityPolicyProtocol.TLS_V1_1_2016,
+    },
+    viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+  }
+);
+
+// Route53 alias record for the CloudFront distribution
+new route53.ARecord(this, 'SiteAliasRecord', {
+  recordName: domainName,
+  target: route53.RecordTarget.fromAlias(
+    new targets.CloudFrontTarget(distribution)
+  ),
+  zone,
+});
+```
+
+And finally we need to take take whatever is in the build folder,
+put it in the S3 bucket and invalidate the CDN (Cloudfront) so the content will refresh immediately:
+
+```ts
+// Setup Bucket Deployment to automatically deploy new assets and invalidate cache
+new s3deploy.BucketDeployment(this, `reddit-tc-s3bucketdeployment`, {
+  sources: [s3deploy.Source.asset('../build')],
+  destinationBucket: s3Site,
+  distribution: distribution,
+  distributionPaths: ['/*'],
+});
+```
+
+If any of the above resources haven't been created,
+the CLI will create a diff of what's currently deployed in AWS,
+and either (a) deploy them, (b) update them, or (c) do nothing if there's nothing to change.
+
+Now all you need to do is run the CLI command to deploy it
+
+```bash
+aws configure // if you credentials aren't set
+cdk deploy
+```

@@ -1,6 +1,6 @@
 ---
 title: 'Betting Odds to Implied Probability Chrome Extension'
-description: 'View the most popular news, pictures and memes from a day in Reddit history.'
+description: 'How to convert the moneyline (American odds) to the implied probability.'
 category: 'Side Project'
 publishedAt: '2021-10-02'
 techs: 'react,nextjs,ux'
@@ -27,11 +27,9 @@ If you play this game over and over, it's easy to see why you'd lose money over 
 In the U.S., a 50/50 bet like this should be even odds, or 100 moneyline (wager $100 to win $100).
 Because _The House always wins_, casinos and sportsbooks would give you -110 odds to pick either side, or "$110 to win $100".
 
-<Image
+<RoundedImage
   src='/images/betting-odds-extension/i-like-those-odds.jpg'
   alt='I like those odds meme'
-  className='mx-auto mb-6 rounded-md'
-  imgClassName='rounded-md'
   width={400}
   height={225}
 />
@@ -41,11 +39,9 @@ Because _The House always wins_, casinos and sportsbooks would give you -110 odd
 
 Here's an example of an "even" game on Draftkings, where you can bet on the Bills or the Rams to win, both giving you -110 odds:
 
-<Image
+<RoundedImage
   src='/images/betting-odds-extension/betting-odds.png'
   alt='nfl betting odds'
-  className='mx-auto my-2 rounded-md'
-  imgClassName='rounded-md'
   width={555}
   height={155}
 />
@@ -53,9 +49,9 @@ Here's an example of an "even" game on Draftkings, where you can bet on the Bill
 ### Implied Probability
 
 Assuming the odds are "fair", the implied probability is the percentage chance that the bet is supposed to win.
-In the coin example, it should be 50% for both heads and tails, but at -110, the implied probability is actually 52.4%.
-Because sportsbooks charge a fee or "vig" for placing bets, the implied probability is normally higher than the actual probability.
-In other words, _you're paying a price that overestimates the chance of something happening_.
+In the coin example, the probability of heads is 50% but at -110, the implied probability is actually 52.4%.
+This is because sportsbooks charge a fee or "vig" for placing bets, which makes the implied probability higher than the actual probability.
+This is how sportsbooks make money: _bets typically cost more than they should_.
 
 > Using the implied probability is simpler way to look at sports betting: a "good bet" is one where you believe the percentage chance is higher than the implied probability.
 
@@ -140,11 +136,9 @@ unction textNodeInnerHTML(textNode, active) {
 And that's pretty much it, other than adding a background script to know when the extension is actually triggered, and adding a listener to call the code above.
 For that same Bills Rams game, here's what happens when you click on the extension:
 
-<Image
+<RoundedImage
   src='/images/betting-odds-extension/betting-odds-converted.png'
   alt='nfl betting odds'
-  className='mx-auto rounded-md'
-  imgClassName='rounded-md'
   width={555}
   height={155}
 />
