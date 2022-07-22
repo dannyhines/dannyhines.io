@@ -1,11 +1,33 @@
 {
   "css.validate": false,
   "editor.formatOnSave": true,
+  "editor.lightbulb.enabled": false,
+  "editor.fontSize": 13,
   "editor.tabSize": 2,
+  "editor.hover.enabled": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
   "headwind.runOnSave": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.ignoreWords": ["clsx", "clsxm", "unstyled", "tailwindcss"]
+  "cSpell.ignoreWords": [
+    "clsx",
+    "clsxm",
+    "unstyled",
+    "tailwindcss",
+    "endregion"
+  ],
+  "editor.renderWhitespace": "boundary",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/coverage": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.build": true,
+    "**/.gh-pages": true
+  },
+  "terminal.integrated.scrollback": 10000,
+  "prettier.proseWrap": "always",
+  "prettier.singleQuote": true,
 }
