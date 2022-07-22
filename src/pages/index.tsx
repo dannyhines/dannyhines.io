@@ -11,11 +11,11 @@ import ButtonLink from '@/components/links/ButtonLink';
 import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
 
-import { ProjectType } from '@/types/Post';
+import { ProjectContent } from '@/types/Post';
 
 let saidHi = false;
 
-export default function HomePage(props: { projects: ProjectType[] }) {
+export default function HomePage(props: { projects: ProjectContent[] }) {
   const isLoaded = useLoaded();
 
   if (!saidHi) {
@@ -48,7 +48,7 @@ export default function HomePage(props: { projects: ProjectType[] }) {
               </p>
               <p className='text-md mt-4' data-fade='4'>
                 <ArrowLink href='https://github.com/danielchines/dannyhines.io'>
-                  See this code on Github
+                  View on Github
                 </ArrowLink>
               </p>
               <ButtonLink

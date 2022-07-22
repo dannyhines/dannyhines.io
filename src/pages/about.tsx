@@ -21,7 +21,7 @@ export default function About() {
           )}
         >
           <div className='layout flex flex-col items-center justify-center gap-3 text-left sm:items-start'>
-            <h1 className='mb-3 text-3xl sm:mb-1' data-fade='1'>
+            <h1 className='mb-3 text-3xl sm:mb-4 md:text-4xl' data-fade='1'>
               Hi, I&apos;m{' '}
               <span className='text-primary-700 dark:text-primary-400'>
                 Danny
@@ -34,18 +34,21 @@ export default function About() {
                 data-fade='2'
               >
                 I started coding in the Spring of my freshman year at college.
-                The language was Matlab, a mathy{' '}
+                The class taught the basics of programming and a language called
+                Matlab: a mathy,{' '}
                 <PrimaryLink href='https://www.mathworks.com/help/matlab/learn_matlab/matrices-and-arrays.html'>
                   matrix-based
                 </PrimaryLink>{' '}
-                language for handling data. It was unlike any other class I
-                took, and after I started watching Youtube videos on iOS
-                programming, I was hooked.
+                language for handling data. At the time I knew the assignments
+                were boring, but I was totally hooked and changed my major from
+                Mechanical Engineering to Computer Science before the semester
+                was over.
                 <br />
                 <br />
                 For work I&apos;ve built Chrome extensions and web apps, APIs
-                and AWS infrastructure. I&apos;ve handled authentication, CI/CD,
-                database migrations, E2E testing, the whole shabang.
+                and AWS infrastructure. Personally and professionally I&apos;ve
+                handled authentication, CI/CD, database migrations, E2E testing,
+                the whole shabang.
                 <br />
                 <br />
                 Originally I made this site because I wanted to show off my side
@@ -53,16 +56,17 @@ export default function About() {
                 <PrimaryLink href='https://tailwindcss.com/'>
                   TailwindCSS
                 </PrimaryLink>{' '}
-                and I thought this would be a good way to try it out.
+                and I thought this would be a good way to kill two birds at
+                once, or whatever.
               </p>
               <NextImage
                 src='/images/me.jpg'
                 alt='Me'
-                className='float-right w-11/12 p-8 sm:ml-4 sm:w-2/5 sm:p-0'
+                className='max-w-11/12 float-right w-11/12 p-8 sm:ml-4 sm:w-2/5 sm:p-0'
                 data-fade='3'
                 imgClassName='rounded-md'
-                width={1200}
-                height={1117}
+                width={1016}
+                height={1115}
               />
             </div>
           </div>
