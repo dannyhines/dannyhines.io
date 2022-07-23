@@ -8,7 +8,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "headwind.runOnSave": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "cSpell.ignoreWords": [
     "clsx",
@@ -27,7 +26,7 @@
     "**/.build": true,
     "**/.gh-pages": true
   },
-  "terminal.integrated.scrollback": 10000,
   "prettier.proseWrap": "always",
   "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
 }

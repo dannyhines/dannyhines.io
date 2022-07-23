@@ -1,0 +1,154 @@
+---
+title: 'DynamoDB.js'
+description: 'Utility functions for DynamoDB getItem, scan, removeFields, etc.'
+publishedAt: '2021-11-24'
+techs: 'aws'
+---
+
+```js
+import dotenv from 'dotenv';
+dotenv.config();
+import AWS from 'aws-sdk';
+
+import { getScanParams } from './util.js';
+
+const docClient = new AWS.DynamoDB.DocumentClient({
+  region: process.env.AWS_REGION,
+});
+const defaultTable = process.env.TABLE_NAME;
+
+// *=========== GET =============*
+
+export async function getItem(id, tableName) {
+  return await docClient.get({ TableName: tableName || defaultTable, Key: { id } }).promise();
+}
+
+// *=========== ADD =============*
+
+export function addItem(Item, tableName) {
+  docClient.put({ TableName: tableName || defaultTable, Item }, function (err, data) {
+    if (err) console.error('DynamoDB ERROR:', err);
+    else console.log('Successfully added item ' + Item.id);
+  });
+}
+
+// *=========== UPDATE =============*
+
+const updateParams = (id, obj, tableName) => {
+  if (!id || !Object.keys(obj).length) {
+    return undefined;
+  }
+  let updateExpression = 'set';
+  let ExpressionAttributeNames = {};
+  let ExpressionAttributeValues = {};
+  for (const property in obj) {
+    updateExpression += ` #${property} = :${property} ,`;
+    ExpressionAttributeNames['#' + property] = property;
+    ExpressionAttributeValues[':' + property] = obj[property];
+  }
+  updateExpression = updateExpression.slice(0, -1);
+
+  return {
+    TableName: tableName || defaultTable,
+    Key: { id },
+    UpdateExpression: updateExpression,
+    ExpressionAttributeNames: ExpressionAttributeNames,
+    ExpressionAttributeValues: ExpressionAttributeValues,
+  };
+};
+
+export const updateItem = (id, obj, tableName) => {
+  const params = updateParams(id, obj, tableName);
+  docClient.update(params, function (err, data) {
+    if (err) console.error(err);
+    else console.log(`Updated ${id}`);
+  });
+};
+
+export const updateItemAsync = async (id, obj, tableName) => {
+  const params = updateParams(id, obj, tableName);
+  return await docClient.update(params).promise();
+};
+
+// *=========== SCAN =============*
+
+export async function getAllItemsAsync(params) {
+  let scanResults = [];
+  let res;
+
+  do {
+    res = await docClient.scan(params).promise();
+    if (res.Items) res.Items.forEach((item) => scanResults.push(item));
+    params.ExclusiveStartKey = res.LastEvaluatedKey;
+  } while (typeof res.LastEvaluatedKey != 'undefined');
+  return scanResults;
+}
+
+// This readability is embarrassing
+function getScanParams(start, end, otherFilter, tableName) {
+  let FilterExpression = '';
+  let values = {};
+  if (!!start) {
+    FilterExpression += 'created > :start';
+    values = { ':start': start };
+  }
+  if (!!start && !!end) FilterExpression += ' and ';
+  if (!!end) {
+    FilterExpression += 'created < :end';
+    values = { ...values, ':end': end };
+  }
+  FilterExpression += !!!otherFilter ? '' : start || end ? ' and ' + otherFilter : otherFilter;
+  const expressions =
+    start || end || otherFilter
+      ? {
+          FilterExpression,
+          ExpressionAttributeValues: start || end ? values : undefined,
+        }
+      : {};
+  return { TableName: tableName || defaultTable, ...expressions };
+}
+
+export async function scanTableAsync(start, end, otherFilter, tableName) {
+  const params = getScanParams(start, end, otherFilter, tableName);
+  return await getAllItems(params);
+}
+
+export function scanTable(FilterExpression, tableName, callback) {
+  var params = { TableName: tableName || defaultTable, FilterExpression };
+  docClient.scan(params, function (err, data) {
+    if (err) console.error('DynamoDB ERROR:', err);
+    else {
+      callback(data.Items);
+    }
+  });
+}
+
+// *=========== REMOVE FIELDS =============*
+
+export function removeFields(id, fieldNamesArray, tableName, callback) {
+  var params = {
+    TableName: tableName || defaultTable,
+    Key: { id },
+    UpdateExpression: `REMOVE ${fieldNamesArray.join(', ')}`,
+    ReturnValues: 'UPDATED_NEW',
+  };
+  docClient.update(params, function (err, data) {
+    if (err) console.error('DynamoDB ERROR:', err);
+    else callback(data.Attributes);
+  });
+}
+```
+
+## Usage
+
+Here's an example updating the last week of data where **fieldToUpdate** is null:
+
+```js
+const aWeekAgo = new Date(Date.now().valueOf() - 7 * 24 * 60 * 60 * 1000).toISOString();
+const items = await scanTableAsync(eightDaysAgo, undefined, `attribute_not_exists(fieldToUpdate)`);
+for (let i = 0; i < items.length; i++) {
+  const item = items[i];
+  console.log('UPDATING', item.id);
+  updateItem(item.id, { fieldToUpdate: 'new value' });
+}
+```
