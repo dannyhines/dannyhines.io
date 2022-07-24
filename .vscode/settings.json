@@ -16,6 +16,9 @@
     "tailwindcss",
     "endregion"
   ],
+  "files.associations": {
+    "*.mdx": "mdx"
+},
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
     "**/node_modules": true,

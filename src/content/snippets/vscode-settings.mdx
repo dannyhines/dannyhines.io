@@ -1,0 +1,89 @@
+---
+title: 'My VS Code Settings'
+description: 'My settings.json file for Visual Studio Code'
+publishedAt: '2022-01-12'
+techs: 'vscode'
+---
+
+You can use these settings in your workspace by placing them in `./vscode/settings.json`. You can
+find your User (global) settings at `~/Library/Application Support/Code/User/settings.json`, which
+will be the default settings for all workspaces.
+
+```json
+{
+  "git.autofetch": true,
+  "editor.formatOnSave": true,
+  "css.validate": false,
+  "editor.lightbulb.enabled": false,
+  "editor.fontSize": 13,
+  "editor.tabSize": 2,
+  "editor.hover.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "headwind.runOnSave": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "cSpell.ignoreWords": ["clsx", "clsxm", "unstyled", "tailwindcss", "endregion"],
+  "cSpell.ignorePaths": [
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/objects",
+    ".vscode"
+  ],
+  "editor.renderWhitespace": "boundary",
+  "files.associations": {
+    "*.md": "mdx"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/coverage": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.build": true,
+    "**/.gh-pages": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "pgFormatter.tabs": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "markdown-preview-enhanced.liveUpdate": true,
+  "explorer.confirmDragAndDrop": false,
+  "timeline.excludeSources": [],
+  "explorer.confirmDelete": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "bracketPairColorizer.depreciation-notice": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "workbench.preferredDarkColorTheme": "New Moon",
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "prettier.printWidth": 100,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.proseWrap": "always"
+  // recording
+  /*
+  "window.zoomLevel": 0,
+  "editor.fontSize": 22,
+  "terminal.integrated.fontSize": 20,
+  "workbench.statusBar.visible": false,
+  "editor.cursorBlinking": "solid",
+  "explorer.decorations.colors": false,
+  "explorer.decorations.badges": false
+  */
+}
+```
