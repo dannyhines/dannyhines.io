@@ -1,0 +1,145 @@
+---
+title: 'FTX NodeJS Client'
+description: 'Core functions for a trading bot using FTX'
+publishedAt: '2021-09-14'
+techs: 'nodejs'
+---
+
+This is a Typescript file for connecting to and interacting with the crpyto exchange
+[FTX](https://ftx.us/). I'm using the `ftx-api` npm module for making trades with an automated
+trading bot.
+
+```ts
+require('dotenv').config();
+import { RestClient } from 'ftx-api';
+import { RestClientOptions } from 'ftx-api/lib/util/requestUtils';
+import { BUY_PERCENT, QUOTE, TRAILING_STOP_PERCENT } from './config';
+import { FTXBalancesResponse, FTXMarket, FTXMarketResponse, FTXMarketsResponse } from './types';
+const { FTX_API_KEY, FTX_API_SECRET } = process.env;
+
+const restClientOptions: RestClientOptions = {
+  domain: 'ftxus',
+  subAccountName: 'tradebot',
+  disable_time_sync: true, // without this the call doesn't terminate
+};
+
+const ftxClient = new RestClient(FTX_API_KEY, FTX_API_SECRET, restClientOptions);
+
+// Get market info (symbol: 'BTC')
+const getMarket = async (symbol: string) => {
+  const response: FTXMarketResponse = await ftxClient.getMarket(symbol + '/' + QUOTE);
+  return response.result;
+};
+
+// GET USD BALANCE for account
+const getUsdBalance = async () => {
+  const resp: FTXBalancesResponse = await ftxClient.getBalances();
+  if (resp.success && resp.result.length && resp.result.findIndex((x) => x.coin === QUOTE) !== -1) {
+    const match = resp.result.find((x) => x.coin === QUOTE);
+    return match ? match.free : 0;
+  } else {
+    return 0;
+  }
+};
+
+// Get qty based on current price and buy %
+const qtyToBuy = async (price: number) => {
+  const usdAvailable = await getUsdBalance();
+  return (usdAvailable * (BUY_PERCENT / 100)) / price;
+};
+
+const placeTrailingStop = async (market: FTXMarket, size: number) => {
+  const sellParams: any = {
+    market: market.name,
+    size,
+    side: 'sell',
+    trailValue: round(TRAILING_STOP_PERCENT * -0.01 * market.ask, market.priceIncrement),
+    type: 'trailingStop',
+    reduceOnly: true,
+  };
+  return await ftxClient.placeTriggerOrder(sellParams);
+};
+
+// Place a buy order and a limit sell order X% below the highest price
+export const buyAndPlaceTrailingStop = async (symbol: string) => {
+  const market = await getMarket(symbol);
+  const buyPrice = market.bid + market.priceIncrement;
+  const buyQty = round(await qtyToBuy(buyPrice), market.sizeIncrement);
+  const buyParams: any = {
+    market: market.name,
+    size: Math.max(buyQty, market.minProvideSize),
+    side: 'buy',
+    type: 'limit',
+    price: buyPrice,
+  };
+  const buyResponse = await ftxClient.placeOrder(buyParams);
+  // If successful, place trailing stop sell
+  if (buyResponse.success) {
+    console.log(`~~~ PURCHASED ${symbol} ~~~\n${JSON.stringify(buyResponse.result)}`);
+    const sellResponse = await placeTrailingStop(market, buyResponse.result.size);
+    if (sellResponse.success) {
+      console.log(`~~~ TRAILING STOP (SELL) ~~~\n${JSON.stringify(sellResponse.result)}`);
+      return true;
+    }
+  }
+  return false;
+};
+
+// Rounds 0.412 to 0.41 if the increment is .01
+// this function looks weird because javascript is stupid and doesn't think 0.01 is 1/100
+export const round = (num: number, increment: number) =>
+  Math.round(num * (1 / increment)) / (1 / increment);
+```
+
+In `./config`:
+
+```ts
+export const BUY_PERCENT = 10; // Every trade buys 10% of the available balance
+export const TRAILING_STOP_PERCENT = 1; // Will set a sell order trailing 1% below the high
+export const QUOTE: string = 'USD';
+```
+
+In `./types`:
+
+```ts
+export interface FTXMarketsResponse {
+  result: FTXMarket[];
+}
+export interface FTXMarketResponse {
+  result: FTXMarket;
+}
+
+export interface FTXOrderResponse {
+  createdAt: string;
+  filledSize: number;
+  id: number;
+  market: string;
+  price: number;
+  remainingSize: number;
+  side: 'buy' | 'sell';
+  size: number;
+  status: 'new' | 'open' | 'closed';
+  type: 'market' | 'limit';
+}
+
+export interface FTXMarket {
+  name: string; //"BTC/USD"
+  baseCurrency: string; //"BTC"
+  quoteCurrency: string; //"USD"
+  type: 'spot' | 'future';
+  enabled: boolean;
+  ask: number;
+  bid: number;
+  last: number;
+  price: number;
+  priceIncrement: number; //0.25
+  sizeIncrement: number; //0.001
+  change1h: number;
+  minProvideSize: number;
+}
+
+export interface FTXBalancesResponse {
+  success: boolean;
+  result: { coin: string; total: number; free: number; usdValue: number }[];
+}
+```
