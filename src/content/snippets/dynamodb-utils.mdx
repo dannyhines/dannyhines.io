@@ -1,16 +1,14 @@
 ---
 title: 'DynamoDB.js'
-description: 'Utility functions for DynamoDB getItem, scan, removeFields, etc.'
+description: 'Utility functions for DynamoDB'
 publishedAt: '2021-11-24'
 techs: 'aws'
 ---
 
 ```js
-import dotenv from 'dotenv';
-dotenv.config();
 import AWS from 'aws-sdk';
 
-import { getScanParams } from './util.js';
+import { getScanParams, getUpdateParams } from './dynamo-util.js';
 
 const docClient = new AWS.DynamoDB.DocumentClient({
   region: process.env.AWS_REGION,
@@ -139,9 +137,60 @@ export function removeFields(id, fieldNamesArray, tableName, callback) {
 }
 ```
 
+## dynamodb-util.js
+
+```js
+export const getUpdateParams = (id, obj, tableName) => {
+  if (!id || !Object.keys(obj).length) {
+    return undefined;
+  }
+  let updateExpression = 'set';
+  let ExpressionAttributeNames = {};
+  let ExpressionAttributeValues = {};
+  for (const property in obj) {
+    updateExpression += ` #${property} = :${property} ,`;
+    ExpressionAttributeNames['#' + property] = property;
+    ExpressionAttributeValues[':' + property] = obj[property];
+  }
+  updateExpression = updateExpression.slice(0, -1);
+
+  return {
+    TableName: tableName || defaultTable,
+    Key: { id },
+    UpdateExpression: updateExpression,
+    ExpressionAttributeNames: ExpressionAttributeNames,
+    ExpressionAttributeValues: ExpressionAttributeValues,
+  };
+};
+
+export const getScanParams = (start, end, otherFilter, tableName) => {
+  let FilterExpression = '';
+  let values = {};
+  if (!!start) {
+    FilterExpression += 'created > :start';
+    values = { ':start': start };
+  }
+  if (!!start && !!end) FilterExpression += ' and ';
+  if (!!end) {
+    FilterExpression += 'created < :end';
+    values = { ...values, ':end': end };
+  }
+  FilterExpression += !!!otherFilter ? '' : start || end ? ' and ' + otherFilter : otherFilter;
+  const expressions =
+    start || end || otherFilter
+      ? {
+          FilterExpression,
+          ExpressionAttributeValues: start || end ? values : undefined,
+        }
+      : {};
+  return { TableName: tableName || defaultTable, ...expressions };
+};
+```
+
 ## Usage
 
-Here's an example updating the last week of data where **fieldToUpdate** is null:
+Here's an example with scan and update. This will update the last week of data where `fieldToUpdate`
+is null:
 
 ```js
 const aWeekAgo = new Date(Date.now().valueOf() - 7 * 24 * 60 * 60 * 1000).toISOString();
