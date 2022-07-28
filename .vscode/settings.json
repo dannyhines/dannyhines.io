@@ -16,9 +16,13 @@
     "tailwindcss",
     "endregion"
   ],
-  "files.associations": {
-    "*.mdx": "mdx"
-},
+  // "cSpell.overrides": [{
+  //   "filename": "**​/src/{*.mdx}",
+  //   "languageId": "md"
+  // },],
+//   "files.associations": {
+//     "*.mdx": "mdx"
+// },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
     "**/node_modules": true,
@@ -29,7 +33,7 @@
     "**/.build": true,
     "**/.gh-pages": true
   },
-  "prettier.proseWrap": "always",
+  // "prettier.proseWrap": "always",
   "prettier.singleQuote": true,
-  "prettier.printWidth": 100,
+  "prettier.printWidth": 92,
 }
