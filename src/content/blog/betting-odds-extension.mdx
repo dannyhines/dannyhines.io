@@ -1,0 +1,195 @@
+---
+title: 'Betting Odds to Implied Probability Chrome Extension'
+description: 'How to convert the moneyline (American odds) to the implied probability.'
+category: 'Side Project'
+publishedAt: '2021-10-02'
+tags: 'react,nextjs,ux'
+headerImg: 'betting-odds-extension/header.png'
+github: 'https://github.com/danielchines/odds-converter-extension'
+link: 'https://chrome.google.com/webstore/detail/odds-to-probability-text/nofjpbibnnkinmfndoknlbkchbecgbkb'
+---
+
+<HeaderImage
+  src='/images/betting-odds-extension/header.png'
+  alt='header image'
+  width={3840}
+  height={2160}
+/>
+
+> View the extension on the
+> [Chrome Web Store](https://chrome.google.com/webstore/detail/odds-to-probability-text/nofjpbibnnkinmfndoknlbkchbecgbkb)
+
+## Background
+
+Betting odds are complicated on purpose. Look no further than "moneyline" odds, which like
+Fahrenheit are 1) only used in the US and 2) confuse everyone else.
+
+I had trouble describing in a single sentence:
+
+<GrayBox>
+  If the number is positive it means "How much you'd win on a $100 wager" and if it's
+  negative it means "How much you need to wager to win $100".
+</GrayBox>
+
+> Moneyline odds are also called _American odds_.
+
+Let's say I'm going to flip a coin - if it's heads I'll give you $10, if it's tails you owe
+me $11. If you play this game over and over, it's easy to see why you'd lose money over
+time.
+
+A 50/50 bet like this should be even odds, or +100 moneyline (wager $100 to win $100).
+Because _The House always wins_, casinos and sportsbooks would give you -110 odds to pick
+either side, or "$110 to win $100".
+
+<iframe
+  src='https://giphy.com/embed/glmRyiSI3v5E4'
+  width='340'
+  height='251'
+  frameBorder='0'
+  className='giphy-embed mx-auto'
+/>
+
+Here's an example of an "even" game on Draftkings, where you can bet on the Bills or the
+Rams to win (moneyline), both giving you -110 odds:
+
+<RoundedImage
+  src='/images/betting-odds-extension/betting-odds.png'
+  alt='nfl betting odds'
+  width={555}
+  height={155}
+/>
+
+> I'm sure there's an argument why the moneyline odds (+260, -180, etc) betting syntax makes
+> more sense, but in reality it's just another way that casinos try to distract you from the
+> amount of money you're losing.
+
+### Implied Probability
+
+Assuming the odds are "fair", the implied probability is the percentage chance that the bet
+is supposed to win. In the coin example, the probability of heads is 50%. At -110 odds,
+however, the implied probability of choosing the Rams (or the Bills) isn't 50%, but 52.38%.
+
+> -110 odds is like saying the odds are 110 / (100 + 110) = 11/21 = 0.5238095 = 52.38% (I'll
+> explain later)
+
+You can tell how much the vig is by adding up the implied probabilities, which in the NFL
+example is about 105%. When betting on Futures, like "Super Bowl winner", this can be 140%
+or higher. This how sportsbooks make money: _bets typically cost more than they should_.
+
+> Using the implied probability is simpler way to look at sports betting: a "good bet" is
+> one where you believe the percentage chance is higher than the implied probability.
+
+### Converting odds
+
+There are three main ways to frame odds:
+
+- **Fractional**: The profit / wager.
+- **Decimal**: The ratio of the payout amount, including the original stake, to the stake
+  itself.
+- **Moneyline/American**:
+  - Positive: How much money will be won on a $100 wager.
+  - Nevative: How much money must be wagered to win $100.
+
+<GrayBox>
+  **For example**: <br />
+  4/1 fractional odds implies you could make $400 profit on a $100 wager, which is +400 American
+  or 5.0 decimal (you get back 5x your original wager). <br />
+  1/4 odds is "$100 to win $25", or 1.25 in decimal. This would be -400 in freedom units.
+</GrayBox>
+
+Converting from decimal to implied probability is easy - just do 1 divided by the decimal
+odds. If you need to convert a moneyline to a probability, however, it's kinda messy:
+
+If Odds < 0:
+
+- **Probability = (-1\*(Odds)) / (-1(Odds) + 100)**
+
+If Odds > 0:
+
+- **Probability = 100 / (Odds + 100)**
+
+## Building a Chrome Extension
+
+I decided to automate the process by making a Chrome extension to convert the odds for me.
+It's a lightweight extension that scans any webpage for instances of American odds (-130,
++140, etc), converts it to implied probability as a percentage, and inserts the probability
+next to the odds.
+
+In javascript, the conversion function looks something like this, where `match` is the
+moneyline odds as a string:
+
+```js
+function replacer(match) {
+  const num = parseInt(match.slice(1, match.length));
+  let replacement = '';
+  if (match[0] === '-') {
+    replacement = ((num / (num + 100)) * 100).toFixed(1);
+  } else {
+    replacement = ((100 / (num + 100)) * 100).toFixed(1);
+  }
+  return match + ' (' + replacement + '%)';
+}
+```
+
+When the extension is activated, it runs through this function to replace the text on the
+page:
+
+```js
+function replaceAllText(active) {
+  // Replace every text element on the page
+  let body = document.getElementsByTagName('body')[0];
+  let textNodes = [...body.querySelectorAll('*')]
+    .map((l) => [...l.childNodes])
+    .flat()
+    .filter((l) => l.nodeType === 3);
+
+  for (let i = 0; i < textNodes.length; i++) {
+    textNodeInnerHTML(textNodes[i], active);
+  }
+}
+```
+
+Specifically, `textNodeInnerHTML()` is either creating a new div to add to the page, or
+removing the already-added div if they're toggling off the 'active' state. That regex is
+basically searching for American odds if it's `active`, otheriwse it's looking for the
+inserted probabilities like "(55%)".
+
+```js
+unction textNodeInnerHTML(textNode, active) {
+  let regex = active ? /([+-])(\d\d\d+)/g : / \(\d*\.\d\%\)/g;
+  var div = document.createElement("div");
+  textNode.parentNode.insertBefore(div, textNode);
+  div.insertAdjacentHTML(
+    "afterend",
+    textNode.data.replace(regex, active ? replacer : "")
+  );
+  div.remove();
+  textNode.remove();
+}
+```
+
+And that's pretty much it, other than adding a background script to know when the extension
+is actually triggered, and adding a listener to call the code above. For that same Bills
+Rams game, here's what happens when you click on the extension:
+
+<RoundedImage
+  src='/images/betting-odds-extension/betting-odds-converted.png'
+  alt='nfl betting odds'
+  width={555}
+  height={155}
+/>
+
+## Building and deploying to the Chrome Web Store
+
+To deploy it I had to register as a
+[Chrome Web Store Developer](https://developer.chrome.com/docs/webstore/register/) and add a
+`manifest.json` file with the extension's metadata. I also put together some images for the
+Web Store listing. Then to zip it all up:
+
+```bash
+zip -r build.zip images/ background.js content_script.js manifest.json
+```
+
+Then in the
+[Chrome Web Store Developer Dashboard](https://chrome.google.com/u/1/webstore/devconsole),
+upload that `build.zip` and after a review from Google it was available for download.

@@ -1,0 +1,96 @@
+---
+title: 'Reddit Time Machine'
+description:
+  'A simple website to view the most popular news, pictures and memes from a day in Reddit
+  history.'
+category: 'Side Project'
+publishedAt: '2021-11-24'
+techs: 'react,nextjs,ux'
+headerImg: 'reddit-time-machine/header.png'
+github: 'https://github.com/danielchines/reddit-time-machine'
+link: 'https://reddit-time-machine.com'
+---
+
+<HeaderImage
+  src='/images/reddit-time-machine/header.png'
+  alt='reddit time machine'
+  width={1200}
+  height={1020}
+/>
+
+> View the final product: [Reddit Time Machine](https://reddit-time-machine.com)
+
+## Reddit
+
+As _the front page of the internet_, Reddit is the ultimate collection of internet folklore.
+I'm a big fan of memes,
+[copypastas](https://www.reddit.com/r/copypasta/comments/9uxpve/hi_can_anyone_tell_me_what_this_subreddit_is_about/)
+and stories like
+[Bean Dad](https://www.refinery29.com/en-us/2021/01/10247075/what-is-bean-dad-story-twitter-meaning).
+I started thinking about what memes were like 5 or 10 years ago, and wondering how internet
+humor has changed.
+
+There are hundreds of thousands of posts per day, with hundreds of millions of active users.
+Because it's been a top website for over a decade, I realized I could make a sort of time
+capsule to show what the internet found the most funny/interesting/infuriating at a
+particular point in time.
+
+> I originally called the project **_Reddit Time Capsule_** and used it to get familiar with
+> [AWS CDK](https://aws.amazon.com/cdk/). After I discovered NextJS and Vercel, I changed
+> the name to **_Reddit Time Machine_** and made changes to improve SEO.
+
+### The Reddit API
+
+Instead of using Reddit's own API, I found an even better search functionality in
+[pushshift.io](https://pushshift.io/api-parameters/). The Pushshift API was created by a
+legend named Jason Baumgartner, who basically scraped the entire Reddit dataset and built an
+API on top of it. As far as I can tell it's funded by donations (I donated) and
+[r/pushshift](https://www.reddit.com/r/pushshift/) is an active community for using the API.
+
+## The UI
+
+Instead of building out components from scratch, I decided to go with
+[Ant Design](https://ant.design/) for the design system. AntD is an open-source React design
+system that gives you tons of reusable components out of the box. Creating a button and
+Datepicker, for example, is as easy as
+
+```js
+import { Button, DatePicker } from 'antd';
+
+const App = () => (
+  <>
+    <Button type='primary'>PRESS ME</Button>
+    <DatePicker placeholder='select date' />
+  </>
+);
+```
+
+## Adding Predictions
+
+After sending the link in my college GroupMe, my friend Hugh made a suggestion: along with
+news, I could display "predictions" from subreddits like r/futurology. It would be
+interesting to see what people thought would be possible in the future, and how clearly
+wrong some predictions can be. After messing around with the API, I realized that searching
+"by [date]" gives the best results, and "predicts", "goal", or "prediction" result in a lot
+of false positives.
+
+Here's an interesting example from a random
+
+<MdxRow>
+  <MdxCol>
+    <RoundedImage
+      src='/images/reddit-time-machine/predictions1.png'
+      alt='predictions from 2012'
+      width={433}
+      height={405}
+    />
+  </MdxCol>
+  <MdxCol>
+    <RoundedImage
+      src='/images/reddit-time-machine/predictions2.png'
+      alt='predictions from 2016'
+      width={436}
+      height={523}
+    />
+  </MdxCol>
+</MdxRow>
