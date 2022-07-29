@@ -11,7 +11,7 @@ import SnippetCard from "@/components/SnippetCard";
 
 import { SnippetContent } from "@/types/Post";
 
-export default function ProjectsPage({
+export default function SnippetsPage({
   snippets,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const isLoaded = useLoaded();
@@ -19,13 +19,13 @@ export default function ProjectsPage({
   return (
     <Layout>
       <Seo
-        templateTitle="Projects"
+        templateTitle="Snippets"
         description="A collection of code snippets that I thought were worth saving."
       />
 
       <main>
         <section
-          className={clsx("layout w-11/12 py-12", isLoaded && "fade-in-start")}
+          className={clsx("layout w-11/12 py-4", isLoaded && "fade-in-start")}
         >
           <h1 data-fade="1">Snippets</h1>
           <p data-fade="2" className="mt-2 text-gray-600 dark:text-gray-300">

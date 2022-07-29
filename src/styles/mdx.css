@@ -3,16 +3,16 @@
 }
 
 /* Single line code with `` */
-.prose code:not(:where([data-code-type='code-block'])) {
+.prose code:not(:where([data-code-type="code-block"])) {
   @apply rounded-md border px-2 py-1 text-gray-900 dark:border-gray-600 dark:text-gray-100;
 }
 
 /* Remove ` character from code block */
-.prose :where(code):not(:where([class~='not-prose'] *))::before {
-  content: '';
+.prose :where(code):not(:where([class~="not-prose"] *))::before {
+  content: "";
 }
-.prose :where(code):not(:where([class~='not-prose'] *))::after {
-  content: '';
+.prose :where(code):not(:where([class~="not-prose"] *))::after {
+  content: "";
 }
 
 .prose a {
@@ -30,12 +30,12 @@
 
 .prose blockquote p:first-of-type::before,
 .prose blockquote p:last-of-type::after {
-  content: '';
+  content: "";
 }
 
 .prose blockquote {
   border-style: solid;
-  border-width: 0 0 0 0.25rem;
+  border-width: 0 0 0 0.2rem;
   border-color: rgb(167, 139, 250);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .prose p {
-  @apply my-6;
+  @apply my-4;
 }
 
 .prose > :first-child {
@@ -75,25 +75,14 @@
   border-bottom: none;
 }
 
-/* Custom Heading Style for Projects */
-.mdx.prose.projects blockquote {
-  font-style: normal;
+/* Custom heading style for blog posts */
+.mdx.prose.blog blockquote {
+  font-style: italic;
 }
-.mdx.prose.projects blockquote:first-of-type h2 {
+.mdx.prose.blog blockquote:first-of-type h2 {
   margin-top: 1rem;
 }
-.mdx.prose.projects blockquote.with-icons h2 {
-  margin-bottom: 0;
-}
-
-/* Custom Heading Style for Projects */
-.mdx.prose.projects blockquote {
-  font-style: normal;
-}
-.mdx.prose.projects blockquote:first-of-type h2 {
-  margin-top: 1rem;
-}
-.mdx.prose.projects blockquote.with-icons h2 {
+.mdx.prose.blog blockquote.with-icons h2 {
   margin-bottom: 0;
 }
 
@@ -112,5 +101,5 @@
 
 .hash-anchor:after {
   @apply invisible absolute -right-5 top-1/2 -translate-y-1/2 text-lg text-primary-400 dark:text-primary-300;
-  content: '#';
+  content: "#";
 }
