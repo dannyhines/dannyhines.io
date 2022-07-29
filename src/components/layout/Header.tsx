@@ -48,7 +48,8 @@ export default function Header() {
                   className={clsxm(
                     "border-none text-base font-semibold text-slate-500 dark:text-slate-300 md:text-lg",
                     "hover:text-primary-600 dark:hover:text-primary-400",
-                    href === router.pathname && "text-black dark:text-white"
+                    href === "/" + router.pathname.split("/")[1] &&
+                      "text-black dark:text-white"
                   )}
                 >
                   {label}
