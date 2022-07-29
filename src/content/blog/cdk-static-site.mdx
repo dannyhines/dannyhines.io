@@ -1,0 +1,308 @@
+---
+title: 'Static Website with AWS CDK'
+description: 'Building a custom website using AWS CDK to provision resources'
+category: 'Guide'
+publishedAt: '2021-12-05'
+tags: 'aws,react'
+headerImg: 'cdk-static-site/header.png'
+github: 'https://github.com/danielchines/how-many-blimps'
+link: 'https://howmanyblimpsarethere.com'
+---
+
+<RoundedImage
+  src='/images/cdk-static-site/header.png'
+  alt='architecture'
+  width={776}
+  height={296}
+/>
+
+> Check out the final product here:
+> [How Many Blimps Are There?](https://www.howmanyblimpsarethere.com)
+
+## AWS CDK
+
+<MdxRow>
+<MdxCol>
+AWS's [Cloud Development Kit](https://aws.amazon.com/cdk/) launched in 2019 as _"a code-first approach to defining cloud application infrastructure"_.
+In other words, it's a library of components and a CLI to create and deploy Cloudformation stacks in your language of choice.
+It's a lot more powerful than it sounds.<br /><br/>
+In AWS fashion, the first iteration was like a pocketknife that was too big to fit in your pocket.
+After suffering through mild [npm version hell](https://stackoverflow.com/questions/66565550/how-to-solve-cdk-cli-version-mismatch),
+I was able to build all AWS resources necessary to deploy a website.
+</MdxCol>
+
+<MdxCol>
+<Image
+  src='/images/cdk-static-site/aws-cdk-meme.jpg'
+  alt='aws cdk meme'
+  className='rounded-md mx-auto'
+  imgClassName='rounded-md'
+  width={300}
+  height={300}
+/>
+</MdxCol>
+</MdxRow>
+
+> AWS has since released V2 of the CDK, which fixes most of the version issues by including
+> all the stable parts of the AWS library into a single package `aws-cdk-lib`.
+
+## Let's make a website, eh?
+
+While at a bar with some friends, someone brought up that there are only about 25 blimps in
+the world. Of course I Googled it and was surprised that the entire first page quoted the
+same number of 25 blimps.
+
+<RoundedImage
+  src='/images/cdk-static-site/blimp-google-search.png'
+  alt='Google search how many blimps'
+  width={1760}
+  height={1284}
+/>
+
+I joked that it would be funny to own howmanyblimpsarethere.com, just to tell people there
+are 25. I just learned how to make websites with AWS CDK, so let's see how quickly I could
+go from idea to deployed website...
+
+### Create React App
+
+I started by making the React app, which <s>Facebook</s> Meta makes incredibly easy:
+
+```bash
+npx create-react-app how-many-blimps
+```
+
+10 minutes later, you'll have your app.
+
+Let's do the bare minimum to see how quickly I can make this thing. Removing some defaults
+and changing `App.js` to mention the number 25:
+
+<MdxRow>
+<MdxCol>
+```js
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h3>
+          There are currently <span style={{ fontSize: 64 }}> 25 </span> blimps
+          in the world
+        </h3>
+        <p style={{ fontSize: 18 }}>
+          This is probably not accurate. This website is stupid.
+        </p>
+      </header>
+    </div>
+  );
+}
+```
+
+</MdxCol>
+<MdxCol>
+  **The Site:**
+<RoundedImage
+src='/images/cdk-static-site/how-many-blimps-site.png'
+alt='How Many Blimps website'
+width={2102}
+height={1472}
+/>
+</MdxCol>
+</MdxRow>
+
+Nailed it.
+
+### Create a CDK project
+
+Next we'll make the CDK app within this repository. The infrastructure will live in the
+`infra` folder.
+
+```bash
+cd how-many-blimps
+mkdir infra
+cd infra
+```
+
+If you don't have the CDK CLI installed:
+
+```bash
+npm install -g aws-cdk
+```
+
+If you haven't done so already, login and set your AWS credentials with `aws configure`.
+
+Then use the CLI to initialize a new project in the empty `infra` folder:
+
+```bash
+cdk init app --language=typescript
+```
+
+## AWS Resources (as code)
+
+The only prerequisite is buying a domain from Route53 (around $12 for most domains). Also
+important to note: the associated S3 bucket name (i.e. 'google.com') can't be taken.
+
+The CDK creates creates a bunch of files by default, but you'll probably only need to edit
+the code within `bin` and `lib`. Inside the `bin` directory you have the executeable(s) that
+run during commands with the CDK CLI tool.
+
+The `bin/infra.ts` file should look something like this:
+
+```ts
+#!/usr/bin/env node
+import 'source-map-support/register';
+import * as cdk from '@aws-cdk/core';
+import { WebsiteStack } from '../lib/blimps-stack';
+
+const app = new cdk.App();
+new WebsiteStack(app, 'BlimpsStack', {
+  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+});
+```
+
+This Stack only uses the default `env` parameter for the stack, which is the AWS account and
+region you're deploying your resources to.
+
+### The Stack
+
+Inside the `lib/` folder we include the stacks, which are created using Components from the
+npm library.
+
+Here's the entire stack:
+
+```ts
+import * as cdk from '@aws-cdk/core';
+import * as route53 from '@aws-cdk/aws-route53';
+import * as acm from '@aws-cdk/aws-certificatemanager';
+import * as s3 from '@aws-cdk/aws-s3';
+import * as s3deploy from '@aws-cdk/aws-s3-deployment';
+import * as cloudFront from '@aws-cdk/aws-cloudfront';
+import * as targets from '@aws-cdk/aws-route53-targets/lib';
+
+const DOMAIN_NAME = 'howmanyblimpsarethere.com';
+
+export class WebsiteStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps) {
+    super(scope, id, props);
+
+    let domainName = DOMAIN_NAME;
+
+    // Hosted Zone
+    const zone = route53.HostedZone.fromLookup(this, 'Zone', {
+      domainName: domainName,
+    });
+
+    // Add S3 Bucket
+    const s3Site = new s3.Bucket(this, `blimps-web-bucket`, {
+      bucketName: domainName,
+      publicReadAccess: true,
+      websiteIndexDocument: 'index.html',
+      websiteErrorDocument: 'index.html',
+    });
+
+    // Create second S3 bucket for www.domain.com
+    const wwwBucket = new s3.Bucket(this, `blimps-web-www-bucket`, {
+      bucketName: 'www.' + domainName,
+      publicReadAccess: true,
+      websiteIndexDocument: undefined,
+      websiteRedirect: {
+        hostName: domainName,
+        protocol: s3.RedirectProtocol.HTTPS,
+      },
+    });
+
+    // TLS certificates
+    const certificateArn = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
+      domainName,
+      hostedZone: zone,
+      subjectAlternativeNames: [domainName, 'www.' + domainName],
+      region: 'us-east-1', // Cloudfront only checks this region for certificates.
+    }).certificateArn;
+
+    // Create a new CloudFront Distribution
+    const distribution = new cloudFront.CloudFrontWebDistribution(
+      this,
+      'blimps-cf-distribution',
+      {
+        aliasConfiguration: {
+          acmCertRef: certificateArn,
+          names: [domainName, 'www.' + domainName],
+          sslMethod: cloudFront.SSLMethod.SNI,
+          securityPolicy: cloudFront.SecurityPolicyProtocol.TLS_V1_1_2016,
+        },
+        viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      }
+    );
+
+    // Route53 alias record for the CloudFront distribution
+    new route53.ARecord(this, 'SiteAliasRecord', {
+      recordName: domainName,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      zone,
+    });
+    new route53.ARecord(this, 'wwwAliasRecord', {
+      recordName: 'www.' + domainName,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      zone,
+    });
+
+    // Setup Bucket Deployment to automatically deploy new assets and invalidate cache
+  }
+```
+
+We start by making the hosted zone S3 bucket(s) for howmanyblimpsarethere.com and
+www.howmanyblimpsarethere.com. We also need a TLS certificate for the url, and we need to
+include the `www.` subdomain.
+
+Then we create a Cloudfront distribution and attach the certificate we made in the previous
+step (so we can use SSL). Then we can create a Route53 alias record within the Hosted Zone
+we made, that points to the disribution:
+
+And finally we need to take take whatever is in the build folder, put it in the S3 bucket
+and invalidate the CDN (Cloudfront) so the content will refresh immediately:
+
+```ts
+// Setup Bucket Deployment to automatically deploy new assets and invalidate cache
+new s3deploy.BucketDeployment(this, `blimps-s3bucketdeployment`, {
+  sources: [s3deploy.Source.asset('../build')],
+  destinationBucket: s3Site,
+  distribution: distribution,
+  distributionPaths: ['/*'],
+});
+
+// for the www bucket
+new s3deploy.BucketDeployment(this, `blimps-www-s3bucketdeployment`, {
+  sources: [],
+  destinationBucket: wwwBucket,
+  distribution: distribution,
+});
+```
+
+If any of the above resources haven't been created, the CLI will create a diff of what's
+currently deployed in AWS, and either (a) deploy them, (b) update them, or (c) do nothing if
+there's nothing to change.
+
+So let's go back to the React app and build the app:
+
+```bash
+cd ..
+npm run build
+```
+
+Now all you need to do is run the CLI command to deploy it
+
+```bash
+cd infra
+aws configure // if you credentials aren't set
+cdk deploy
+```
+
+And that's it! I bought the domain while watching the first quarter of a Sunday night NFL
+game, and by halftime it was deployed. So like 45 minutes to deploy a website? Not bad.
+
+<iframe
+  src='https://giphy.com/embed/2wSe48eAUC15p38UqO'
+  width='480'
+  height='311'
+  frameBorder='0'
+  className='giphy-embed mx-auto'
+  allowFullScreen
+/>
