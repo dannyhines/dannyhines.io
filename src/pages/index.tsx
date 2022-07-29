@@ -64,18 +64,6 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                 <ProjectsSection projects={props.projects} />
               </div>
             </div>
-
-            {/* <UnstyledLink
-              href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-              className='mt-4'
-            >
-              <img
-                width='92'
-                height='32'
-                src='https://vercel.com/button'
-                alt='Deploy with Vercel'
-              />
-            </UnstyledLink> */}
           </div>
         </section>
       </main>

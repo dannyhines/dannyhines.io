@@ -42,7 +42,7 @@ export default function SnippetPage({ code, meta }: SnippetType) {
 
             <div className="mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between">
               <CustomLink
-                href={`https://github.com/theodorusclarence/theodorusclarence.com/blob/main/src/contents/snippets/${meta.slug}.mdx`}
+                href={`https://github.com/danielchines/dannyhines.io/src/content/snippets/${meta.slug}.mdx`}
               >
                 Edit this on GitHub
               </CustomLink>
