@@ -51,19 +51,161 @@ API on top of it. As far as I can tell it's funded by donations (I donated) and
 
 Instead of building out components from scratch, I decided to go with
 [Ant Design](https://ant.design/) for the design system. AntD is an open-source React design
-system that gives you tons of reusable components out of the box. Creating a button and
-Datepicker, for example, is as easy as
+system that gives you tons of reusable components out of the box. Because I knew it would be
+a simple website, one of the most important factors for choosing Ant Design is that it has a
+nice [DatePicker](https://ant.design/components/date-picker/). It makes it easy to create
+and handle interactions:
 
-```js
-import { Button, DatePicker } from 'antd';
+<iframe
+  src='https://codesandbox.io/embed/basic-antd-4-22-2-liom67?fontsize=14&hidenavigation=1&theme=dark'
+  height='500'
+  width='100%'
+  style={{ border: 0, borderRadius: '4px', overflow: 'hidden' }}
+/>
 
-const App = () => (
-  <>
-    <Button type='primary'>PRESS ME</Button>
-    <DatePicker placeholder='select date' />
-  </>
-);
+### Retrieving posts
+
+The Pushshift API is relatively simple, although the main website doesn't have the most
+up-to-date documentation, which you can find through the r/pushshift subreddit. Here's how I
+create the url for searching the different subreddits:
+
+```ts
+// startDate is the date in unix time
+const endDate = (startDate || new Date().getTime() / 1000) + 86400; // 1 day later
+const baseURl =
+  'https://api.pushshift.io/reddit/search/submission/?sort_type=score&sort=desc&size=25';
+const url = baseURl + `&after=${startDate}&before=${endDate}&subreddit=`;
 ```
+
+That will return 25 posts with the most points (in decreasing order) between the two dates.
+So to search for memes, for example, I just use that url and add a comma-separated list of
+subreddits to search in:
+
+```ts
+const [memes, setMemes] = useState<Post[]>([]);
+const [loading, setLoading] = useState(false);
+
+const fetchData = async () => {
+  setLoading(true);
+  fetch(url + 'memes,memeeconomy,dankmemes,adviceanimals')
+    .then((response) => response.json())
+    .then((res) => {
+      setMemes(res.data.slice(0, 10));
+    })
+    .catch(() => {
+      setMemes([]);
+    })
+    .finally(() => {
+      // set loading to false
+    });
+};
+```
+
+Basically whenever the date is changed by the user, we call that API for the news, memes,
+etc and set them in our state to display as posts.
+
+For displaying the posts, I utilize the AntD
+[Card component](https://ant.design/components/card/). I found that it looks best to have
+images on their own cards, and the News/Predictions/Politics look better as a list on a
+Card:
+
+<MdxRow>
+  <MdxCol>
+    <Image
+      src='/images/reddit-time-machine/news-list.png'
+      alt='News list'
+      width={425}
+      height={432}
+    />
+  </MdxCol>
+  <MdxCol>
+    <Image
+      src='/images/reddit-time-machine/img-card.png'
+      alt='image card'
+      width={422}
+      height={403}
+    />
+  </MdxCol>
+</MdxRow>
+
+The ListView Card looks like this:
+
+```tsx
+const ListView: React.FC<ListViewProps> = (props) => {
+  const { isMobile } = useWindowDimensions();
+  const { title, posts, loading } = props;
+  const LoadingListView = [0, 1, 2, 3, 4, 5].map((value, i) => (
+    <Skeleton key={i} active avatar />
+  ));
+
+  const getThumbnail = (post: Post) => {
+    const imgResolutions = post.preview?.images.resolutions ?? [];
+    const thumbnailUrl =
+      post.thumbnail && post.thumbnail !== 'default' ? post.thumbnail : undefined;
+    const previewUrl =
+      imgResolutions && imgResolutions.length ? imgResolutions[0].url : undefined;
+    return thumbnailUrl ?? previewUrl ?? 'default_thumbnail.png';
+  };
+
+  return (
+    <>
+      <ListTitle>{title}</ListTitle>
+
+      <Card style={{ textAlign: 'left' }}>
+        {loading && LoadingListView}
+        <List
+          itemLayout='horizontal'
+          dataSource={posts}
+          locale={{ emptyText: `No ${title} to show` }}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar
+                    shape='square'
+                    src={getThumbnail(item)}
+                    size='large'
+                    alt={item.title}
+                  />
+                }
+                title={LinkWithAnalytics(
+                  item.url,
+                  item.title,
+                  'external',
+                  isMobile ? 12 : undefined
+                )}
+                description={LinkWithAnalytics(
+                  item.full_link,
+                  `r/${item.subreddit} · ${item.author} · ${item.score?.toString()} pts`,
+                  'reddit',
+                  isMobile ? 10 : undefined
+                )}
+              />
+            </List.Item>
+          )}
+        />
+      </Card>
+    </>
+  );
+};
+```
+
+### The layout
+
+I use Ant Design's [Grid](https://ant.design/components/grid/) to layout the content using
+Rows and Cols, which can easily change width with the size of the screen using the
+breakpoints (i.e. 'sm' is when `screen ≥ 576px`, 'md' is `screen ≥ 768px`, etc).
+
+I struggled for a while to decide on how to order the content. I decided to keep the images
+at the top because pictures catch your eye, and I decided that News should be first,
+followed by politics.
+
+<RoundedImage
+  src='/images/reddit-time-machine/rtm-layout.gif'
+  alt='dynamic layout'
+  width={640}
+  height={439}
+/>
 
 ## Adding Predictions
 
@@ -74,7 +216,7 @@ wrong some predictions can be. After messing around with the API, I realized tha
 "by [date]" gives the best results, and "predicts", "goal", or "prediction" result in a lot
 of false positives.
 
-Here's an interesting example from a random
+Here's an interesting example from two random days in 2012 and 2016:
 
 <MdxRow>
   <MdxCol>
@@ -94,3 +236,8 @@ Here's an interesting example from a random
     />
   </MdxCol>
 </MdxRow>
+
+r/Futorology is an incredibly optimistic corner of the internet - there are countless
+articles like **"No More Car Crashes by 2020?"**.
+
+Have an other suggestions? Let me know on Github, or feel free to create a PR!
