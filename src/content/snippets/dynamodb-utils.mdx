@@ -17,7 +17,9 @@ const defaultTable = process.env.TABLE_NAME;
 // *=========== GET =============*
 
 export async function getItem(id, tableName) {
-  return await docClient.get({ TableName: tableName || defaultTable, Key: { id } }).promise();
+  return await docClient
+    .get({ TableName: tableName || defaultTable, Key: { id } })
+    .promise();
 }
 
 // *=========== ADD =============*
@@ -94,7 +96,11 @@ function getScanParams(start, end, otherFilter, tableName) {
     FilterExpression += 'created < :end';
     values = { ...values, ':end': end };
   }
-  FilterExpression += !!!otherFilter ? '' : start || end ? ' and ' + otherFilter : otherFilter;
+  FilterExpression += !!!otherFilter
+    ? ''
+    : start || end
+    ? ' and ' + otherFilter
+    : otherFilter;
   const expressions =
     start || end || otherFilter
       ? {
@@ -174,7 +180,11 @@ export const getScanParams = (start, end, otherFilter, tableName) => {
     FilterExpression += 'created < :end';
     values = { ...values, ':end': end };
   }
-  FilterExpression += !!!otherFilter ? '' : start || end ? ' and ' + otherFilter : otherFilter;
+  FilterExpression += !!!otherFilter
+    ? ''
+    : start || end
+    ? ' and ' + otherFilter
+    : otherFilter;
   const expressions =
     start || end || otherFilter
       ? {
@@ -188,15 +198,23 @@ export const getScanParams = (start, end, otherFilter, tableName) => {
 
 ## Usage
 
-Here's an example with scan and update. This will update the last week of data where `fieldToUpdate`
-is null:
+Here's an example with scan and update. This will update the last week of data where
+`fieldToUpdate` is null:
 
 ```js
 const aWeekAgo = new Date(Date.now().valueOf() - 7 * 24 * 60 * 60 * 1000).toISOString();
-const items = await scanTableAsync(eightDaysAgo, undefined, `attribute_not_exists(fieldToUpdate)`);
+const items = await scanTableAsync(
+  eightDaysAgo,
+  undefined,
+  `attribute_not_exists(fieldToUpdate)`
+);
 for (let i = 0; i < items.length; i++) {
   const item = items[i];
   console.log('UPDATING', item.id);
   updateItem(item.id, { fieldToUpdate: 'new value' });
 }
 ```
+
+> Note: The code above should only be used for one-off operations, like infrequent cron-jobs
+> or if there was a gap in your data for some reason. Scan operations are expensive and
+> should not be used regularly, instead use indexes/keys for querying a NoSQL database.
