@@ -71,7 +71,12 @@ I started by making the React app, which <s>Facebook</s> Meta makes incredibly e
 npx create-react-app how-many-blimps
 ```
 
-10 minutes later, you'll have your app.
+<RoundedImage
+  alt='3 hours later'
+  src='/images/cdk-static-site/3-hours-later.png'
+  width={678}
+  height={457}
+/>
 
 Let's do the bare minimum to see how quickly I can make this thing. Removing some defaults
 and changing `App.js` to mention the number 25:
@@ -159,14 +164,15 @@ new WebsiteStack(app, 'BlimpsStack', {
 ```
 
 This Stack only uses the default `env` parameter for the stack, which is the AWS account and
-region you're deploying your resources to.
+region you're deploying your resources to. That's all we need to the executable, let's move
+on to the actual CDK components.
 
 ### The Stack
 
 Inside the `lib/` folder we include the stacks, which are created using Components from the
 npm library.
 
-Here's the entire stack:
+Here's our stack for the website infrastructure:
 
 ```ts
 import * as cdk from '@aws-cdk/core';
@@ -245,22 +251,91 @@ export class WebsiteStack extends cdk.Stack {
     });
 
     // Setup Bucket Deployment to automatically deploy new assets and invalidate cache
+new s3deploy.BucketDeployment(this, `blimps-s3bucketdeployment`, {
+  sources: [s3deploy.Source.asset('../build')],
+  destinationBucket: s3Site,
+  distribution: distribution,
+  distributionPaths: ['/*'],
+});
+
+// for the www bucket
+new s3deploy.BucketDeployment(this, `blimps-www-s3bucketdeployment`, {
+  sources: [],
+  destinationBucket: wwwBucket,
+  distribution: distribution,
+});
   }
 ```
 
-We start by making the hosted zone S3 bucket(s) for howmanyblimpsarethere.com and
-www.howmanyblimpsarethere.com. We also need a TLS certificate for the url, and we need to
-include the `www.` subdomain.
+#### Let's break it down.
+
+We start by making the hosted zone, which takes in our domain from Route53) as a parameter.
+Then we make the S3 bucket(s) for howmanyblimpsarethere.com and
+www.howmanyblimpsarethere.com.
+
+```ts
+const zone = route53.HostedZone.fromLookup(this, 'Zone', {
+  domainName: domainName,
+});
+
+const s3Site = new s3.Bucket(this, 'blimps-web-bucket', {
+  bucketName: domainName,
+  publicReadAccess: true,
+  websiteIndexDocument: 'index.html',
+  websiteErrorDocument: 'index.html',
+});
+
+// Create second S3 bucket for www.domain.com
+const wwwBucket = new s3.Bucket(this, 'blimps-web-www-bucket', {
+  bucketName: 'www.' + domainName,
+  publicReadAccess: true,
+  websiteIndexDocument: undefined,
+  websiteRedirect: {
+    hostName: domainName,
+    protocol: s3.RedirectProtocol.HTTPS,
+  },
+});
+```
+
+We also need a TLS certificate for the url, and we want to make sure we include the `www.`
+subdomain.
+
+```ts
+const certificateArn = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
+  domainName,
+  hostedZone: zone,
+  subjectAlternativeNames: [domainName, 'www.' + domainName],
+  region: 'us-east-1',
+}).certificateArn;
+```
 
 Then we create a Cloudfront distribution and attach the certificate we made in the previous
 step (so we can use SSL). Then we can create a Route53 alias record within the Hosted Zone
 we made, that points to the disribution:
 
+```ts
+const distribution = new cloudFront.CloudFrontWebDistribution(
+  this,
+  'blimps-cf-distribution',
+  {
+    aliasConfiguration: {
+      acmCertRef: certificateArn,
+      names: [domainName, 'www.' + domainName],
+      sslMethod: cloudFront.SSLMethod.SNI,
+      securityPolicy: cloudFront.SecurityPolicyProtocol.TLS_V1_1_2016,
+    },
+    viewerProtocolPolicy: cloudFront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+  }
+);
+```
+
+(If you want to see how to include CORS settings, click
+[here](https://github.com/danielchines/how-many-blimps/blob/main/infra/lib/blimps-stack.ts#L67)).
+
 And finally we need to take take whatever is in the build folder, put it in the S3 bucket
 and invalidate the CDN (Cloudfront) so the content will refresh immediately:
 
 ```ts
-// Setup Bucket Deployment to automatically deploy new assets and invalidate cache
 new s3deploy.BucketDeployment(this, `blimps-s3bucketdeployment`, {
   sources: [s3deploy.Source.asset('../build')],
   destinationBucket: s3Site,
@@ -277,17 +352,19 @@ new s3deploy.BucketDeployment(this, `blimps-www-s3bucketdeployment`, {
 ```
 
 If any of the above resources haven't been created, the CLI will create a diff of what's
-currently deployed in AWS, and either (a) deploy them, (b) update them, or (c) do nothing if
-there's nothing to change.
+currently deployed in AWS vs. what's in the new stack, and either (a) deploy new resources,
+(b) update them, or (c) do nothing if there's nothing to change.
 
-So let's go back to the React app and build the app:
+So let's go back to the React app and build it:
 
 ```bash
 cd ..
 npm run build
 ```
 
-Now all you need to do is run the CLI command to deploy it
+That'll compile the Typescript and put everything in the /build folder, which we specify in
+the `s3deploy.BucketDeployment` component. Now all you need to do is run the CLI command to
+deploy it:
 
 ```bash
 cd infra
@@ -295,14 +372,15 @@ aws configure // if you credentials aren't set
 cdk deploy
 ```
 
-And that's it! I bought the domain while watching the first quarter of a Sunday night NFL
-game, and by halftime it was deployed. So like 45 minutes to deploy a website? Not bad.
+And that's it! I bought the domain during the Pregame of a Sunday night NFL game, and by
+halftime it was deployed. Copy-paste these components and you could do it even faster.
+Pretty fricken sweet.
 
 <iframe
   src='https://giphy.com/embed/2wSe48eAUC15p38UqO'
   width='480'
   height='311'
   frameBorder='0'
-  className='giphy-embed mx-auto'
+  className='giphy-embed mx-auto mb-1'
   allowFullScreen
 />
