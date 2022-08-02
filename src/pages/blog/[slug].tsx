@@ -68,7 +68,7 @@ export default function ProjectPage({ code, meta }: ProjectType) {
             </section>
 
             {meta.github && (
-              <div className="flex w-full flex-row items-center justify-center gap-2">
+              <div className="my-4 flex w-full flex-row items-center justify-center gap-2">
                 <SiGithub className="text-lg text-gray-800 dark:text-white" />
                 <UnderlineLink href={meta.github} className="mt-1">
                   View the code on Github
