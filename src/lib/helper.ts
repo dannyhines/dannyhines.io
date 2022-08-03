@@ -11,7 +11,7 @@ export function openGraph({
   siteName,
   templateTitle,
   description,
-  logo = 'images/me.jpg',
+  logo = "images/me.jpeg",
 }: OpenGraphType): string {
   const ogLogo = encodeURIComponent(logo);
   const ogSiteName = encodeURIComponent(siteName.trim());
@@ -21,6 +21,6 @@ export function openGraph({
   const ogDesc = encodeURIComponent(description.trim());
 
   return `/api/og-image?siteName=${ogSiteName}&description=${ogDesc}&logo=${ogLogo}${
-    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
+    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ""
   }`;
 }

@@ -31,7 +31,7 @@ export default function BlogPage({
             Some of my thoughts, side projects and tutorials, mostly about
             software development.
           </p>
-          <ul data-fade="3" className="mt-6 grid gap-4 2xl:grid-cols-2">
+          <ul data-fade="3" className="mt-6 grid gap-4 ">
             {blogPosts.map((post: BlogContent) => (
               <BlogCard key={post.slug} blog={post} />
             ))}

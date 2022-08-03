@@ -26,9 +26,9 @@ export default function BlogCard({ blog, className }: BlogCardProps) {
     >
       <UnstyledLink
         href={`/blog/${blog.slug}`}
-        className="flex flex-row items-center rounded-md p-4 focus:outline-none focus-visible:ring focus-visible:ring-primary-300"
+        className="flex flex-col items-center rounded-md p-4 focus:outline-none focus-visible:ring focus-visible:ring-primary-300 sm:flex-row"
       >
-        <div className="w-1/6 rounded-md ">
+        <div className="mb-4 w-1/2 rounded-md sm:m-0 sm:w-1/3 md:w-1/4 lg:w-1/6 ">
           <NextImage
             layout="responsive"
             className="pointer-events-none w-full rounded-md"
