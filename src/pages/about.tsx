@@ -60,13 +60,13 @@ export default function About() {
                 once, or whatever.
               </p>
               <NextImage
-                src="/images/me.jpg"
+                src="/images/me-large.jpg"
                 alt="Me"
                 className="max-w-11/12 float-right w-11/12 p-8 sm:ml-4 sm:w-2/5 sm:p-0"
                 data-fade="3"
                 imgClassName="rounded-md"
-                width={1016}
-                height={1115}
+                width={2796}
+                height={3225}
               />
             </div>
           </div>

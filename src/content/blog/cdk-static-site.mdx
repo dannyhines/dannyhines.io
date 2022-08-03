@@ -146,7 +146,7 @@ The only prerequisite is buying a domain from Route53 (around $12 for most domai
 important to note: the associated S3 bucket name (i.e. 'google.com') can't be taken.
 
 The CDK creates creates a bunch of files by default, but you'll probably only need to edit
-the code within `bin` and `lib`. Inside the `bin` directory you have the executeable(s) that
+the code within `bin` and `lib`. Inside the `bin` directory you have the executable(s) that
 run during commands with the CDK CLI tool.
 
 The `bin/infra.ts` file should look something like this:
@@ -311,7 +311,7 @@ const certificateArn = new acm.DnsValidatedCertificate(this, 'SiteCertificate', 
 
 Then we create a Cloudfront distribution and attach the certificate we made in the previous
 step (so we can use SSL). Then we can create a Route53 alias record within the Hosted Zone
-we made, that points to the disribution:
+we made, that points to the distribution:
 
 ```ts
 const distribution = new cloudFront.CloudFrontWebDistribution(
@@ -374,7 +374,7 @@ cdk deploy
 
 And that's it! I bought the domain during the Pregame of a Sunday night NFL game, and by
 halftime it was deployed. Copy-paste these components and you could do it even faster.
-Pretty fricken sweet.
+Pretty frickin sweet.
 
 <iframe
   src='https://giphy.com/embed/2wSe48eAUC15p38UqO'

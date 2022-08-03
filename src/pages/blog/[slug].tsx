@@ -39,7 +39,7 @@ export default function ProjectPage({ code, meta }: ProjectType) {
                   height={25}
                   width={24}
                   sizes="20vw"
-                  src="/images/me_small.jpeg"
+                  src="/images/me-small.jpeg"
                   className="rounded-full"
                   imgClassName="rounded-full"
                 />

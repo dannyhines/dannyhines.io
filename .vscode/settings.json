@@ -9,20 +9,9 @@
     "source.fixAll": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.ignoreWords": [
-    "clsx",
-    "clsxm",
-    "unstyled",
-    "tailwindcss",
-    "endregion"
-  ],
-  // "cSpell.overrides": [{
-  //   "filename": "**​/src/{*.mdx}",
-  //   "languageId": "md"
-  // },],
-//   "files.associations": {
-//     "*.mdx": "mdx"
-// },
+  "files.associations": {
+    "*.mdx": "markdown",
+  },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
     "**/node_modules": true,
@@ -33,7 +22,49 @@
     "**/.build": true,
     "**/.gh-pages": true
   },
-  // "prettier.proseWrap": "always",
   "prettier.singleQuote": true,
   "prettier.printWidth": 92,
+  "cSpell.enableFiletypes": [
+    "*"
+  ],
+  "cSpell.overrides": [{
+    "filename": "src/**/{*.mdx}",
+    "languageId": "markdown"
+  },],
+"cSpell.ignorePaths": [
+  "package-lock.json",
+  "node_modules",
+  "vscode-extension",
+  ".git/objects",
+  ".vscode",
+  ".vscode-insiders",
+  "public"
+],
+"cSpell.words": [
+  "adviceanimals",
+  "bucketdeployment",
+  "certificatemanager",
+  "clsx",
+  "clsxm",
+  "copypastas",
+  "dankmemes",
+  "dotenv",
+  "draftkings",
+  "endregion",
+  "futorology",
+  "hardcoding",
+  "howmanyblimpsarethere",
+  "memeeconomy",
+  "mkdir",
+  "moneyline",
+  "nextjs",
+  "pushshift",
+  "semibold",
+  "sportsbooks",
+  "subreddits",
+  "tailwindcss",
+  "typeof",
+  "unstyled",
+  "giphy-embed",
+]
 }
