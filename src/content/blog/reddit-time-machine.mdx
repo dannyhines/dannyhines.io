@@ -4,7 +4,7 @@ description:
   'A simple website to view the most popular news, pictures and memes from a day in Reddit
   history.'
 category: 'Side Project'
-publishedAt: '2021-11-24'
+publishedAt: '2022-04-03'
 techs: 'react,nextjs,ux'
 headerImg: 'reddit-time-machine/header.png'
 github: 'https://github.com/danielchines/reddit-time-machine'
@@ -27,8 +27,9 @@ I'm a big fan of memes,
 [copypastas](https://www.reddit.com/r/copypasta/comments/9uxpve/hi_can_anyone_tell_me_what_this_subreddit_is_about/)
 and stories like
 [Bean Dad](https://www.refinery29.com/en-us/2021/01/10247075/what-is-bean-dad-story-twitter-meaning).
-I started thinking about what memes were like 5 or 10 years ago, and wondering how internet
-humor has changed.
+Recently I saw an old meme and started thinking about how internet humor has changed over
+the past decade or so, from simple block text to pop culture references to
+poorly-photoshopped meta memes.
 
 There are hundreds of thousands of posts per day, with hundreds of millions of active users.
 Because it's been a top website for over a decade, I realized I could make a sort of time
@@ -47,27 +48,13 @@ legend named Jason Baumgartner, who basically scraped the entire Reddit dataset 
 API on top of it. As far as I can tell it's funded by donations (I donated) and
 [r/pushshift](https://www.reddit.com/r/pushshift/) is an active community for using the API.
 
-## The UI
+## Retrieving posts
 
-Instead of building out components from scratch, I decided to go with
-[Ant Design](https://ant.design/) for the design system. AntD is an open-source React design
-system that gives you tons of reusable components out of the box. Because I knew it would be
-a simple website, one of the most important factors for choosing Ant Design is that it has a
-nice [DatePicker](https://ant.design/components/date-picker/). It makes it easy to create
-and handle interactions:
-
-<iframe
-  src='https://codesandbox.io/embed/basic-antd-4-22-2-liom67?fontsize=14&hidenavigation=1&theme=dark'
-  height='500'
-  width='100%'
-  style={{ border: 0, borderRadius: '4px', overflow: 'hidden' }}
-/>
-
-### Retrieving posts
-
-The Pushshift API is relatively simple, although the main website doesn't have the most
-up-to-date documentation, which you can find through the r/pushshift subreddit. Here's how I
-create the url for searching the different subreddits:
+The Pushshift API is better than the Reddit API in that you can search the most upvoted
+posts by subreddit in a specific date range.
+[The website's documentation](https://pushshift.io/api-parameters/) has the list of possible
+parameters, and you can also find help in the r/pushshift subreddit. Here's how I create the
+url for searching the different subreddits:
 
 ```ts
 // startDate is the date in unix time
@@ -104,18 +91,33 @@ const fetchData = async () => {
 Basically whenever the date is changed by the user, we call that API for the news, memes,
 etc and set them in our state to display as posts.
 
-For displaying the posts, I utilize the AntD
-[Card component](https://ant.design/components/card/). I found that it looks best to have
-images on their own cards, and the News/Predictions/Politics look better as a list on a
-Card:
+## The UI
+
+Instead of building out components from scratch, I decided to go with
+[Ant Design](https://ant.design/) for the design system. AntD is an open-source React design
+system that gives you tons of reusable components out of the box. Because I knew it would be
+a simple website, one of the most important factors for choosing Ant Design is that it has a
+nice [DatePicker](https://ant.design/components/date-picker/). It makes it easy to create
+and handle interactions:
+
+<iframe
+  src='https://codesandbox.io/embed/basic-antd-4-22-2-liom67?fontsize=14&hidenavigation=1&theme=dark'
+  height='440'
+  width='100%'
+  style={{ border: 0, borderRadius: '8px', overflow: 'hidden' }}
+/>
+<br />
+For displaying the posts, I utilize the AntD [Card
+component](https://ant.design/components/card/). I found that it looks best to have images
+on their own cards, and the News/Predictions/Politics look better as a list on a Card:
 
 <MdxRow>
   <MdxCol>
     <Image
       src='/images/reddit-time-machine/news-list.png'
       alt='News list'
-      width={425}
-      height={432}
+      width={422}
+      height={376}
     />
   </MdxCol>
   <MdxCol>
@@ -128,33 +130,42 @@ Card:
   </MdxCol>
 </MdxRow>
 
-The ListView Card looks like this:
+### Dealing with images
+
+Because of the age and scope of Reddit posts, dealing with images is a bit of a nuissance.
+Every post can have a `thumbnail` and a `preview` object, which has a nested object `images`
+that has an array of `resolutions` in increasing size. Posts that are just photos also
+include the image in the main url with a sepearate field for indicating the imamge source
+(Reddit, imgur, etc).
+
+To add to the fun, sometimes the `post.thumbnail` is "default", so if you check if the
+thumnail exists, you'll be looking for an image named "default" which throws an error.
+That's what led to gross functions like this for trying to get a valid image url:
+
+```tsx
+const getThumbnail = (post: Post) => {
+  const imgResolutions = post.preview?.images.resolutions ?? [];
+  const thumbnailUrl =
+    post.thumbnail && post.thumbnail !== 'default' ? post.thumbnail : undefined;
+  const previewUrl =
+    imgResolutions && imgResolutions.length ? imgResolutions[0].url : undefined;
+  return thumbnailUrl ?? previewUrl ?? 'default_thumbnail.png';
+};
+```
+
+The ListView component shows the thumbnail, post title, and other details for each post,
+using AntD components to maintain styling:
 
 ```tsx
 const ListView: React.FC<ListViewProps> = (props) => {
-  const { isMobile } = useWindowDimensions();
-  const { title, posts, loading } = props;
-  const LoadingListView = [0, 1, 2, 3, 4, 5].map((value, i) => (
-    <Skeleton key={i} active avatar />
-  ));
-
-  const getThumbnail = (post: Post) => {
-    const imgResolutions = post.preview?.images.resolutions ?? [];
-    const thumbnailUrl =
-      post.thumbnail && post.thumbnail !== 'default' ? post.thumbnail : undefined;
-    const previewUrl =
-      imgResolutions && imgResolutions.length ? imgResolutions[0].url : undefined;
-    return thumbnailUrl ?? previewUrl ?? 'default_thumbnail.png';
-  };
+  const { title, posts } = props;
 
   return (
     <>
-      <ListTitle>{title}</ListTitle>
+      <h3>{title}</h3>
 
       <Card style={{ textAlign: 'left' }}>
-        {loading && LoadingListView}
         <List
-          itemLayout='horizontal'
           dataSource={posts}
           locale={{ emptyText: `No ${title} to show` }}
           renderItem={(item) => (
@@ -168,18 +179,16 @@ const ListView: React.FC<ListViewProps> = (props) => {
                     alt={item.title}
                   />
                 }
-                title={LinkWithAnalytics(
-                  item.url,
-                  item.title,
-                  'external',
-                  isMobile ? 12 : undefined
-                )}
-                description={LinkWithAnalytics(
-                  item.full_link,
-                  `r/${item.subreddit} · ${item.author} · ${item.score?.toString()} pts`,
-                  'reddit',
-                  isMobile ? 10 : undefined
-                )}
+                title={
+                  <a href={item.url} target='_blank' rel='noopener noreferrer'>
+                    {text}
+                  </a>
+                }
+                description={
+                  <a href={item.full_link} target='_blank' rel='noopener noreferrer'>
+                    {text}
+                  </a>
+                }
               />
             </List.Item>
           )}
@@ -190,6 +199,10 @@ const ListView: React.FC<ListViewProps> = (props) => {
 };
 ```
 
+Notice the title is a link that directs to the `post.url` i.e. the news article, and
+clicking the text below (the author, subreddit and number of points) directs to the
+`full_link` which is the post on Reddit.
+
 ### The layout
 
 I use Ant Design's [Grid](https://ant.design/components/grid/) to layout the content using
@@ -197,8 +210,8 @@ Rows and Cols, which can easily change width with the size of the screen using t
 breakpoints (i.e. 'sm' is when `screen ≥ 576px`, 'md' is `screen ≥ 768px`, etc).
 
 I struggled for a while to decide on how to order the content. I decided to keep the images
-at the top because pictures catch your eye, and I decided that News should be first,
-followed by politics.
+at the top because pictures catch your eye, and I decided that news should be first to
+capture major events, followed by politics.
 
 <RoundedImage
   src='/images/reddit-time-machine/rtm-layout.gif'
@@ -237,7 +250,6 @@ Here's an interesting example from two random days in 2012 and 2016:
   </MdxCol>
 </MdxRow>
 
-r/Futorology is an incredibly optimistic corner of the internet - there are countless
-articles like **"No More Car Crashes by 2020?"**.
+r/Futorology is an optimistic bunch, huh?
 
 Have an other suggestions? Let me know on Github, or feel free to create a PR!
