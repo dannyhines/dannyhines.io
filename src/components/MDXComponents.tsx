@@ -21,7 +21,7 @@ const RoundedImage = (props: ImageProps) => {
   return (
     <NextImage
       alt={props.alt ?? "image"}
-      className="mx-auto mt-8 mb-12 max-w-prose rounded-md"
+      className="mx-auto mt-4 mb-8 max-w-prose rounded-md"
       imgClassName="rounded-md"
       width={props.width ?? "100%"}
       height={props.height ?? "auto"}
@@ -32,14 +32,18 @@ const RoundedImage = (props: ImageProps) => {
 
 const MdxRow = (props: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
+    <div className="w-prose grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
       {props.children}
     </div>
   );
 };
 
 const MdxCol = (props: { children: React.ReactNode }) => {
-  return <div className="!mb-0 flex flex-col space-y-4">{props.children}</div>;
+  return (
+    <div className="!mb-0 flex flex-col space-y-2 sm:space-y-0">
+      {props.children}
+    </div>
+  );
 };
 
 const GrayBox = (props: { children: React.ReactNode }) => {
@@ -52,7 +56,7 @@ const GrayBox = (props: { children: React.ReactNode }) => {
 
 const MDXComponents = {
   a: UnderlineLink,
-  Image: NextImage,
+  Image: RoundedImage,
   RoundedImage,
   HeaderImage,
   pre: Pre,
