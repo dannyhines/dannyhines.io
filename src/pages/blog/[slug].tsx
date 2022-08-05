@@ -15,7 +15,7 @@ import Seo from "@/components/Seo";
 
 import { ProjectType } from "@/types/Post";
 
-export default function ProjectPage({ code, meta }: ProjectType) {
+export default function BlogPage({ code, meta }: ProjectType) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
 
   return (
@@ -23,7 +23,7 @@ export default function ProjectPage({ code, meta }: ProjectType) {
       <Seo
         title={`${meta.title} – Danny Hines`}
         description={meta.description}
-        image={`${meta.title}/header`}
+        image={`https://www.dannyhines.io/images/${meta.slug}/header.png`}
         date={new Date(meta.publishedAt).toISOString()}
         type="article"
       />
