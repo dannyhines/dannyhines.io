@@ -5,6 +5,7 @@ import useLoaded from "@/hooks/useLoaded";
 
 import Layout from "@/components/layout/Layout";
 import PrimaryLink from "@/components/links/PrimaryLink";
+import UnderlineLink from "@/components/links/UnderlineLink";
 import NextImage from "@/components/NextImage";
 import Seo from "@/components/Seo";
 
@@ -68,6 +69,49 @@ export default function About() {
                 width={2621}
                 height={2612}
               />
+            </div>
+
+            <div className="mt-8">
+              <h2>About this site</h2>
+              <p className="mt-4">
+                I built this website using{" "}
+                <UnderlineLink href="https://nextjs.org/">NextJS</UnderlineLink>{" "}
+                and deployed it using{" "}
+                <UnderlineLink href="https://vercel.com">Vercel</UnderlineLink>,
+                the company behind NextJS. It&apos;s my new favorite way to make
+                websites because you can use React with server-side rendering,
+                which is a boost to performance and SEO.
+              </p>
+              <div className="text-center">
+                <NextImage
+                  src="/images/about-vercel.png"
+                  alt="Vercel"
+                  className="mx-auto my-8 max-w-full"
+                  imgClassName="rounded-md"
+                  width={800}
+                  height={419}
+                />
+              </div>
+              <p className="mt-4">
+                Credit to Theodorus Clarence&apos;s{" "}
+                <UnderlineLink href="https://github.com/theodorusclarence/ts-nextjs-tailwind-starter">
+                  Next.js + Tailwind CSS + TypeScript
+                </UnderlineLink>{" "}
+                starter project that let me hit the ground running. It has a
+                handful of components created for you that you&apos;d normally
+                copy-paste from a previous project, like buttons and links. It
+                also comes linting rules pre-configured with{" "}
+                <UnderlineLink href="https://typicode.github.io/husky/#/">
+                  Husky
+                </UnderlineLink>
+                , and an {`<Seo />`} component that can simplify the tags for
+                different pages.
+              </p>
+              <p className="mt-4">
+                I was reluctant to use a template for my personal website, but
+                it removed the need for so much boilerplate code that I
+                couldn&apos;t pass it up.
+              </p>
             </div>
           </div>
         </section>
