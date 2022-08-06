@@ -31,43 +31,39 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
       <main>
         <section
           className={clsx(
-            "min-h-main mt-20 mb-20 flex flex-col",
+            "min-h-main mt-4 mb-20 flex flex-col",
             isLoaded && "fade-in-start"
           )}
         >
           <div className="layout flex flex-col items-center justify-center text-center md:items-start md:text-left">
             <div className="flex flex-col-reverse items-center justify-center gap-4 sm:flex-row">
-              <div className="w-full sm:w-3/4">
-                <h1 className="" data-fade="1">
+              <div className="mt-0 w-full sm:mt-12 sm:w-3/4">
+                <h1 className="text-4xl sm:text-5xl" data-fade="1">
                   Danny Hines
                 </h1>
                 <p
                   className="my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg"
                   data-fade="2"
                 >
-                  I&apos;m a fullstack engineer with experience building
-                  fullstack web and mobile apps. My expertise is in
-                  React/NextJS, iOS development with SwiftUI, and I can
-                  provision just about anything with AWS (if I&apos;m allowed to
-                  Google stuff). I also love building and learning new things,
-                  so I made this site to keep track of what I&apos;ve learned
-                  and teach others about software.
+                  I&apos;m a software engineer at{" "}
+                  <UnderlineLink href="https://www.capitalone.com/">
+                    Capital One
+                  </UnderlineLink>{" "}
+                  with experience building web and mobile applications, mostly
+                  with React/NextJS and iOS.
                   <br />
-                  <br />
-                  This site uses NextJS and is deployed using{" "}
-                  <UnderlineLink href="https://vercel.com">
-                    Vercel
-                  </UnderlineLink>
-                  , with TailwindCSS for styling.
+                  <br />I built this site to keep track of what I&apos;ve
+                  learned and teach others about software. It uses NextJS,
+                  TailwindCSS and is deployed with Vercel.
                   <br />
                   <ArrowLink
                     href="https://github.com/danielchines/dannyhines.io"
-                    className="mt-4"
+                    className="mt-2"
                   >
                     View it on Github
                   </ArrowLink>
                 </p>
-                <div className="flex gap-3">
+                <div className="flex justify-center gap-3 sm:justify-start">
                   <ButtonLink
                     className="mt-6"
                     href="/blog"
@@ -89,7 +85,7 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
               <NextImage
                 src="/images/me-transparent.png"
                 alt="Me"
-                className="max-w-2/3 w-2/3 p-8 sm:w-1/4 sm:p-0"
+                className="w-2/3 max-w-[300px] p-4 sm:w-1/4 sm:p-0"
                 data-fade="3"
                 width={1795}
                 height={2032}

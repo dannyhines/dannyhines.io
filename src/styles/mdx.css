@@ -58,11 +58,11 @@
   margin-right: 0.5rem;
   width: -moz-fit-content;
   width: fit-content;
-  @apply mt-4 mb-2 md:mt-8 md:mb-4;
+  @apply my-4 md:mt-8 md:mb-4;
 }
 
 .prose p {
-  @apply mb-8;
+  @apply my-4;
 }
 
 .prose > :first-child {
