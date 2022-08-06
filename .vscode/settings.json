@@ -10,7 +10,7 @@
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "files.associations": {
-    "*.mdx": "markdown",
+    "*.mdx": "mdx",
   },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
@@ -61,7 +61,9 @@
   "memeeconomy",
   "mkdir",
   "moneyline",
+  "msapplication",
   "nextjs",
+  "photoshopped",
   "pushshift",
   "semibold",
   "sportsbooks",

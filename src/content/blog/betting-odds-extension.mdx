@@ -88,7 +88,7 @@ There are three main ways to frame odds:
   itself.
 - **Moneyline/American**:
   - Positive: How much money will be won on a $100 wager.
-  - Nevative: How much money must be wagered to win $100.
+  - Negative: How much money must be wagered to win $100.
 
 <GrayBox>
   **For example**: <br />
@@ -151,7 +151,7 @@ function replaceAllText(active) {
 
 Specifically, `textNodeInnerHTML()` is either creating a new div to add to the page, or
 removing the already-added div if they're toggling off the 'active' state. That regex is
-basically searching for American odds if it's `active`, otheriwse it's looking for the
+basically searching for American odds if it's `active`, otherwise it's looking for the
 inserted probabilities like "(55%)".
 
 ```js

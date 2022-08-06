@@ -132,14 +132,14 @@ on their own cards, and the News/Predictions/Politics look better as a list on a
 
 ### Dealing with images
 
-Because of the age and scope of Reddit posts, dealing with images is a bit of a nuissance.
+Because of the age and scope of Reddit posts, dealing with images is a bit of a nuisance.
 Every post can have a `thumbnail` and a `preview` object, which has a nested object `images`
 that has an array of `resolutions` in increasing size. Posts that are just photos also
-include the image in the main url with a sepearate field for indicating the imamge source
-(Reddit, imgur, etc).
+include the image in the main url with a separate field indicating the image source (Reddit,
+imgur, etc).
 
 To add to the fun, sometimes the `post.thumbnail` is "default", so if you check if the
-thumnail exists, you'll be looking for an image named "default" which throws an error.
+thumbnail exists, you'll be looking for an image named "default" which throws an error.
 That's what led to gross functions like this for trying to get a valid image url:
 
 ```tsx
