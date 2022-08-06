@@ -3,25 +3,13 @@ import { ImageProps } from "next/image";
 import CustomCode, { Pre } from "@/components/Code";
 import UnderlineLink from "@/components/links/UnderlineLink";
 import NextImage from "@/components/NextImage";
+import { RoundedImage } from "@/components/RoundedImage";
 
 const HeaderImage = (props: ImageProps) => {
   return (
     <NextImage
       alt={props.alt ?? "header image"}
       className={`w-full max-w-full rounded-md ${props.className ?? ""}`}
-      imgClassName="rounded-md"
-      width={props.width ?? "100%"}
-      height={props.height ?? "auto"}
-      {...props}
-    />
-  );
-};
-
-const RoundedImage = (props: ImageProps) => {
-  return (
-    <NextImage
-      alt={props.alt ?? "image"}
-      className="mx-auto mt-4 mb-8 max-w-prose rounded-md"
       imgClassName="rounded-md"
       width={props.width ?? "100%"}
       height={props.height ?? "auto"}
@@ -57,7 +45,6 @@ const GrayBox = (props: { children: React.ReactNode }) => {
 const MDXComponents = {
   a: UnderlineLink,
   Image: RoundedImage,
-  RoundedImage,
   HeaderImage,
   pre: Pre,
   code: CustomCode,

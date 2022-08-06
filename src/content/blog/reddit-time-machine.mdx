@@ -207,13 +207,13 @@ clicking the text below (the author, subreddit and number of points) directs to 
 
 I use Ant Design's [Grid](https://ant.design/components/grid/) to layout the content using
 Rows and Cols, which can easily change width with the size of the screen using the
-breakpoints (i.e. 'sm' is when `screen ≥ 576px`, 'md' is `screen ≥ 768px`, etc).
+breakpoints (i.e. 'sm' is when **screen ≥ 576px**, 'md' is **screen ≥ 768px**, etc).
 
 I struggled for a while to decide on how to order the content. I decided to keep the images
 at the top because pictures catch your eye, and I decided that news should be first to
 capture major events, followed by politics.
 
-<RoundedImage
+<Image
   src='/images/reddit-time-machine/rtm-layout.gif'
   alt='dynamic layout'
   width={640}
@@ -233,7 +233,7 @@ Here's an interesting example from two random days in 2012 and 2016:
 
 <MdxRow>
   <MdxCol>
-    <RoundedImage
+    <Image
       src='/images/reddit-time-machine/predictions1.png'
       alt='predictions from 2012'
       width={433}
@@ -241,7 +241,7 @@ Here's an interesting example from two random days in 2012 and 2016:
     />
   </MdxCol>
   <MdxCol>
-    <RoundedImage
+    <Image
       src='/images/reddit-time-machine/predictions2.png'
       alt='predictions from 2016'
       width={436}
