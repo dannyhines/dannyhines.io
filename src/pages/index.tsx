@@ -64,18 +64,13 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                   </ArrowLink>
                 </p>
                 <div className="flex justify-center gap-3 sm:justify-start">
-                  <ButtonLink
-                    className="mt-6"
-                    href="/blog"
-                    variant="primary"
-                    data-fade="5"
-                  >
+                  <ButtonLink className="mt-6" href="/blog" data-fade="5">
                     Check out the blog
                   </ButtonLink>
                   <ButtonLink
                     className="mt-6"
                     href="/about"
-                    variant="light"
+                    variant="outline"
                     data-fade="5"
                   >
                     About me
