@@ -38,9 +38,9 @@ export default function Header() {
         !onTop && "shadow-sm"
       )}
     >
-      <div className="layout md:h-18 flex h-14 items-center justify-between">
+      <div className="layout flex h-14 items-center justify-between md:h-16">
         <nav>
-          <ul className="flex items-start justify-between space-x-10">
+          <ul className="flex items-start justify-between space-x-6 sm:space-x-10">
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
