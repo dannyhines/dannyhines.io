@@ -44,7 +44,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
           src={`/images/${headerImg}`}
           alt={project.title}
           width={600}
-          height={400}
+          height={360}
         />
         <h4 className='mt-3 mb-2'>{project.title}</h4>
         <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>

@@ -31,7 +31,7 @@ export default function SnippetsPage({
             were worth sharing.
           </p>
 
-          <ul data-fade='3' className='mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-3'>
+          <ul data-fade='3' className='mt-6 grid gap-4 sm:grid-cols-2 '>
             {snippets.map((snippet: SnippetContent) => (
               <SnippetCard key={snippet.slug} snippet={snippet} />
             ))}
