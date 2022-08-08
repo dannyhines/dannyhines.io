@@ -104,7 +104,7 @@ export default function About() {
                 <UnderlineLink href="https://typicode.github.io/husky/#/">
                   Husky
                 </UnderlineLink>
-                , and an {`<Seo />`} component that can simplify the tags for
+                , and an {"<Seo />"} component that can simplify the tags for
                 different pages.
               </p>
               <p className="mt-4">
