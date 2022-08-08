@@ -13,7 +13,12 @@ require('dotenv').config();
 import { RestClient } from 'ftx-api';
 import { RestClientOptions } from 'ftx-api/lib/util/requestUtils';
 import { BUY_PERCENT, QUOTE, TRAILING_STOP_PERCENT } from './config';
-import { FTXBalancesResponse, FTXMarket, FTXMarketResponse, FTXMarketsResponse } from './types';
+import {
+  FTXBalancesResponse,
+  FTXMarket,
+  FTXMarketResponse,
+  FTXMarketsResponse,
+} from './types';
 const { FTX_API_KEY, FTX_API_SECRET } = process.env;
 
 const restClientOptions: RestClientOptions = {
@@ -33,7 +38,11 @@ const getMarket = async (symbol: string) => {
 // GET USD BALANCE for account
 const getUsdBalance = async () => {
   const resp: FTXBalancesResponse = await ftxClient.getBalances();
-  if (resp.success && resp.result.length && resp.result.findIndex((x) => x.coin === QUOTE) !== -1) {
+  if (
+    resp.success &&
+    resp.result.length &&
+    resp.result.findIndex((x) => x.coin === QUOTE) !== -1
+  ) {
     const match = resp.result.find((x) => x.coin === QUOTE);
     return match ? match.free : 0;
   } else {

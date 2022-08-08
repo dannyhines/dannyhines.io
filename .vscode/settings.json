@@ -10,7 +10,7 @@
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "files.associations": {
-    "*.mdx": "mdx",
+    "*.mdx": "mdx"
   },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
@@ -26,53 +26,53 @@
   },
   "prettier.singleQuote": true,
   "prettier.printWidth": 92,
-  "cSpell.enableFiletypes": [
-    "*"
+  "cSpell.enableFiletypes": ["*"],
+  "cSpell.overrides": [
+    {
+      "filename": "src/**/{*.mdx}",
+      "languageId": "markdown"
+    }
   ],
-  "cSpell.overrides": [{
-    "filename": "src/**/{*.mdx}",
-    "languageId": "markdown"
-  },],
-"cSpell.ignorePaths": [
-  "package-lock.json",
-  "node_modules",
-  "vscode-extension",
-  ".git/objects",
-  ".vscode",
-  ".vscode-insiders",
-  "public"
-],
-"cSpell.words": [
-  "adviceanimals",
-  "bucketdeployment",
-  "certificatemanager",
-  "clsx",
-  "clsxm",
-  "copypastas",
-  "dankmemes",
-  "dotenv",
-  "draftkings",
-  "endregion",
-  "futorology",
-  "giphy-embed",
-  "hardcoding",
-  "Hinesight",
-  "howmanyblimpsarethere",
-  "influencers",
-  "memeeconomy",
-  "mkdir",
-  "moneyline",
-  "msapplication",
-  "nextjs",
-  "photoshopped",
-  "pushshift",
-  "semibold",
-  "sportsbooks",
-  "subreddits",
-  "tailwindcss",
-  "typeof",
-  "unstyled",
-  "upvoted"
-],
-"mdx-preview.preview.useVscodeMarkdownStyles": false
+  "cSpell.ignorePaths": [
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/objects",
+    ".vscode",
+    ".vscode-insiders",
+    "public"
+  ],
+  "cSpell.words": [
+    "adviceanimals",
+    "bucketdeployment",
+    "certificatemanager",
+    "clsx",
+    "clsxm",
+    "copypastas",
+    "dankmemes",
+    "dotenv",
+    "draftkings",
+    "endregion",
+    "futorology",
+    "giphy-embed",
+    "hardcoding",
+    "Hinesight",
+    "howmanyblimpsarethere",
+    "influencers",
+    "memeeconomy",
+    "mkdir",
+    "moneyline",
+    "msapplication",
+    "nextjs",
+    "photoshopped",
+    "pushshift",
+    "semibold",
+    "sportsbooks",
+    "subreddits",
+    "tailwindcss",
+    "typeof",
+    "unstyled",
+    "upvoted"
+  ],
+  "mdx-preview.preview.useVscodeMarkdownStyles": false
 }

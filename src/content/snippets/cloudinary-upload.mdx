@@ -37,12 +37,15 @@ while (true) {
   // if the last action was to create a new directory then we know the chosen
   // directory is new and has no folders otherwise we have to wait a few seconds
   // for the API to be prepared for us to make a request for the contents.
-  const directories = lastSelection === actions.CREATE_NEW ? [] : await getFolders(chosenDirectory);
+  const directories =
+    lastSelection === actions.CREATE_NEW ? [] : await getFolders(chosenDirectory);
   lastSelection = await arg(
     `Select directory in ${chosenDirectory}`,
     [
       { name: '.', value: '.', description: '✅ Choose this directory' },
-      !chosenDirectory ? null : { name: '..', value: '..', description: '⤴️ Go up a directory' },
+      !chosenDirectory
+        ? null
+        : { name: '..', value: '..', description: '⤴️ Go up a directory' },
       ...directories.map((folder) => ({
         name: folder.name,
         value: folder.path,

@@ -1,4 +1,4 @@
-import { ReadTimeResults } from "reading-time";
+import { ReadTimeResults } from 'reading-time';
 
 export type BlogContent = {
   wordCount: number;
@@ -12,11 +12,11 @@ export type BlogContent = {
   tags: string;
 };
 
-export type ContentType = "blog" | "snippets" | "projects";
+export type ContentType = 'blog' | 'snippets' | 'projects';
 
-export type PickContent<T extends ContentType> = T extends "blog"
+export type PickContent<T extends ContentType> = T extends 'blog'
   ? BlogContent
-  : T extends "snippets"
+  : T extends 'snippets'
   ? SnippetContent
   : ProjectContent;
 

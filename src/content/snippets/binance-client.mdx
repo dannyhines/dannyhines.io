@@ -47,11 +47,15 @@ export const getAvailableSymbols = async (quote) => {
 
 export function getPriceAtTime(symbol, timestamp, callback) {
   const ts = new Date(timestamp).valueOf();
-  binance.aggTrades(symbol + QUOTE, { startTime: ts, endTime: ts + 10000 }, (error, response) => {
-    if (response.length) {
-      callback(response.length ? parseFloat(response[0].p) : undefined);
+  binance.aggTrades(
+    symbol + QUOTE,
+    { startTime: ts, endTime: ts + 10000 },
+    (error, response) => {
+      if (response.length) {
+        callback(response.length ? parseFloat(response[0].p) : undefined);
+      }
     }
-  });
+  );
 }
 
 // For backtesting
@@ -76,7 +80,10 @@ function getMinMaxes(symbol, buyTimestamp, cb) {
       console.log('1h', min1h, max1h);
       cb(min5m, max5m, min1h, max1h);
     },
-    { startTime: startDate.valueOf(), limit: startDate.getSeconds() > 45 ? 60 : 61 }
+    {
+      startTime: startDate.valueOf(),
+      limit: startDate.getSeconds() > 45 ? 60 : 61,
+    }
   );
 }
 
@@ -113,7 +120,8 @@ export const buySymbol = async (symbol) => {
   const buyOrderId = bResponse.orderId;
   const buyTime = new Date(bResponse.transactTime).toISOString();
   const filledOrder = bResponse.fills[0];
-  const fee = parseFloat(filledOrder.commission) * global.prices[filledOrder.commissionAsset];
+  const fee =
+    parseFloat(filledOrder.commission) * global.prices[filledOrder.commissionAsset];
   const price = parseFloat(filledOrder.price);
   console.log(`Bought ${qty} ${symbol} at $${price}`);
   return { price, qty };

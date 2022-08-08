@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function useOnTop() {
   const [onTop, setOnTop] = React.useState<boolean>(true);
@@ -6,9 +6,9 @@ export default function useOnTop() {
     const handleScroll = () => {
       setOnTop(window.pageYOffset === 0);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 

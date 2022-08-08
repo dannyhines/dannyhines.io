@@ -30,11 +30,11 @@
 @layer base {
   /* inter var - latin */
   @font-face {
-    font-family: "Inter";
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 100 900;
     font-display: optional;
-    src: url("/fonts/inter-var-latin.woff2") format("woff2");
+    src: url('/fonts/inter-var-latin.woff2') format('woff2');
   }
 
   #__next {
@@ -113,11 +113,7 @@
 @layer utilities {
   .animated-underline {
     background-image: linear-gradient(#33333300, #33333300),
-      linear-gradient(
-        to right,
-        var(--color-primary-600),
-        var(--color-primary-500)
-      );
+      linear-gradient(to right, var(--color-primary-600), var(--color-primary-500));
     background-size: 100% 2px, 0 2px;
     background-position: 100% 100%, 0 100%;
     background-repeat: no-repeat;
@@ -151,28 +147,28 @@
 .fade-in-start [data-fade] {
   @apply translate-y-0 opacity-100;
 }
-.fade-in-start [data-fade="1"] {
+.fade-in-start [data-fade='1'] {
   transition-delay: 100ms;
 }
-.fade-in-start [data-fade="2"] {
+.fade-in-start [data-fade='2'] {
   transition-delay: 200ms;
 }
-.fade-in-start [data-fade="3"] {
+.fade-in-start [data-fade='3'] {
   transition-delay: 300ms;
 }
-.fade-in-start [data-fade="4"] {
+.fade-in-start [data-fade='4'] {
   transition-delay: 400ms;
 }
-.fade-in-start [data-fade="5"] {
+.fade-in-start [data-fade='5'] {
   transition-delay: 500ms;
 }
-.fade-in-start [data-fade="6"] {
+.fade-in-start [data-fade='6'] {
   transition-delay: 600ms;
 }
-.fade-in-start [data-fade="7"] {
+.fade-in-start [data-fade='7'] {
   transition-delay: 700ms;
 }
-.fade-in-start [data-fade="8"] {
+.fade-in-start [data-fade='8'] {
   transition-delay: 800ms;
 }
 /* #endregion  /**======== Fade In =========== */

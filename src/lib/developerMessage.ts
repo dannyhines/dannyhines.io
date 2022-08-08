@@ -3,18 +3,18 @@
 
 export default function developerMessage() {
   console.log(
-    "%c __    __   _______  __       __        ______      ___________  __    __   _______  ______      _______ \n" +
-      "%c|  |  |  | |   ____||  |     |  |      /  __   \\   |           ||  |  |  | |   ____||   _   \\   |   ____|\n" +
+    '%c __    __   _______  __       __        ______      ___________  __    __   _______  ______      _______ \n' +
+      '%c|  |  |  | |   ____||  |     |  |      /  __   \\   |           ||  |  |  | |   ____||   _   \\   |   ____|\n' +
       "%c|  |__|  | |  |__   |  |     |  |     |  |  |  |   `---|  |----'|  |__|  | |  |__   |  |_)  |   |  |__\n" +
-      "%c|   __   | |   __|  |  |     |  |     |  |  |  |       |  |     |   __   | |   __|  |      /    |   __|\n" +
+      '%c|   __   | |   __|  |  |     |  |     |  |  |  |       |  |     |   __   | |   __|  |      /    |   __|\n' +
       "%c|  |  |  | |  |____ |  `----.|  `----.|  `--'  |       |  |     |  |  |  | |  |____ |  |  \\---.||  |____\n" +
-      "%c|__|  |__| |_______||_______||_______| \\______/        |__|     |__|  |__| |_______|| _| `.____||_______|\n\n",
-    "color: rgb(167, 139, 250);",
-    "color: rgb(167, 139, 250);",
-    "color: rgb(139, 92, 246);",
-    "color: rgb(124, 58, 237);",
-    "color: rgb(109, 40, 217);",
-    "color: rgb(109, 40, 217);"
+      '%c|__|  |__| |_______||_______||_______| \\______/        |__|     |__|  |__| |_______|| _| `.____||_______|\n\n',
+    'color: rgb(167, 139, 250);',
+    'color: rgb(167, 139, 250);',
+    'color: rgb(139, 92, 246);',
+    'color: rgb(124, 58, 237);',
+    'color: rgb(109, 40, 217);',
+    'color: rgb(109, 40, 217);'
   );
 
   const msgs = [
@@ -46,7 +46,7 @@ export default function developerMessage() {
   const index = Math.floor(Math.random() * 4);
   console.log(
     `%c\n${msgs[index]}\n\n`,
-    "font-family: Inter, sans-serif; font-size: 1.2rem; font-weight: 500; display: inline-block; border: 1px dashed;"
+    'font-family: Inter, sans-serif; font-size: 1.2rem; font-weight: 500; display: inline-block; border: 1px dashed;'
   );
   // console.log(
   //   "%cBut seriously here's the repo if you're curious: " +

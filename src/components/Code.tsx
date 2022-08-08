@@ -50,11 +50,7 @@ export default function Code(props: React.ComponentPropsWithRef<'code'>) {
           }}
         >
           <button className='absolute top-2 right-2 hidden rounded border border-gray-600 p-2 text-lg transition-colors hover:bg-gray-700 md:block'>
-            {isCopied ? (
-              <HiCheckCircle className='text-green-400' />
-            ) : (
-              <HiClipboard />
-            )}
+            {isCopied ? <HiCheckCircle className='text-green-400' /> : <HiClipboard />}
           </button>
         </CopyToClipboard>
       )}
