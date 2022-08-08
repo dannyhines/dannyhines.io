@@ -1,56 +1,76 @@
-import clsx from "clsx";
-import * as React from "react";
+import clsx from 'clsx';
+import * as React from 'react';
+import { HiOutlineExternalLink } from 'react-icons/hi';
+import { SiGithub } from 'react-icons/si';
 
-import UnstyledLink from "@/components/links/UnstyledLink";
-import NextImage from "@/components/NextImage";
+import useLoaded from '@/hooks/useLoaded';
 
-// import TechIcons, { TechListType } from '@/components/TechIcons';
-import { ProjectContent } from "@/types/Post";
+import UnstyledLink from '@/components/links/UnstyledLink';
+import NextImage from '@/components/NextImage';
+
+import { ProjectContent } from '@/types/Post';
 
 type ProjectCardProps = {
   project: ProjectContent;
-} & React.ComponentPropsWithoutRef<"li">;
+} & React.ComponentPropsWithoutRef<'li'>;
 
 export default function ProjectCard({ project, className }: ProjectCardProps) {
+  const isLoaded = useLoaded();
+  if (!isLoaded) {
+    return null;
+  }
+  const { blog, github, link, headerImg } = project;
   return (
     <li
       className={clsx(
-        "rounded-md md:w-full",
-        "border dark:border-gray-600",
-        "scale-100 hover:scale-[1.02] active:scale-[0.97] motion-safe:transform-gpu",
-        "transition duration-100",
-        "motion-reduce:hover:scale-100",
-        "animate-shadow",
+        'project-card rounded-lg md:w-full',
+        'bg-white dark:bg-transparent',
+        'border dark:border-gray-700 ',
+        'scale-100 hover:scale-[1.02] active:scale-[0.97] motion-safe:transform-gpu',
+        'transition duration-100',
+        'motion-reduce:hover:scale-100',
+        'animate-shadow',
         className
       )}
     >
       <UnstyledLink
-        href={`/blog/${project.blog}`}
-        className="flex h-full flex-col items-start rounded-md p-4 focus:outline-none focus-visible:ring focus-visible:ring-primary-300"
+        href={blog ? `/blog/${blog}` : github ?? link ?? ''}
+        className='flex flex-col items-start rounded-md p-4 text-left focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
       >
-        <h4 className="my-2">{project.title}</h4>
-        <p className="mb-auto text-sm text-gray-700 dark:text-gray-300">
+        <NextImage
+          layout='intrinsic'
+          className='pointer-events-none w-full'
+          imgClassName='rounded-lg'
+          src={`/images/${headerImg}`}
+          alt={project.title}
+          width={600}
+          height={400}
+        />
+        <h4 className='mt-3 mb-2'>{project.title}</h4>
+        <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
           {project.description}
         </p>
-        {/* <div className='mt-2'>
-          <TechIcons techs={project.techs.split(',') as Array<TechListType>} />
-        </div> */}
-
-        <NextImage
-          layout="intrinsic"
-          className="pointer-events-none mt-3 w-full"
-          imgClassName="rounded-md"
-          src={`/images/${project.headerImg}`}
-          alt={project.title}
-          width={300}
-          height={200}
-          // preview={false}
-        />
-
-        <p className="animated-underline mt-2 inline-block font-medium">
-          See more →
-        </p>
+        <div className='mt-2 flex w-full max-w-sm justify-start space-x-4 align-middle'>
+          {project.blog && (
+            <p className='animated-underline mt-2 inline-block font-semibold'>
+              Blog post →
+            </p>
+          )}
+        </div>
       </UnstyledLink>
+      <div className='absolute bottom-4 right-5 flex gap-4'>
+        {isLoaded && project.github && (
+          <UnstyledLink href={project.github}>
+            <SiGithub className='mt-2 text-2xl text-primary-600 hover:scale-125 dark:text-primary-500' />
+          </UnstyledLink>
+        )}
+
+        {isLoaded && project.link && (
+          <UnstyledLink href={`${project.link}`}>
+            <HiOutlineExternalLink className='mt-1 text-3xl text-primary-600 hover:scale-125 dark:text-primary-500' />
+          </UnstyledLink>
+        )}
+      </div>
     </li>
   );
 }
