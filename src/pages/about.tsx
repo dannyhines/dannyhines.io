@@ -63,7 +63,7 @@ export default function About() {
               />
             </div>
 
-            <div className='mt-8'>
+            <div className='mt-10' data-fade='4'>
               <h2>About this site</h2>
               <p className='mt-4'>
                 I built this website using{' '}
@@ -80,8 +80,8 @@ export default function About() {
                   alt='Vercel'
                   className='mx-auto my-8 max-w-full'
                   imgClassName='rounded-md'
-                  width={800}
-                  height={419}
+                  width={500}
+                  height={262}
                 />
               </div>
               <p className='mt-4'>
@@ -89,10 +89,10 @@ export default function About() {
                 <UnderlineLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
                   Next.js + Tailwind CSS + TypeScript
                 </UnderlineLink>{' '}
-                starter project that let me hit the ground running. It has a handful of
-                components created for you that you&apos;d normally copy-paste from a
-                previous project, like buttons and links. It also comes linting rules
-                pre-configured with{' '}
+                starter project that let me hit the ground running. It comes with features
+                and components that you&apos;d normally copy-paste from a previous project,
+                like settings up TailwindCSS and a customizable Link component. It also
+                comes linting rules pre-configured with{' '}
                 <UnderlineLink href='https://typicode.github.io/husky/#/'>
                   Husky
                 </UnderlineLink>
