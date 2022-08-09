@@ -27,12 +27,12 @@ const MdxRow = (props: { children: React.ReactNode }) => {
 };
 
 const MdxCol = (props: { children: React.ReactNode }) => {
-  return <div className='!mb-0 flex flex-col space-y-2 sm:space-y-0'>{props.children}</div>;
+  return <div className='!mb-0 flex flex-col space-y-1 sm:space-y-0'>{props.children}</div>;
 };
 
 const GrayBox = (props: { children: React.ReactNode }) => {
   return (
-    <div className='mx-1 my-8 rounded-lg border border-gray-300 bg-gray-200 px-4 py-0 text-sm dark:border-gray-600 dark:bg-gray-700 md:mx-auto md:w-11/12'>
+    <div className='mx-1 my-8 rounded-lg border border-gray-300 bg-gray-200 px-4 py-0 text-sm dark:border-gray-600 dark:bg-gray-800 md:mx-auto md:w-11/12'>
       {props.children}
     </div>
   );
