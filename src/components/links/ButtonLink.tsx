@@ -25,8 +25,10 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         className={clsxm(
           'inline-flex items-center rounded px-4 py-2 font-semibold',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
+          'scale-100 hover:scale-[1.03] active:scale-[0.97] motion-safe:transform-gpu',
           'shadow-sm',
           'transition-colors duration-75',
+          'transition duration-75',
           //#region  //*=========== Variants ===========
           [
             variant === 'primary' && [
@@ -47,17 +49,6 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
               'shadow-none',
               'hover:bg-primary-50 active:bg-primary-100 disabled:bg-primary-100',
               'dark:hover:bg-gray-900 dark:active:bg-gray-800 dark:disabled:bg-gray-800',
-            ],
-            variant === 'light' && [
-              'bg-white text-dark ',
-              'border border-gray-300',
-              'hover:bg-gray-100 hover:text-dark',
-              'active:bg-white/80 disabled:bg-gray-200',
-            ],
-            variant === 'dark' && [
-              'bg-gray-900 text-white',
-              'border border-gray-600',
-              'hover:bg-gray-800 active:bg-gray-700 disabled:bg-gray-700',
             ],
           ],
           //#endregion  //*======== Variants ===========

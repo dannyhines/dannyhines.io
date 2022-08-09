@@ -7,7 +7,7 @@ import '@/styles/dracula.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute='class' defaultTheme='system'>
+    <ThemeProvider attribute='class' defaultTheme='dark'>
       <Component {...pageProps} />
     </ThemeProvider>
   );
