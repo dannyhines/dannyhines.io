@@ -39,7 +39,7 @@ export default function BlogCard({ blog, className }: BlogCardProps) {
             height={200}
           />
         </div>
-        <div className='ml-4 flex flex-col items-start justify-start p-4'>
+        <div className='flex flex-col items-start justify-start p-4 sm:ml-6 sm:p-0'>
           <h4 className='mb-2'>{blog.title}</h4>
           <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
             {blog.description}
