@@ -92,7 +92,7 @@ export default function About() {
                 starter project that let me hit the ground running. It comes with features
                 and components that you&apos;d normally copy-paste from a previous project,
                 like settings up TailwindCSS and a customizable Link component. It also
-                comes linting rules pre-configured with{' '}
+                comes with linting rules pre-configured with{' '}
                 <UnderlineLink href='https://typicode.github.io/husky/#/'>
                   Husky
                 </UnderlineLink>
