@@ -9,9 +9,9 @@
     "source.fixAll": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "files.associations": {
-    "*.mdx": "mdx"
-  },
+  // "files.associations": {
+  //   "*.mdx": "mdx"
+  // },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
     "**/node_modules": true,
