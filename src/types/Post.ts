@@ -10,6 +10,7 @@ export type BlogContent = {
   publishedAt: string;
   lastUpdated?: string;
   tags: string;
+  category?: string;
 };
 
 export type ContentType = 'blog' | 'snippets' | 'projects';
@@ -46,7 +47,6 @@ export type ProjectContent = {
   publishedAt: string;
   lastUpdated?: string;
   description: string;
-  category?: string;
   techs: string;
   headerImg: string;
   link?: string;
