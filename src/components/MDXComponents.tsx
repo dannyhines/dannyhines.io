@@ -32,7 +32,7 @@ const MdxCol = (props: { children: React.ReactNode }) => {
 
 const GrayBox = (props: { children: React.ReactNode }) => {
   return (
-    <div className='mx-1 my-6 rounded-lg border border-gray-300 bg-gray-200 px-4 py-0 text-sm dark:border-gray-600 dark:bg-gray-800 md:mx-auto md:w-11/12'>
+    <div className='mx-1 my-6 rounded-lg border border-gray-300 bg-gray-200 px-4 py-0 text-sm dark:border-gray-700 dark:bg-gray-600/25 md:mx-auto md:w-11/12'>
       {props.children}
     </div>
   );
