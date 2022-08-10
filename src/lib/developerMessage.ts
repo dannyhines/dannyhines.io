@@ -21,7 +21,7 @@ export default function developerMessage() {
     `    Hi, I am a Yugoslavian virus but because of poor technology in my country unfortunately 
     I am not able to harm your computer. Please be so kind to delete one of your important files 
     yourself and then forward me to other users. Many thanks for your cooperation! 
-     Best regards, \n    Yugoslavian virus`,
+     Best regards, \n     Yugoslavian virus`,
     `    Did you ever hear the tragedy of Darth Plagueis "the wise"? I thought not. It's not a story
     the Jedi would tell you. It's a Sith legend. Darth Plagueis was a Dark Lord of the Sith, so 
     powerful and so wise he could use the Force to influence the midichlorians to create life... 
@@ -46,7 +46,7 @@ export default function developerMessage() {
   const index = Math.floor(Math.random() * 4);
   console.log(
     `%c\n${msgs[index]}\n\n`,
-    'font-family: Inter, sans-serif; font-size: 1.2rem; font-weight: 500; display: inline-block; border: 1px dashed;'
+    'font-family: Inter, sans-serif; font-size: 15px; font-weight: 500; display:'
   );
   // console.log(
   //   "%cBut seriously here's the repo if you're curious: " +
