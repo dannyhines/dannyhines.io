@@ -17,6 +17,12 @@ class MyDocument extends Document {
             type='font/woff2'
             crossOrigin='anonymous'
           />
+          <script
+            async
+            defer
+            data-website-id='a7fdaa82-ac99-4cac-9bab-5e86ea90add8'
+            src='https://dannyhines-io-analytics.vercel.app/umami.js'
+          ></script>
         </Head>
         <body className='bg-white dark:bg-dark dark:text-white'>
           <Main />
