@@ -45,6 +45,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
           alt={project.title}
           width={600}
           height={360}
+          sizes='40vw'
         />
         <h4 className='mt-2 mb-2'>{project.title}</h4>
         <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>

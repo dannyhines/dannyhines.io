@@ -90,12 +90,10 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                 alt='Me'
                 className='w-2/3 max-w-[300px] p-4 sm:w-1/4 sm:p-0'
                 data-fade='3'
-                width={1795}
-                height={2032}
+                width={1795 / 3}
+                height={2032 / 3}
               />
             </div>
-            <hr />
-
             <div className='mt-24 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />
             </div>
