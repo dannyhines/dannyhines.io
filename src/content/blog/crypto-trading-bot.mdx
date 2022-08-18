@@ -30,15 +30,14 @@ revenue, no cash flows, and there ever-present threat of the
 But that doesn't mean that you can't profit off of it. And even if I'm unsuccessful, trading
 crypto still sounds like a fun way to lose money.
 
-Because it's ‘wild wild west', crypto is crazy volatile. Because there's no company to
-analyze or a market to compare it to, the market is dominated by hype and FOMO. In general,
-those who have made the most on crypto are those who bought early, ~~because it's basically
-a ponzi scheme~~ and the price of a crypto token goes up as word spreads across the
-internet.
+Crypto is the Wild Wild West of the finance industry. Because there's no company to analyze
+or a market to compare it to, the market is dominated by hype and FOMO. In general, those
+who have made the most on crypto are those who bought early, ~~because it's basically a
+ponzi scheme~~ and the price of a crypto token goes up as word spreads across the internet.
 
-The economist and _father of value investing_ Ben Graham said, "In the short run, the market
-is a voting machine but in the long run it is a weighing machine.” Recently, it feels like
-markets have voted for Elon Musk.
+The _father of value investing_ Ben Graham once said, "In the short run the market is a
+voting machine, but in the long run it is a weighing machine.” It's probably too early to
+tell the weight of crypto, but I know the markets have voted for Elon Musk.
 
 <Image
   src='/images/crypto-trading-bot/elon-tweet.png'
@@ -51,9 +50,9 @@ Elon tweeted that you will be able to buy Tesla merch with Dogecoin and the pric
 30%. That's what I'm talking about.
 
 I don't care as much about the big bois BTC and ETH, because bitcoin is mentioned all the
-time, and its market cap is so large that any news story will be lost in the tsunami of
-bitcoin-related tweets. So I'm going to look for influencers tweeting about altcoins, and
-see if I can buy before crypto twitter does.
+time, and its market cap is so large that any news story will be a small blip compared to
+the tsunami of bitcoin-related tweets. So I'm going to look for influencers tweeting about
+altcoins, and see if I can buy before crypto twitter does.
 
 ## Twitter has a free API, right?
 
@@ -92,7 +91,8 @@ live. By opening a stream, we can listen for certain keywords and/or from certai
 Without paying $100/month, we can fetch 2M tweets/month and 25 query strings, each with a
 max 512 characters. The queries look like advanced google searches, using quotes to match
 exact text and finding tweets from a certain user with `from:username`. I would run out of
-query space if I wanted to search for every
+query space if I wanted to search for every keyword, so my query is a big list of usernames,
+so I get all the influencers' tweets and check whether a keyword is mentioned on my server.
 
 ## Matching tweets to tokens
 
@@ -295,10 +295,10 @@ coin against BTC.
 
 ### Some (unbelievable) results
 
-I originally tested using a 1% trailing stop percent (that is, if the price is at 100, it
+I originally tested using a 1\% trailing stop percent (that is, if the price is at 100, it
 will set the stop price at 99). Because of the inherent volatility, I noticed it would hit
 the stop price and sell at a loss frequently before a pop. I decided to try alternate
-trailing stop percentages ranging from 0.5% to 3%, to see how the trades would perform.
+trailing stop percentages ranging from 0.5\% to 3\%, to see how the trades would perform.
 Here's a few months worth of data for a bunch of influencers, it shows the net profit/loss %
 if you would have if you traded using my current strategy.
 
