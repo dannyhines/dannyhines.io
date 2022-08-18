@@ -1,6 +1,7 @@
 ---
-title: 'Crypto Trading Bot using Twitter Sentiment'
-description: 'I built a Heroku app for listening to crypto-related tweets from top influencers, and trade based on the tweet's sentiment, among other factors.'
+title: 'Crypto Twitter Automated Trading Bot'
+description:
+  'I built a bot that listens crypto-related tweets and placing trades based on sentiment.'
 category: 'Side Project'
 publishedAt: '2022-01-20'
 tags: 'heroku,crypto,aws,javascript'
@@ -8,15 +9,354 @@ headerImg: 'crypto-trading-bot/header.png'
 github: 'https://github.com/danielchines/crypto-trading-bot'
 ---
 
+<HeaderImage
+  src='/images/crypto-trading-bot/header.png'
+  alt='Measuring crypto sentiment'
+  width={1366}
+  height={810}
+/>
+
 > TL;DR: Built a Heroku app that connects to the Twitter and FTX APIs to listen for tweets
-> from top influencers, measure the sentiment with open-source tools, and make trades based
-> on the sentiment, follower count, etc. Messed with the configuration before realizing
-> between the fees, macro events, whales and frontrunners, I probably wouldn't make a
-> profit.
+> from top influencers, measure the sentiment, and make trades based on the sentiment,
+> follower count, and price history. This bot is currently not trading, but I'm saving data
+> and running backtests. If you're interested in working with me to improve it, hmu.
+
+I'm not a big crypto guy. I'll start there, because although I love the idea of
+[Bitcoin](https://bitcoin.org/bitcoin.pdf) and the possibilities of the blockchain, I simply
+can't fathom why it's worth what it is. Pricing Bitcoin or any cryptocurrency is difficult
+because there's no basis for it. That is, it doesn't produce anything. There is no CEO, no
+revenue, no cash flows, and there ever-present threat of the
+[U.S. outlawing it](https://www.cnbc.com/2021/09/15/ray-dalio-says-if-bitcoin-is-really-successful-regulators-will-kill-it.html).
+But that doesn't mean that you can't profit off of it. And even if I'm unsuccessful, trading
+crypto still sounds like a fun way to lose money.
+
+Because it's ‘wild wild west', crypto is crazy volatile. Because there's no company to
+analyze or a market to compare it to, the market is dominated by hype and FOMO. In general,
+those who have made the most on crypto are those who bought early, ~~because it's basically
+a ponzi scheme~~ and the price of a crypto token goes up as word spreads across the
+internet.
+
+The economist and _father of value investing_ Ben Graham said, "In the short run, the market
+is a voting machine but in the long run it is a weighing machine.” Recently, it feels like
+markets have voted for Elon Musk.
 
 <Image
-src='images/crypto-trading-bot/elon-tweet.png'
-alt="Elon's tweet sends doge to the moon"
-width={1551 / 2}
-height={986 / 2}
->
+  src='/images/crypto-trading-bot/elon-tweet.png'
+  alt="Elon's tweet sends doge to the moon"
+  width={1551}
+  height={986}
+/>
+
+Elon tweeted that you will be able to buy Tesla merch with Dogecoin and the price shot up
+30%. That's what I'm talking about.
+
+I don't care as much about the big bois BTC and ETH, because bitcoin is mentioned all the
+time, and its market cap is so large that any news story will be lost in the tsunami of
+bitcoin-related tweets. So I'm going to look for influencers tweeting about altcoins, and
+see if I can buy before crypto twitter does.
+
+## Twitter has a free API, right?
+
+Here's what we're going to do:
+
+- Listen for tweets from prominent crypto influencers
+- When they mention a coin, we measure the sentiment of the tweet and the price information
+- If the sentiment is positive enough, place a market buy order
+- Place a _trailing stop_ sell order, so if they price moves X% below its high, it will sell
+
+This will essentially act like a twenty-something year old who loves crypto twitter, except
+a lot faster and we'll actually sell. The goal is to buy at the market price as soon as the
+news/endorsement is made, and place a stop order slightly below our buy price (let's say 2%
+below market price). Instead of the typical **limit sell order** which you would place above
+the current price to lock in a profit, a **stop sell order** is placed below the market
+price, so in the worst case scenario there's a fixed amount you can lose. In our case, we're
+hoping for a “pop” that is larger than the trailing stop % to lock in gainz.
+
+> This buy/trailing stop combo is essentially a bet that the price will go up by more than
+> 2% before it goes down by 2%.
+
+Assuming the price goes up (because it _always_ goes up), the stop order will automatically
+update our stop price to be a certain percentage (i.e. 2%) below the highest price. That
+way, if we buy at 100, it goes to 110 and drops back down, we'll still lock in a ~7.8% gain
+because we'd sell around 107.8 (2% below 110).
+
+You're probably asking, _couldn't you just put a limit sell order at 10% higher than the
+price you bought at to make 10%?_ Sure, but what happens if it goes down? Or even more
+annoying, what if goes up by 50%? We're looking for moonshots here, and the trailing stop is
+our best chance of capturing big swings upward.
+
+## The Twitter API
+
+Twitter has a solid API that lets you search for previous tweets as well as stream them
+live. By opening a stream, we can listen for certain keywords and/or from certain users.
+Without paying $100/month, we can fetch 2M tweets/month and 25 query strings, each with a
+max 512 characters. The queries look like advanced google searches, using quotes to match
+exact text and finding tweets from a certain user with `from:username`. I would run out of
+query space if I wanted to search for every
+
+## Matching tweets to tokens
+
+Identifying which tweets referenced which coins was a challenge. The problem felt simple at
+first, but increasingly became more complicated as I noticed the edge cases over time.
+
+To know what's available to trade, I hardcoded a list of symbols and keywords that are
+closely related. My original bot used [FTX.US](http://FTX.US) which could only trade 17
+symbols using US dollars. This list uses Binance.US, which has 65 symbols but required more
+effort to set up.
+
+```ts
+export const SYMBOLS = {
+  "1INCH": ["1inch"],
+  AAVE: ["aave", "aaveaave"],
+  ADA: ["ada", "cardano", "iohk", "Charles Hoskinson"],
+  ALGO: ["algo", "algorand"],
+  AMP: ["flexa", "amptoken"],
+  ANKR: ["ankr"],
+  ATOM: ["cosmos"],
+  AVAX: ["avax", "avalanche", "avalancheavax"],
+  AXS: ["axs", "axie infinity", "axieinfinity"],
+  BAND: ["band protocol", "bandprotocol"],
+  BAT: ["basic attention token", "brave browser", "brave rewards", "attentiontoken"],
+...
+}
+```
+
+The symbols are stored in a dictionary using the symbol as the key (eg. `DOGE`) and the
+value is an array of keywords which are guaranteed to refer to the symbol.
+
+### Matching text to symbols
+
+I set up the matching function to look out for variations of the symbol, which are the keys
+in the dictionary. Because certain tokens like
+$ZEN and $LINK are actual words, I can't reliably check for “link” or “Link”. So I decided to check for an all-caps version of the symbol, as well as a $ and # preceding the symbol no matter its capitalization. The token $ABC would match “ABC”, “$abc”,
+“$ABC”, “#abc”, etc.
+
+Anything else that refers to the token should be listed as a keyword, i.e. the symbol for
+ChainLink is $LINK. I set up the keywords so that if the keyword is lowercase, it will match
+the text no matter if it's capitalized or not. This is helpful to catch totally unique words
+like “axieinfinity”, which is capitalized in different ways. If there is capitalization in a
+keyword, it will need to match the capitalization exactly. Examples are “The Graph”, “Dash”
+or “Helium”.
+
+For example, given the symbol/keyword for the token ChainLink:
+
+`LINK: ["chainlink"]`
+
+We would be able to match **LINK, #LINK, $link, #link, ChainLink, chainlink, Chainlink**
+
+Originally I included the capitalized symbol name, i.e. “Btc”, but ChainLink caused a unique
+problem because “Link:” is incredibly common in tweets that link to an article. This
+strategy avoids “link” and “Link” but still catches “$link”, and I can add any other word or
+phrase in the keywords.
+
+## Measuring Sentiment
+
+For measuring the sentiment and therefore how positive the tweet is toward the token I used
+the [Javascript version](https://github.com/vaderSentiment/vaderSentiment-js) of an
+open-source project called [VADER](https://github.com/cjhutto/vaderSentiment). Vader is “a
+lexicon and rule-based sentiment analysis tool that is _specifically attuned to sentiments
+expressed in social media_”. **It uses a list of ~7,000 words and their relative
+positive/negative sentiment on a scale from -4 to 4, and the measures a string of text by
+counting the valence of different sections of the text along with negations, capitalization,
+and punctuation which affect the overall sentiment. The output of the sentiment function is
+an object that gives you the percentage of the phrase that was positive, negative, and
+neutral, and the **compound\*\* score which is the overall sentiment (from -1 to 1).
+
+```ts
+const vader = require('vader-sentiment');
+const input = 'Danny is very smart, handsome, and funny';
+const intensity = vader.SentimentIntensityAnalyzer.polarity_scores(input);
+console.log(intensity);
+// {neg: 0.0, neu: 0.299, pos: 0.701, compound: 0.8545}
+```
+
+In general, a score ≥ 0.05 is considered positive, and ≤ -0.05 is negative. It's not
+perfect, but the compound score is usually a solid estimate of the sentiment.
+
+I added about 200 words to the lexicon with crypto-related words and phrases like “bullish”,
+“just bought”, “tanking”, “to the moon”, etc. Here are tests using mocha/chai for my fork of
+the VaderSentiment project:
+
+```ts
+import { SentimentIntensityAnalyzer } from '../src/SentimentAnalyzer/index.js';
+import { expect } from 'chai';
+
+const getScore = (txt) => SentimentIntensityAnalyzer.polarity_scores(txt).compound;
+
+describe('Sentiment', function () {
+  it('Exclamation point', function () {
+    let strings = [
+      'Danny is smart, handsome, and funny.',
+      'Danny is smart, handsome, and funny!',
+      'Danny is smart, handsome, and funny!!!',
+    ];
+    expect(getScore(strings[1])).to.be.greaterThan(getScore(strings[0]));
+    expect(getScore(strings[2])).to.be.greaterThan(getScore(strings[1]));
+  });
+  it('Question mark(s) - ending in ? lowers sentiment', function () {
+    let strings = [
+      'Danny is smart, handsome, and funny.',
+      'Danny is smart, handsome, and funny?',
+      'Danny is smart, handsome, and funny?',
+      'Danny is smart, handsome, and funny???',
+    ];
+    expect(getScore(strings[1])).to.be.lessThan(getScore(strings[0]));
+    expect(getScore(strings[2])).to.be.greaterThan(getScore(strings[1]));
+    expect(getScore(strings[3])).to.be.lessThan(getScore(strings[2]));
+  });
+  it('Emojis', function () {
+    expect(getScore('💘 and 💋 and 😁')).to.be.greaterThan(0);
+    expect(getScore('🚀 🚀 🚀')).to.be.greaterThan(getScore('🚀'));
+  });
+  it('Negation', function () {
+    let strings = ['I am buying Bitcoin', 'I am not buying Bitcoin'];
+    expect(getScore(strings[1])).to.be.lessThan(getScore(strings[0]));
+    expect(getScore(strings[0])).to.be.greaterThan(0);
+    expect(getScore(strings[1])).to.be.lessThan(0);
+    expect(getScore('problem')).to.be.lessThan(getScore('no problem'));
+  });
+  it('Phrases', function () {
+    let strings = [
+      "I like Eth, but I'm afraid of the gas fees",
+      'I like Eth, I think it will work out',
+    ];
+    expect(getScore(strings[0])).to.be.lessThan(getScore(strings[1]));
+    expect(getScore('exchange is now accepting LTC')).to.be.greaterThan(
+      getScore('exchange is accepting LTC')
+    );
+    expect(getScore("if you're into crypto ❤️ this")).to.be.lessThan(0.05);
+    expect(getScore('This coin is not a buy right now')).to.be.lessThan(0);
+    expect(getScore('This coin is the shit')).to.be.greaterThan(0);
+    expect(getScore('that would be worth a lot')).to.be.lessThan(0);
+  });
+  it('Non-influential text', function () {
+    expect(getScore('Here are my top 10 favorite coins')).to.be.lessThan(0.05);
+    expect(
+      getScore("If you bought $CRYPTO 1 year ago, this is how much you'd make")
+    ).to.be.lessThan(0.05);
+  });
+});
+```
+
+## When to buy
+
+This is obviously the hard part. At first I looked at buying when the sentiment was
+positive. That works, but if Elon Musk is tweeting, he only needs to mention the word “Doge”
+and it can go up. I decided to split the influencers into 5 categories, each with a
+different sentiment threshold for considering it a “buy”. These are exchange, influencer,
+news, trader, and superinfluencer. I've messed around with the thresholds a lot, here's an
+example of how it looks:
+
+```ts
+export const BUY_THRESHOLD = {
+  superinfluencer: -0.05,
+  exchange: 0.6,
+  influencer: 0.35,
+  trader: 0.2,
+  news: 0.3,
+};
+```
+
+I originally had a very low threshold for the exchanges, for example, because I wanted to
+catch whenever a company like Bitcoin announced a new coin on their platform. After some
+backtesting and messing with the lexicon, it wasn't working well so I made phrases like “now
+trading” worth high valence scores like 3.2 on the -4 to 4 scale, which allowed me to bring
+the threshold up and filter out noise.
+
+Because it's very confusing how I match keywords and decide to trade on single or multiple
+matches, I made a flow chart that attempts to explain how I approach it without giving you
+all the code.
+
+<Image
+  src='/images/crypto-trading-bot/tweet-flow-chart.png'
+  alt='Flowchart: how my bot decides what to do'
+  width={1896}
+  height={1420}
+/>
+
+Basically if the tweet mentions a single coin or one coin is mentioned more than others, it
+will see if it's a "good buy" by calling the `shouldBuy()` function. This function will
+resolve to true of the sentiment is above the threshold for that type of influencer given
+their follower count. It also looks at whether or not the influencer is associated with the
+token (i.e. the CEO of Binance Changpeng Zhao should have a higher buy threshold for buying
+$BNB). Additionally, there is a check on the 14-day RSI value of the coin's price, but this
+has given mixed results so I only consider this if the RSI is especially high.
+
+## Backtesting
+
+To measure the performance of the strategy, I pulled the last few months of relevant tweets
+and added to the dataset over the past couple weeks. Although I want to have US dollars to
+trade with, I realized that the price of Bitcoin is the major driver of price fluctuations
+in altcoins. So when backtesting, I usually look at the price movement relative to Bitcoin,
+i.e. trading DOGE/BTC instead of DOGE/USD. This gives me a better perspective of how the
+price of the coin moved relative to the market as a whole. I use the regular Binance api
+(instead of Binance.us) to backtest because of the larger volume and they have every type of
+coin against BTC.
+
+### Some (unbelievable) results
+
+I originally tested using a 1% trailing stop percent (that is, if the price is at 100, it
+will set the stop price at 99). Because of the inherent volatility, I noticed it would hit
+the stop price and sell at a loss frequently before a pop. I decided to try alternate
+trailing stop percentages ranging from 0.5% to 3%, to see how the trades would perform.
+Here's a few months worth of data for a bunch of influencers, it shows the net profit/loss %
+if you would have if you traded using my current strategy.
+
+<Image
+  src='/images/crypto-trading-bot/backtesting-jan-22.png'
+  alt='Backtesting data'
+  width={1472}
+  height={1950}
+/>
+
+This (probably confusing) table shows that every trailing stop percentage resulted in a
+positive P/L except using 2.5\%. Despite this outlier, the totals give a sort of bell curve,
+with 2\% being the most profitable. If I traded using a 2\% trailing stop, I would've traded
+1190 times off of 3946 tweets, with a net profit of 142.5\%. This doesn't include fees,
+which would be quite high for the number of trades, but _yeeeesh_ that's a huge profit.
+
+This table also reveals the most and least profitable types of influencers. The most
+“correct” were the inlfuencers like TheCryptoLark. The least profitable were the exchanges
+like Binance and Gemini, which has made me rethink how I'm scoring tweets from exchanges.
+
+### Deploying it
+
+At first I deployed this bot on AWS using a cron job to look for tweets every 1 minute. This
+meant I was up to 59 seconds behind every other twitter crypto bot, so I made the change to
+use Twitter streams to listen for tweets live. Because I despise running virtual machines on
+AWS (what's a subnet plz help), I decided to go with Heroku.
+
+I deployed the bot, connected to a PostgreSQL database (also on Heroku), and use Coralogix
+for logging. I'm giving the bot about $100 to see how it goes.
+
+## Update 4/12/22
+
+After running it off and on for a few months and losing about 10%, I decided to stop trading
+with this bot. Between all the noise on twitter, the fees, and losing money on the spread
+(difference between bid/ask), it's currently not a profitable strategy. The giant profit
+from backtesting was most likely a result of not considering the fees + spread, and because
+my test was during the biggest bull run in the history of crypto.
+
+Sometimes a well-known trader will tweet the same thing a couple times in a row and the bot
+will buy several times, but the person tweeting is just live-tweeting while they're chasing
+their loses. Other times they're using sarcasm and the bot can't tell. Even when an exchange
+tweets that they're now trading a certain coin, it's not guaranteed to be a winning trade. I
+think it's because people are front-running the announcement somehow, but it's hard to tell
+because of the inherent volatility.
+
+Another reason for stopping is a downturn in the market, both the crypto market and the
+global economy as a whole. As the crypto industry matures and the questions about it start
+to have answers, the news is less positive. The price of any liquid asset will be determined
+by its future, so when the future felt limitless, the prices reflected that. But building
+things is hard, and there are thousands of different coins, all claiming to have intrinsic
+value because it's the future.
+
+Amazon announced it would be delivering packages via drone in 2013. I'm sure there was a
+small pop in the stock price when the news was announced, but in the past decade the news
+surrounding Amazon drone delivery has been predominantly negative. And I feel like that's
+what is happening in crypto.
+
+I'll continue to collect the tweets and run backtesting to see if they would've been
+profitable trades, and maybe I can find a winning strategy later.
+
+That said, I'm still going to trade on Elon Musk.
