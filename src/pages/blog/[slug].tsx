@@ -43,7 +43,6 @@ export default function BlogPage({ code, meta }: ProjectType) {
                   className='rounded-full'
                   imgClassName='rounded-full'
                 />
-
                 <p className='ml-2 text-sm text-gray-700 dark:text-gray-300'>
                   {'Danny Hines • '}
                   {meta.readingTime.text}
@@ -75,11 +74,6 @@ export default function BlogPage({ code, meta }: ProjectType) {
                 </UnderlineLink>
               </div>
             )}
-            {/* 
-            <figure className='mt-12'>
-              <Comment />
-            </figure> */}
-
             <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
               <CustomLink
                 href={`https://github.com/danielchines/dannyhines.io/blob/main/src/content/blog/${meta.slug}.mdx`}

@@ -72,7 +72,11 @@ export default function About() {
                 <UnderlineLink href='https://vercel.com'>Vercel</UnderlineLink>, the company
                 behind NextJS. It&apos;s my new favorite way to make websites because you
                 can use React with server-side rendering, which is a boost to performance
-                and SEO.
+                and SEO. Checkout the{' '}
+                <UnderlineLink href='https://pagespeed.web.dev/report?url=https%3A%2F%2Fdannyhines.io%2F&form_factor=desktop'>
+                  PageSpeed Insights
+                </UnderlineLink>{' '}
+                on this site.
               </p>
               <div className='text-center'>
                 <NextImage
