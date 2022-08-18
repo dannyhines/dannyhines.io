@@ -9,9 +9,9 @@
     "source.fixAll": true
   },
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "files.associations": {
-    "*.mdx": "mdx"
-  },
+  // "files.associations": {
+  //   "*.mdx": "markdown"
+  // },
   "editor.renderWhitespace": "boundary",
   "search.exclude": {
     "**/node_modules": true,
@@ -26,13 +26,8 @@
   },
   "prettier.singleQuote": true,
   "prettier.printWidth": 92,
+  "prettier.proseWrap": "always",
   "cSpell.enableFiletypes": ["*"],
-  "cSpell.overrides": [
-    {
-      "filename": "src/**/{*.mdx}",
-      "languageId": "markdown"
-    }
-  ],
   "cSpell.ignorePaths": [
     "package-lock.json",
     "node_modules",
@@ -67,10 +62,12 @@
     "photoshopped",
     "pushshift",
     "semibold",
+    "sportsbook",
     "sportsbooks",
     "subreddits",
     "tailwindcss",
     "typeof",
+    "umami",
     "unstyled",
     "upvoted"
   ],

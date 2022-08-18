@@ -45,19 +45,21 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
           alt={project.title}
           width={600}
           height={360}
+          sizes='40vw'
         />
-        <h4 className='mt-3 mb-2'>{project.title}</h4>
+        <h4 className='mt-2 mb-2'>{project.title}</h4>
         <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
           {project.description}
         </p>
         <div className='mt-2 flex w-full max-w-sm justify-start space-x-4 align-middle'>
           {project.blog && (
-            <p className='animated-underline mt-2 inline-block font-semibold'>
-              Blog post →
+            <p className='animated-underline mt-1 inline-block font-semibold'>
+              Read more →
             </p>
           )}
         </div>
       </UnstyledLink>
+
       <div className='absolute bottom-4 right-5 flex gap-4'>
         {isLoaded && project.github && (
           <UnstyledLink href={project.github}>

@@ -20,12 +20,13 @@ export default function NotFoundPage() {
             />
             <h1 className='mt-8 text-4xl md:text-6xl'>Page Not Found</h1>
             <p className='my-8'>
-              *Slow clap* Well well well... Here we are. The 404 error page. You&apos;re a
-              curious one huh? Messing with the url, sneakin&apos; around on my website
-              lookin for a hidden page. I would never create a easter egg like that
-              <UnstyledLink href='/harambe'>.</UnstyledLink> Or did I create a link to a
-              page that doesn&apos;t exist? If it&apos;s the latter, that&apos;s my bad I
-              didn&apos;t mean to get all accusatory.
+              *Slow clap* Well well well... Here we are. The 404 page. You think you&apos;re
+              pretty slick, huh? Sneakin&apos; around on my website, messing with the url..
+              were you looking for a hidden page or something? I&apos;d never waste my time
+              creating an easter egg like that
+              <UnstyledLink href='/harambe'>.</UnstyledLink> Or.. did I mess up and create a
+              link to a page that doesn&apos;t exist? Huh, maybe it was my fault. If
+              that&apos;s the case then that&apos;s my bad sorry about that.
             </p>
             <ArrowLink className='mt-4 md:text-lg' href='/'>
               Back to Home

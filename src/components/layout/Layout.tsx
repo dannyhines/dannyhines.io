@@ -9,9 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <PreloadProvider>
-        <div id='skip-nav'>{children}</div>
-      </PreloadProvider>
+      <PreloadProvider>{children}</PreloadProvider>
       <Footer />
     </>
   );

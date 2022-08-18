@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import developerMessage from '@/lib/developerMessage';
 import { getPostsByType } from '@/lib/mdx';
+import { trackEvent } from '@/lib/umami';
 import useLoaded from '@/hooks/useLoaded';
 
 import Layout from '@/components/layout/Layout';
@@ -59,12 +60,18 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                   <ArrowLink
                     href='https://github.com/danielchines/dannyhines.io'
                     className='mt-2'
+                    onClick={() => trackEvent('[Home] View source code', 'external_link')}
                   >
                     View it on Github
                   </ArrowLink>
                 </p>
                 <div className='flex justify-center gap-3 sm:justify-start'>
-                  <ButtonLink className='mt-6' href='/blog' data-fade='5'>
+                  <ButtonLink
+                    className='mt-6'
+                    href='/blog'
+                    data-fade='5'
+                    onClick={() => trackEvent('[Home] View blog', 'internal_link')}
+                  >
                     Check out the blog
                   </ButtonLink>
                   <ButtonLink
@@ -72,6 +79,7 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                     href='/about'
                     variant='outline'
                     data-fade='5'
+                    onClick={() => trackEvent('[Home] View about', 'internal_link')}
                   >
                     About me
                   </ButtonLink>
@@ -82,12 +90,10 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                 alt='Me'
                 className='w-2/3 max-w-[300px] p-4 sm:w-1/4 sm:p-0'
                 data-fade='3'
-                width={1795}
-                height={2032}
+                width={1795 / 3}
+                height={2032 / 3}
               />
             </div>
-            <hr />
-
             <div className='mt-24 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />
             </div>

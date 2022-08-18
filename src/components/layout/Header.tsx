@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 
 import clsxm from '@/lib/clsxm';
+import { trackEvent } from '@/lib/umami';
 import useOnTop from '@/hooks/useOnTop';
 
 import Button from '@/components/buttons/Button';
@@ -48,6 +49,9 @@ export default function Header() {
                     href === '/' + router.pathname.split('/')[1] &&
                       'text-black dark:text-white'
                   )}
+                  onClick={() =>
+                    trackEvent('[Header] Navigate to ' + label, 'internal_link')
+                  }
                 >
                   {label}
                 </UnstyledLink>
