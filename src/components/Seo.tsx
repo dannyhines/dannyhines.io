@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 const defaultMeta = {
   title: 'Danny Hines - Software Engineer',
   siteName: 'Danny Hines',
-  description:
-    'My personal website built with Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky.',
+  description: 'My personal website and blog, built with Next.js.',
   url: 'https://dannyhines.io',
   type: 'website',
   robots: 'follow, index',
