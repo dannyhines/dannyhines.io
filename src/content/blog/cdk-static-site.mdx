@@ -48,13 +48,15 @@ I was able to build all AWS resources necessary to deploy a website.
 
 ### The Architecture
 
-Our website will be _static_, meaning it will contain mostly Javascript files that tell the browser
-how to generate the website's HTML and functionality. We'll use React to generate the files, and store them in AWS S3.
+Our website will be _static_, meaning it will contain mostly Javascript files that tell the
+browser how to generate the website's HTML and functionality. We'll use React to generate
+the files, and store them in AWS S3.
 
-In order to get the content to the users, we'll set up a domain through AWS that can listen for HTTP requests.
-Instead of directly pointing the user to the datacenter storing the files,
-we'll use Cloudfront as our CDN (content delivery network) to cache the content in datacenters all over the world.
-To make sure we can connect users securely through HTTPS, we'll also create and attach a certificate for our domain on the Cloudfront distribution.
+In order to get the content to the users, we'll set up a domain through AWS that can listen
+for HTTP requests. Instead of directly pointing the user to the datacenter storing the
+files, we'll use Cloudfront as our CDN (content delivery network) to cache the content in
+datacenters all over the world. To make sure we can connect users securely through HTTPS,
+we'll also create and attach a certificate for our domain on the Cloudfront distribution.
 
 <Image
   src='/images/cdk-static-site/architecture.png'
