@@ -21,23 +21,26 @@ github: 'https://github.com/danielchines/crypto-trading-bot'
 > follower count, and price history. This bot is currently not trading, but I'm saving data
 > and running backtests. If you're interested in working with me to improve it, hmu.
 
-I'm not a big crypto guy. I'll start there, because although I love the idea of
-[Bitcoin](https://bitcoin.org/bitcoin.pdf) and the possibilities of the blockchain, I simply
-can't fathom why it's worth what it is. Pricing Bitcoin or any cryptocurrency is difficult
-because there's no basis for it. That is, it doesn't produce anything. There is no CEO, no
-revenue, no cash flows, and there ever-present threat of the
-[U.S. outlawing it](https://www.cnbc.com/2021/09/15/ray-dalio-says-if-bitcoin-is-really-successful-regulators-will-kill-it.html).
-But that doesn't mean that you can't profit off of it. And even if I'm unsuccessful, trading
-crypto still sounds like a fun way to lose money.
+## Background
 
-Crypto is the Wild Wild West of the finance industry. Because there's no company to analyze
-or a market to compare it to, the market is dominated by hype and FOMO. In general, those
-who have made the most on crypto are those who bought early, ~~because it's basically a
-ponzi scheme~~ and the price of a crypto token goes up as word spreads across the internet.
+I'm not a big crypto guy. Blockchain tech is undoubtedly cool, but I resist investing in
+crypto because I have no idea what the price should be. That is, it doesn't produce
+anything. There is no CEO, no revenue, no cash flows, and there ever-present threat of the
+[U.S. outlawing it](https://www.cnbc.com/2021/09/15/ray-dalio-says-if-bitcoin-is-really-successful-regulators-will-kill-it.html).
+But that doesn't mean that you can't profit off of it. Instead of hodling random coins with
+good marketing, I trust myself more to trade with software. Even if I'm unsuccessful,
+trading crypto still sounds like a fun way to lose money.
+
+### The Elon effect
+
+Because there's no company to analyze or a market to compare it to, crypto price movements
+are dominated by hype and FOMO. This is especially true for smaller-marketcap coins that
+have the potential take over the world. And when the next big thing happens in crypto,
+Twitter is where most people find out.
 
 The _father of value investing_ Ben Graham once said, "In the short run the market is a
-voting machine, but in the long run it is a weighing machine.” It's probably too early to
-tell the weight of crypto, but I know the markets have voted for Elon Musk.
+voting machine, but in the long run it is a weighing machine.” It's too early to tell the
+weights, but I know the markets have voted for Elon Musk.
 
 <Image
   src='/images/crypto-trading-bot/elon-tweet.png'
@@ -50,11 +53,11 @@ Elon tweeted that you will be able to buy Tesla merch with Dogecoin and the pric
 30%. That's what I'm talking about.
 
 I don't care as much about the big bois BTC and ETH, because bitcoin is mentioned all the
-time, and its market cap is so large that any news story will be a small blip compared to
-the tsunami of bitcoin-related tweets. So I'm going to look for influencers tweeting about
-altcoins, and see if I can buy before crypto twitter does.
+time and its market cap is so large that any given tweet will cause a ripple in the tsunami
+of bitcoin-related tweets. So I'm going to look for influencers tweeting about altcoins, and
+see if I can buy before crypto twitter does.
 
-## Twitter has a free API, right?
+## The Strategy
 
 Here's what we're going to do:
 
@@ -71,8 +74,10 @@ the current price to lock in a profit, a **stop sell order** is placed below the
 price, so in the worst case scenario there's a fixed amount you can lose. In our case, we're
 hoping for a “pop” that is larger than the trailing stop % to lock in gainz.
 
-> This buy/trailing stop combo is essentially a bet that the price will go up by more than
-> 2% before it goes down by 2%.
+<GrayBox>
+  This buy/trailing stop combo is essentially a bet that the price will go up by more than
+  2% before it goes down by 2%.
+</GrayBox>
 
 Assuming the price goes up (because it _always_ goes up), the stop order will automatically
 update our stop price to be a certain percentage (i.e. 2%) below the highest price. That
@@ -83,6 +88,9 @@ You're probably asking, _couldn't you just put a limit sell order at 10% higher 
 price you bought at to make 10%?_ Sure, but what happens if it goes down? Or even more
 annoying, what if goes up by 50%? We're looking for moonshots here, and the trailing stop is
 our best chance of capturing big swings upward.
+
+> To see how I trade with Node.js, check out [my code snippet](/snippets/ftx) for creating
+> this buy/trailing stop combo using the FTX API with Typescript.
 
 ## The Twitter API
 
@@ -270,8 +278,8 @@ all the code.
 <Image
   src='/images/crypto-trading-bot/tweet-flow-chart.png'
   alt='Flowchart: how my bot decides what to do'
-  width={1896}
-  height={1420}
+  width={1570}
+  height={1179}
 />
 
 Basically if the tweet mentions a single coin or one coin is mentioned more than others, it
