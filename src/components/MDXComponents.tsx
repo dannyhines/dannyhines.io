@@ -1,21 +1,6 @@
-import { ImageProps } from 'next/image';
-
+import CloudinaryImg from '@/components/CloudinaryImage';
 import CustomCode, { Pre } from '@/components/Code';
 import UnderlineLink from '@/components/links/UnderlineLink';
-import NextImage from '@/components/NextImage';
-
-const HeaderImage = (props: ImageProps) => {
-  return (
-    <NextImage
-      alt={props.alt ?? 'header image'}
-      className={`w-full max-w-full rounded-md ${props.className ?? ''}`}
-      imgClassName='rounded-md'
-      width={props.width ?? '100%'}
-      height={props.height ?? 'auto'}
-      {...props}
-    />
-  );
-};
 
 const MdxRow = (props: { children: React.ReactNode }) => {
   return (
@@ -41,28 +26,9 @@ const GrayBox = (props: { children: React.ReactNode }) => {
   );
 };
 
-const RoundedImage = (props: ImageProps & { caption?: string }) => {
-  return (
-    <div className='mx-auto max-w-prose rounded-md'>
-      <NextImage
-        alt={props.alt ?? 'image'}
-        className='w-full'
-        imgClassName='rounded-md'
-        width={props.width ?? '100%'}
-        height={props.height ?? 'auto'}
-        {...props}
-      />
-      {props.caption && (
-        <p className='w-prose float-right mx-auto italic'>{props.caption}</p>
-      )}
-    </div>
-  );
-};
-
 const MDXComponents = {
   a: UnderlineLink,
-  Image: RoundedImage,
-  HeaderImage,
+  CloudinaryImg,
   pre: Pre,
   code: CustomCode,
   MdxRow,
