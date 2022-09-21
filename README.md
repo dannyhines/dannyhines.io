@@ -1,11 +1,7 @@
-<div align="center">
-<img alt="logo" src="/public/favicon/favicon-96x96.png">
-  <h1>DannyHines.io</h1>
-  <p>My personal website and blog, written in Typescript with Next.js.</p>
-  <p></p>
-</div>
+  <h1><img alt="logo" src="/public/favicon/favicon-32x32.png" height="27" width="27">   DannyHines.io</h1>
 
-## Features
+My personal website written in Typescript, which includes a blog and library of code
+snippets.
 
 This repo was created using Theodorus Clarence's
 [NextJS + TailwindCSS starter](https://www.codefactor.io/repository/github/theodorusclarence/ts-nextjs-tailwind-starter),
@@ -26,17 +22,21 @@ including:
   [og.thcl.dev](https://github.com/theodorusclarence/og), fork it and deploy!
 - 🗺 Site Map — Automatically generate sitemap.xml
 
-See the 👉
-[feature details and changelog](https://github.com/theodorusclarence/ts-nextjs-tailwind-starter/blob/main/CHANGELOG.md)
-👈 for more.
-
 ## Getting Started
 
-### 1. Clone this template using one of the three ways:
+### Use create-next-app with the template
+
+You can clone this repo, but I recommend starting with
+[the template](https://www.codefactor.io/repository/github/theodorusclarence/ts-nextjs-tailwind-starter)
+so it's easier to replace the starter code. You can use the Github UI using that link, or
+with the `create-next-app` template:
 
 ```bash
    npx create-next-app -e https://github.com/theodorusclarence/ts-nextjs-tailwind-starter project-name
 ```
+
+Then you'll need to change the name in package.json and search for "!STARTERCONF" to
+configure it for your website.
 
 ### 2. Install dependencies
 
@@ -56,17 +56,3 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You
 can start editing the page by modifying `src/pages/index.tsx`.
-
-### 4. Change defaults
-
-There are some things you need to change including title, urls, favicons, etc.
-
-Find all comments with !STARTERCONF, then follow the guide.
-
-Don't forget to change the package name in package.json
-
-### 5. Commit Message Convention
-
-This starter is using
-[conventional commits](https://www.conventionalcommits.org/en/v1.0.0/), it is mandatory to
-use it to commit changes.
