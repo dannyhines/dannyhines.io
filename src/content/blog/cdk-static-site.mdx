@@ -4,13 +4,14 @@ description: 'Building a custom website using AWS CDK to provision resources'
 category: 'Guide'
 publishedAt: '2021-12-05'
 tags: 'aws,react'
-headerImg: 'cdk-static-site/header.png'
+headerImg: 'cdk-static-site/header_fokag3.png'
 github: 'https://github.com/danielchines/how-many-blimps'
 link: 'https://howmanyblimpsarethere.com'
 ---
 
-<HeaderImage
-  src='/images/cdk-static-site/header.png'
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/cdk-static-site/header_fokag3.png'
   alt='wires in a server room'
   width={1000}
   height={665}
@@ -32,8 +33,9 @@ I was able to build all AWS resources necessary to deploy a website.
 </MdxCol>
 
 <MdxCol>
-<Image
-  src='/images/cdk-static-site/aws-cdk-meme.jpg'
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/cdk-static-site/aws-cdk-meme_xdegxk.jpg'
   alt='aws cdk meme'
   className='rounded-md'
   imgClassName='rounded-md'
@@ -58,8 +60,9 @@ files, we'll use Cloudfront as our CDN (content delivery network) to cache the c
 datacenters all over the world. To make sure we can connect users securely through HTTPS,
 we'll also create and attach a certificate for our domain on the Cloudfront distribution.
 
-<Image
-  src='/images/cdk-static-site/architecture.png'
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/cdk-static-site/architecture_qboq5r.png'
   alt='architecture'
   width={776}
   height={296}
@@ -71,8 +74,9 @@ While at a bar with some friends, someone brought up that there are only about 2
 the world. Of course I Googled it and was surprised that the entire first page quoted the
 same number of 25 blimps.
 
-<Image
-  src='/images/cdk-static-site/blimp-google-search.png'
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/cdk-static-site/blimp-google-search_ue0ebl.png'
   alt='Google search how many blimps'
   width={1760}
   height={1284}
@@ -90,9 +94,10 @@ I started by making the React app, which <s>Facebook</s> Meta makes incredibly e
 npx create-react-app how-many-blimps
 ```
 
-<Image
+<CloudinaryImg
+  mdx
   alt='3 hours later'
-  src='/images/cdk-static-site/3-hours-later.png'
+  publicId='/dannyhines.io/cdk-static-site/3-hours-later_shckdb.png'
   width={678}
   height={457}
 />
@@ -121,15 +126,16 @@ function App() {
 ```
 
 </MdxCol>
-<MdxCol>
-  **The Site:**
-<Image
-src='/images/cdk-static-site/how-many-blimps-site.png'
-alt='How Many Blimps website'
-width={2102}
-height={1472}
-/>
-</MdxCol>
+  <MdxCol>
+    **The Site:**
+    <CloudinaryImg
+      mdx
+      publicId='/dannyhines.io/cdk-static-site/how-many-blimps-site_dn7ywr.png'
+      alt='How Many Blimps website'
+      width={2102}
+      height={1472}
+    />
+  </MdxCol>
 </MdxRow>
 
 Nailed it.
@@ -395,11 +401,10 @@ And that's it! I bought the domain during the Pregame of a Sunday night NFL game
 halftime it was deployed. Copy-paste these components and you could do it even faster.
 Pretty frickin sweet.
 
-<iframe
-  src='https://giphy.com/embed/2wSe48eAUC15p38UqO'
-  width='480'
-  height='311'
-  frameBorder='0'
-  className='giphy-embed mx-auto mb-1'
-  allowFullScreen
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/cdk-static-site/kenny-powers_r7cysr.gif'
+  alt='Kenny Powers'
+  width={600}
+  height={389}
 />
