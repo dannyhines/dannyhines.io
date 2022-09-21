@@ -5,8 +5,8 @@ import { SiGithub } from 'react-icons/si';
 
 import useLoaded from '@/hooks/useLoaded';
 
+import CloudinaryImg from '@/components/CloudinaryImage';
 import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
 
 import { ProjectContent } from '@/types/Post';
 
@@ -37,15 +37,12 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
         href={blog ? `/blog/${blog}` : github ?? link ?? ''}
         className='flex flex-col items-start rounded-md p-4 text-left focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
       >
-        <NextImage
-          layout='intrinsic'
+        <CloudinaryImg
           className='pointer-events-none w-full'
-          imgClassName='rounded-lg'
-          src={`/images/${headerImg}`}
+          publicId={headerImg}
           alt={project.title}
           width={600}
           height={360}
-          sizes='40vw'
         />
         <h4 className='mt-2 mb-2'>{project.title}</h4>
         <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>

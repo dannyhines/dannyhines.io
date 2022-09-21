@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
+import CloudinaryImg from '@/components/CloudinaryImage';
 import UnstyledLink from '@/components/links/UnstyledLink';
-import NextImage from '@/components/NextImage';
 
 // import TechIcons, { TechListType } from '@/components/TechIcons';
 import { BlogContent } from '@/types/Post';
@@ -29,11 +29,8 @@ export default function BlogCard({ blog, className }: BlogCardProps) {
         className='flex flex-col items-center rounded-md focus:outline-none focus-visible:ring focus-visible:ring-primary-300 sm:flex-row'
       >
         <div className='relative h-full w-full sm:m-0 md:w-[220px]'>
-          <NextImage
-            layout='responsive'
-            className='pointer-events-none h-full w-full'
-            imgClassName='sm:rounded-bl-md sm:rounded-tr-none rounded-tr-md rounded-tl-md rounded-bl-none'
-            src={`/images/${blog.slug}/header.png`}
+          <CloudinaryImg
+            publicId={blog.headerImg}
             alt={blog.title}
             width={300}
             height={200}
