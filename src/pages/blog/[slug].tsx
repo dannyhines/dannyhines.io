@@ -23,7 +23,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
       <Seo
         title={`${meta.title} – Danny Hines`}
         description={meta.description}
-        image={`https://www.dannyhines.io/images/${meta.slug}/header.png`}
+        image={meta.headerImg}
         date={new Date(meta.publishedAt).toISOString()}
         type='article'
       />
