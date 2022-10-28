@@ -84,7 +84,7 @@ export default function CloudinaryImg({
           paddingTop: aspectRatio
             ? `${aspectRatio * 100}%`
             : `${(+height / +width) * 100}%`,
-          cursor: preview ? 'zoom-in' : 'default',
+          cursor: preview ? 'zoom-in' : 'pointer',
         }}
         className='img-blur'
         onClick={preview ? () => setIsOpen(true) : undefined}

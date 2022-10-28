@@ -28,12 +28,13 @@ export default function BlogCard({ blog, className }: BlogCardProps) {
         href={`/blog/${blog.slug}`}
         className='flex flex-col items-center rounded-md focus:outline-none focus-visible:ring focus-visible:ring-primary-300 sm:flex-row'
       >
-        <div className='relative h-full w-full sm:m-0 md:w-[220px]'>
+        <div className='relative h-full w-full sm:m-0 sm:max-w-[220px]'>
           <CloudinaryImg
             publicId={blog.headerImg}
             alt={blog.title}
-            width={300}
-            height={200}
+            width={600}
+            height={400}
+            preview={false}
           />
         </div>
         <div className='flex flex-col items-start justify-start p-4 sm:ml-6 sm:p-0'>
