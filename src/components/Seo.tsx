@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 const CLOUDINARY_BANNER_URL = 'https://res.cloudinary.com/dannyhines/image/upload';
 const defaultMeta = {
-  title: 'Danny Hines - Software Engineer',
+  title: 'Danny Hines',
   siteName: 'Danny Hines',
   description: 'My personal website and blog, built with Next.js.',
   url: 'https://dannyhines.io',

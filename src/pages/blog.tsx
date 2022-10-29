@@ -19,7 +19,7 @@ export default function BlogPage({
   return (
     <Layout>
       <Seo
-        templateTitle='Blog | Danny Hines'
+        templateTitle='Blog'
         description='Some of my thoughts and tutorials, mostly about software development.'
       />
       <main>
