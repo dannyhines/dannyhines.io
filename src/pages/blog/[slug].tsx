@@ -26,6 +26,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
         image={meta.headerImg}
         date={new Date(meta.publishedAt).toISOString()}
         type='article'
+        isBlog
       />
 
       <main>

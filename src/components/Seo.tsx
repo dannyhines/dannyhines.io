@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+const CLOUDINARY_BANNER_URL = 'https://res.cloudinary.com/dannyhines/image/upload';
 const defaultMeta = {
   title: 'Danny Hines - Software Engineer',
   siteName: 'Danny Hines',
@@ -9,8 +10,8 @@ const defaultMeta = {
   type: 'website',
   robots: 'follow, index',
   image: 'https://www.dannyhines.io/images/me.jpeg',
+  isBlog: false,
 };
-
 type SeoProps = {
   date?: string;
   templateTitle?: string;
@@ -25,6 +26,8 @@ export default function Seo(props: SeoProps) {
   meta['title'] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
+
+  if (props.isBlog) meta['image'] = CLOUDINARY_BANNER_URL + meta.image;
 
   return (
     <Head>
