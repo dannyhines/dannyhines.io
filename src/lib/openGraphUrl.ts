@@ -2,7 +2,7 @@ type OpenGraphType = {
   siteName: string;
   description: string;
   templateTitle?: string;
-  logo?: string;
+  // logo?: string;
   banner?: string;
   isBlog?: boolean;
 };
@@ -14,9 +14,9 @@ export function openGraphUrl({
   templateTitle,
   description,
   banner,
-  logo = `${OG_URL}/images/logo.jpg`,
-}: OpenGraphType): string {
-  const ogLogo = encodeURIComponent(logo);
+}: // logo = `${OG_URL}/images/logo.jpg`,
+OpenGraphType): string {
+  // const ogLogo = encodeURIComponent(logo);
   const ogSiteName = encodeURIComponent(siteName.trim());
   const ogTemplateTitle = templateTitle
     ? encodeURIComponent(templateTitle.trim())
@@ -25,10 +25,10 @@ export function openGraphUrl({
 
   if (banner) {
     const ogBanner = encodeURIComponent(banner.trim());
-    return `${OG_URL}/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}`;
+    return `${OG_URL}/api/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}`;
   }
 
-  return `${OG_URL}/api/gradient?siteName=${ogSiteName}&description=${ogDesc}&logo=${ogLogo}${
+  return `${OG_URL}/api/gradient?siteName=${ogSiteName}&description=${ogDesc}${
     ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
   }`;
 }
