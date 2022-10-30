@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { openGraphUrl } from '@/lib/openGraphUrl';
+
 const CLOUDINARY_BANNER_URL = 'https://res.cloudinary.com/dannyhines/image/upload';
 const defaultMeta = {
   title: 'Danny Hines',
@@ -27,7 +29,18 @@ export default function Seo(props: SeoProps) {
     ? `${props.templateTitle} | ${meta.siteName}`
     : meta.title;
 
-  if (props.isBlog) meta['image'] = CLOUDINARY_BANNER_URL + meta.image;
+  if (props.isBlog) {
+    meta['image'] = CLOUDINARY_BANNER_URL + meta.image;
+  } else {
+    // Use siteName if there is templateTitle
+    // but show full title if there is none
+    meta.image = openGraphUrl({
+      description: meta.description,
+      siteName: props.templateTitle ? meta.siteName : meta.title,
+      templateTitle: props.templateTitle,
+      banner: meta.image,
+    });
+  }
 
   return (
     <Head>

@@ -13,7 +13,10 @@ export default function About() {
   const isLoaded = useLoaded();
   return (
     <Layout>
-      <Seo />
+      <Seo
+        templateTitle='About'
+        description='Learn more about me and my favorite tech stack(s)'
+      />
       <main>
         <section
           className={clsx(
