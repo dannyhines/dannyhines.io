@@ -6,12 +6,15 @@ type OpenGraphType = {
   banner?: string;
   isBlog?: boolean;
 };
+
+const OG_URL = 'https://og-sigma-three.vercel.app';
+
 export function openGraphUrl({
   siteName,
   templateTitle,
   description,
   banner,
-  logo = 'https://og.clarence.link/images/logo.jpg',
+  logo = `${OG_URL}/images/logo.jpg`,
 }: OpenGraphType): string {
   const ogLogo = encodeURIComponent(logo);
   const ogSiteName = encodeURIComponent(siteName.trim());
@@ -22,10 +25,10 @@ export function openGraphUrl({
 
   if (banner) {
     const ogBanner = encodeURIComponent(banner.trim());
-    return `https://og.clarence.link/api/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}`;
+    return `${OG_URL}/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}`;
   }
 
-  return `https://og.clarence.link/api/gradient?siteName=${ogSiteName}&description=${ogDesc}&logo=${ogLogo}${
+  return `${OG_URL}/api/gradient?siteName=${ogSiteName}&description=${ogDesc}&logo=${ogLogo}${
     ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
   }`;
 }
