@@ -21,7 +21,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
   return (
     <Layout>
       <Seo
-        title={`${meta.title} – Danny Hines`}
+        title={meta.title}
         description={meta.description}
         image={meta.headerImg}
         date={new Date(meta.publishedAt).toISOString()}

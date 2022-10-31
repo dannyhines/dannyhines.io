@@ -16,11 +16,7 @@ export default function SnippetPage({ code, meta }: SnippetType) {
 
   return (
     <Layout>
-      <Seo
-        title={`${meta.title} – Danny Hines`}
-        description={meta.description}
-        type='article'
-      />
+      <Seo templateTitle={meta.title} description={meta.description} type='article' />
 
       <main>
         <section className=''>
