@@ -62,7 +62,12 @@ export default function Header() {
 
         <Button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          variant={(theme as 'light' | 'dark') ?? 'light'}
+          // variant={(theme as 'light' | 'dark') ?? 'light'}
+          variant='ghost'
+          className={clsxm(
+            theme === 'dark' && 'text-light border border-gray-700 shadow-md',
+            theme === 'light' && 'border  text-dark shadow-md'
+          )}
         >
           {theme === 'light' ? <FiMoon size={20} /> : <FiSun size={20} />}
         </Button>
