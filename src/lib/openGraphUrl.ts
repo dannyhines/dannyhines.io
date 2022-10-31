@@ -25,10 +25,10 @@ OpenGraphType): string {
 
   if (banner) {
     const ogBanner = encodeURIComponent(banner.trim());
-    return `${OG_URL}/api/blog?templateTitle=${ogTemplateTitle}%26banner=${ogBanner}`;
+    return `${OG_URL}/api/blog?templateTitle=${ogTemplateTitle}&banner=${ogBanner}`;
   }
 
-  return `${OG_URL}/api/gradient?siteName=${ogSiteName}%26description=${ogDesc}${
-    ogTemplateTitle ? `%26templateTitle=${ogTemplateTitle}` : ''
+  return `${OG_URL}/api/gradient?siteName=${ogSiteName}&description=${ogDesc}${
+    ogTemplateTitle ? `&templateTitle=${ogTemplateTitle}` : ''
   }`;
 }
