@@ -50,7 +50,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
                 </p>
               </div>
               <p className='min-w-32 mt-2 text-sm text-gray-600 dark:text-gray-400 md:mt-0'>
-                Posted {format(new Date(meta.publishedAt), 'MMM d yyyy')}
+                Posted {format(new Date(meta.publishedAt), 'MMM d, yyyy')}
               </p>
             </div>
 
