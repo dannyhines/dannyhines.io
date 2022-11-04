@@ -1,0 +1,145 @@
+---
+title: "Get your league's ESPN Fantasy Football boxscore using Typescript"
+description:
+  "Typescript function to call the ESPN Fantasy Football API and returns your league's
+  current matchups, including team names and scores and player projections."
+tags: 'nodejs, typescript, espn'
+---
+
+## Setup
+
+First you'll need to get your League ID, which can be found by going to fantasy.espn.com,
+navigating to your league and copying the path parameter from the url, which will look
+something like `https://fantasy.espn.com/football/league?leagueId=12345`. That will be the
+`leagueId` variable in the .ts file below, which you can hardcode in the file or use a .env
+file like the snippet uses. Your .env file would look like:
+
+```text
+FF_LEAGUE_ID=12345
+```
+
+The only dependency is `node-fetch` which is a lightweight Fetch wrapper for Node.js. I
+suppose you could also use the fetch library built into Node.js if your project is on a
+diet. That's it! Here's the script:
+
+```ts
+import { BoxscoreResponse, Matchup, MatchupObj, Scoreboard } from './types';
+const fetch = require('node-fetch');
+const leagueId = process.env.FF_LEAGUE_ID;
+
+const getBoxscores = async (seasonId: number, scoringPeriodId: number) => {
+  const BASE_URL = `https://fantasy.espn.com/apis/v3/games/ffl/seasons/${seasonId}/`;
+  const scoresUrl =
+    BASE_URL +
+    `segments/0/leagues/${leagueId}?view=mMatchupScore&view=mTeam&view=mScoreboard&view=mRoster`;
+
+  try {
+    const response = await fetch(scoresUrl);
+    const data: BoxscoreResponse = await response.json();
+
+    const boxscores: Scoreboard[] = data.schedule
+      .filter((x) => x.matchupPeriodId === scoringPeriodId)
+      .map((score: Matchup) => {
+        let home = data.teams.find((x) => x.id === score.home.teamId);
+        let away = data.teams.find((x) => x.id === score.away.teamId);
+        let homeMember = data.members.find(
+          (member) => home?.owners.findIndex((owner) => owner === member.id) != -1
+        )!;
+        let awayMember = data.members.find(
+          (member) => away?.owners.findIndex((owner) => owner === member.id) != -1
+        )!;
+        return {
+          homeScore: score.home.totalProjectedPointsLive || score.home.totalPoints,
+          awayScore: score.away.totalProjectedPointsLive || score.away.totalPoints,
+          homeName: home!.location + ' ' + home!.nickname,
+          awayName: away!.location + ' ' + away!.nickname,
+          homeFirstName: homeMember.firstName,
+          awayFirstName: awayMember.firstName,
+          homeLastName: homeMember.lastName,
+          awayLastName: awayMember.lastName,
+          homeRoster: rosterForMatchup(score.home),
+          awayRoster: rosterForMatchup(score.away),
+        };
+      });
+
+    return boxscores;
+  } catch (err) {
+    throw Error('(in getBoxscores()):' + err);
+  }
+};
+
+const rosterForMatchup = (matchup: MatchupObj) => {
+  if (
+    !matchup.rosterForCurrentScoringPeriod ||
+    !matchup.rosterForCurrentScoringPeriod.entries
+  ) {
+    return [];
+  } else {
+    return matchup.rosterForCurrentScoringPeriod.entries.map((x) => {
+      const slot = x.lineupSlotId;
+      return {
+        name: x.playerPoolEntry.player.fullName,
+        projectedPoints: x.playerPoolEntry.player.stats[0].appliedTotal || 0,
+        points: x.playerPoolEntry.appliedStatTotal,
+        starting: slot < 9 || slot == 17 || slot == 16, // Other slots are bench positions - this could change based on league settings
+      };
+    });
+  }
+};
+export default getBoxscores;
+```
+
+Note that the "starting" field for individual players is based on a roster size of 13 with 4
+bench slots and 1 IR slot. If your league settings are different, the "starting" slots could
+be different.
+
+The types.ts file:
+
+```ts
+// The generated object after filtering/mapping
+export interface Scoreboard {
+  homeScore: number;
+  awayScore: number;
+  homeName: string;
+  awayName: string;
+  homeFirstName: string;
+  awayFirstName: string;
+  homeLastName: string;
+  awayLastName: string;
+  homeRoster: Player[];
+  awayRoster: Player[];
+}
+
+//  ----- Below is what's returned from the API --- //
+
+export interface BoxscoreResponse {
+  gameId: number;
+  id: number;
+  schedule: Matchup[];
+  scoringPeriodId: number;
+  seasonId: number;
+  segmentId: number;
+  status: Status;
+  members: Member[];
+  teams: Team[];
+}
+
+export interface Matchup {
+  away: MatchupObj;
+  home: MatchupObj;
+  id: number;
+  matchupPeriodId: number;
+  winner: Winner;
+}
+
+export interface MatchupObj {
+  teamId: number;
+  totalPoints: number;
+  totalPointsLive?: number;
+  totalProjectedPointsLive?: number;
+  rosterForCurrentScoringPeriod: { lineupSlotId: number; entries: PlayerEntry[] };
+}
+```
+
+This code is taken from my fantasy football GroupMe bot.
+[View it on Github](https://github.com/danielchines/fantasy-bot)
