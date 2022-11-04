@@ -38,6 +38,9 @@ console.log(hash);
 //   3e0e072b5af9cf7dd022e507bbcea46ea8e0054311b713e0129937ef60cf3f4c
 ```
 
+(Theoretically hashing can be reversed, but the amount of computational energy required is
+unfeasible in almost all cases - the big exception being bitcoin mining).
+
 ## Encrypt data with a Cipher
 
 The `Cipher` class is used to encrypt data. **Encryption** is the process of turning
@@ -67,8 +70,3 @@ scrypt(password, 'salt', 24, (err, key) => {
   });
 });
 ```
-
-The different between the two is that hashing is _one-way_ and and encryption is _two-way_.
-
-(Theoretically hashing can be reversed, but the amount of computational energy required is
-unfeasible in almost all cases - the big exception being bitcoin mining).
