@@ -28,7 +28,7 @@ the password they typed is correct without saving the password itself.
 ```javascript
 const { createHash } = require('node:crypto');
 
-const msg = "Here's a super secret message to encode";
+const msg = "Here's a super secret message to hash";
 
 const hash = createHash('sha256').update(msg).digest('hex');
 
@@ -51,6 +51,8 @@ decrypted using the private key, or password.
 ```javascript
 const { scrypt, randomFill, createCipheriv } = require('node:crypto');
 
+const msg = "Here's a super secret message to encrypt";
+
 const algorithm = 'aes-192-cbc';
 const password = 'Password used to generate key';
 
@@ -64,7 +66,7 @@ scrypt(password, 'salt', 24, (err, key) => {
 
     const cipher = createCipheriv(algorithm, key, iv);
 
-    let encrypted = cipher.update('some clear text data', 'utf8', 'hex');
+    let encrypted = cipher.update(msg, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     console.log(encrypted);
   });
