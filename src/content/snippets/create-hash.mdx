@@ -1,0 +1,74 @@
+---
+title: 'Hash and encrypt data using the built-in crypto Node.js library'
+description:
+  'This script uses the built-in Node.js crypto library to create a SHA-256 hash and a
+  Cipher for encrypting data.'
+tags: 'javascript, cryptography'
+---
+
+### First see if the built-in Crypto module is available
+
+```javascript
+let crypto;
+try {
+  crypto = require('node:crypto');
+  console.log("we're good");
+} catch (err) {
+  console.log('crypto support is disabled!');
+}
+```
+
+## Create a SHA-256 hash
+
+With the SHA-256 **hashing** algorithm, the text is converted to a unique "digest" which
+cannot be decrypted. The algorithm will always produce the same result, or key, and cannot
+be decrypted. This is useful for storing passwords in a database because you can ensure that
+the password they typed is correct without saving the password itself.
+
+```javascript
+const { createHash } = require('node:crypto');
+
+const msg = "Here's a super secret message to encode";
+
+const hash = createHash('sha256').update(msg).digest('hex');
+
+console.log(hash);
+
+// Prints:
+//   3e0e072b5af9cf7dd022e507bbcea46ea8e0054311b713e0129937ef60cf3f4c
+```
+
+## Encrypt data with a Cipher
+
+The `Cipher` class is used to encrypt data. **Encryption** is the process of turning
+readable text into unreadable "Ciphertext", which is used for sending messages without the
+risk of third-parties being able to read it. Unlike with hashing, the Ciphertext can be
+decrypted using the private key, or password.
+
+```javascript
+const { scrypt, randomFill, createCipheriv } = require('node:crypto');
+
+const algorithm = 'aes-192-cbc';
+const password = 'Password used to generate key';
+
+// First, we'll generate the key. The key length is dependent on the algorithm.
+// In this case for aes192, it is 24 bytes (192 bits).
+scrypt(password, 'salt', 24, (err, key) => {
+  if (err) throw err;
+  // Then, we'll generate a random initialization vector
+  randomFill(new Uint8Array(16), (err, iv) => {
+    if (err) throw err;
+
+    const cipher = createCipheriv(algorithm, key, iv);
+
+    let encrypted = cipher.update('some clear text data', 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    console.log(encrypted);
+  });
+});
+```
+
+The different between the two is that hashing is _one-way_ and and encryption is _two-way_.
+
+(Theoretically hashing can be reversed, but the amount of computational energy required is
+unfeasible in almost all cases - the big exception being bitcoin mining).
