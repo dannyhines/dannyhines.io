@@ -6,7 +6,11 @@ type TrackEvent = (
 ) => void;
 
 export const trackEvent: TrackEvent = (...args) => {
-  if (window.umami && typeof window.umami.trackEvent === 'function') {
+  if (
+    process.env.NODE_ENV === 'production' &&
+    window.umami &&
+    typeof window.umami.trackEvent === 'function'
+  ) {
     window.umami.trackEvent(...args);
   }
 };
