@@ -6,6 +6,8 @@ import Lightbox from 'react-image-lightbox';
 
 import 'react-image-lightbox/style.css';
 
+const MAX_PROSE_WIDTH = 850;
+
 type CloudinaryImgType = {
   publicId: string;
   height: string | number;
@@ -69,10 +71,10 @@ export default function CloudinaryImg({
     <figure
       className={clsx(className, {
         'overflow-hidden rounded shadow dark:shadow-none': !noStyle,
-        'mx-auto w-full': mdx && width <= 800,
+        'mx-auto w-full': mdx && width <= MAX_PROSE_WIDTH,
       })}
       style={{
-        ...(mdx && width <= 800 ? { maxWidth: width } : {}),
+        ...(mdx && width <= MAX_PROSE_WIDTH ? { maxWidth: width } : {}),
         ...style,
       }}
       {...rest}
