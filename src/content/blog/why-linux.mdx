@@ -1,0 +1,203 @@
+---
+title: 'Five Reasons Why People Use Linux'
+description: 'Why is Linux such a popular operating system? I give five reasons why'
+category: 'Informational'
+publishedAt: '2022-11-06'
+tags: 'linux,os,cli'
+headerImg: '/dannyhines.io/why-linux/header.png'
+---
+
+<CloudinaryImg
+  mdx
+  publicId='dannyhines.io/why-linux/header.png'
+  alt='Header'
+  width={2000}
+  height={1333}
+/>
+
+Linux is the operating system of choice for millions of developers for its security and
+customizability. It was created by Linus Torwald in 1991 for personal computers, but has
+since spawned hundreds of different versions and has been ported to more platforms than any
+other OS, from cheap $250 laptops to the
+[top supercomputers in the world](https://web.archive.org/web/20171114211600/http://www.zdnet.com/article/linux-totally-dominates-supercomputers/).
+Its umbrella of flavors also includes Android, which is by far the most-used mobile
+operating system.
+
+I personally use MacOS (Unix) because I have a Mac, plus I work on iOS apps and I doubt that
+Xcode would behave nicely with Linux. I wrote this because while I wasn’t very familiar with
+the Linux OS and its benefits, despite the fact that
+[47% of professional developers use it](https://truelist.co/blog/linux-statistics/), and so
+do 96.3% of the top one million web servers
+
+After a little research, I came up with five reasons why:
+
+## 1. It’s open-source
+
+Linux is open-source, meaning the code is available online for anyone to read which makes it
+**more secure than other operating systems**. While this may seem counterintuitive, it being
+open-source means that potential vulnerabilities are discovered and patched quickly by the
+community. Because engineers use the software themselves, they have a strong incentive to
+fix problems that would leave their computer vulnerable.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/why-linux/windows-linux-mac-meme_vv85uh'
+  alt='Windows Linux Mac meme'
+  width={625}
+  height={287}
+/>
+
+While bad actors can read the source code to find exploits, for every black-hat hacker there
+are a million users who rely on the operating system for everyday use and therefore have a
+strong incentive to snuff out vulnerable code. With Linux, you can trust that the system is
+secure, even without installing security software.
+
+Another reason to like the open-source nature of Linux is that the contributors are the
+users.  
+This leads to thoughtful design choices that are tailored to the distro’s user base, like
+better error messaging.
+
+<MdxRow>
+  <MdxCol>
+    <CloudinaryImg
+      mdx
+      publicId='/dannyhines.io/why-linux/windows-error_bww55a.png'
+      alt='Windows error'
+      width={1263}
+      height={640}
+    />
+  </MdxCol>
+  <MdxCol>
+    <CloudinaryImg
+      mdx
+      publicId='/dannyhines.io/why-linux/linux-error_eev5o8.png'
+      alt='Linux error'
+      width={1024}
+      height={768}
+    />
+  </MdxCol>
+</MdxRow>
+
+On Linux, features are added as often as users come up with them, and if the majority of the
+community prefers the status quo, the community can always create a new distribution.
+Speaking of which..
+
+## 2. Customization (Distros!)
+
+When you install “Linux”, you’re installing a version of Linux, known as a distribution or
+_distro_. I won’t go into detail on the Linux distros - there are
+[over 600 total and another 500 in active development](https://www.tecmint.com/linux-distro-for-power-users/).
+But in sum, distros are flavors of the operating system that emerged from the open-source
+community for different use cases, whether you’re using it for your home computer, using an
+enterprise environment or a server to communicate with devices.
+
+If you’re used to Mac or Windows you might use [Ubuntu](https://ubuntu.com/download/desktop)
+or [Mint](https://linuxmint.com/), which are forked from the grandaddy of distros
+[Debian](https://www.debian.org/), and are built for user-friendliness and come with useful
+default apps. If you’re a Linux wizard or network admin you might use
+[Arch Linix](https://www.archlinux.org/) or [Gentoo](https://www.gentoo.org/), which are
+designed for advanced users who really know the ins and outs of Linux.
+
+You can also customize just about every part of the operating system. If you’re using an
+older machine with 2GB of RAM, on Windows or a Mac you would probably have trouble running
+applications without third-party software for limiting memory usage, which itself adds to
+memory. With Linux you can select more lightweight options for your distro and even choose a
+graphical desktop environment like
+[LXQt](https://redirect.viglink.com/?format=go&jsonp=vglnk_166777421243610&key=eac202ea7a96cf485281d6c4ffa2069e&libId=la5xi15s0103es17000DL5r4yqrec&loc=https%3A%2F%2Fwww.makeuseof.com%2Ftag%2Fbest-lean-linux-desktop-environment-lxde-vs-xfce-vs-mate%2F&ccpaConsent=1---&v=1&opt=true&optExText=false&out=https%3A%2F%2Flxqt-project.org%2F&ref=https%3A%2F%2Fwww.makeuseof.com%2Ftag%2Flinux-windows-ram%2F&title=The%20Best%20Lean%20Linux%20Desktop%20Environment%3A%20LXDE%20vs.%20Xfce%20vs.%20MATE&txt=LXQt),
+which is so lightweight that it was forked to create the
+[Raspberry Pi OS](https://www.raspberrypi.com/software/). This is why older computers tend
+to perform much better using Linux than with Windows, which forces you to run default
+processes no matter the machine.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/why-linux/distros_mvwedo.jpg'
+  alt='44 different Linux distros'
+  width={1200}
+  height={486}
+/>
+
+> Credit:
+> [Eric Adams](https://www.forbes.com/sites/jasonevangelho/2019/11/05/my-search-for-the-perfect-linux-os-just-ended--with-an-unexpected-surprise/)
+
+## 3. Package Manager / workflow
+
+Linux’s package manager is smooth af. For whatever software you need to download, this is
+how you get it (on most Linux distros):
+
+```bash
+sudo apt-get install [your-package-here]
+```
+
+And you’re good to go.
+
+On Linux, it’s assumed that you’re not afraid of the command line. When you realize you need
+to download something, you’re 0.2 seconds away from your cursor being in the terminal and
+seconds away from the software being downloaded.
+
+On Mac or Windows, installing software often means installing/updating a separate package
+manager like Homebrew. If the software can’t be downloaded via the CLI you’ll need to find
+it online (trusting that the website is the correct one), downloading an executable that
+installs the app, dragging the app to your Applications folder, and sometimes restarting
+your machine (especially on Windows) for the changes to take effect.
+
+<GrayBox>
+  Note that Windows released
+  [winget](https://learn.microsoft.com/en-us/windows/package-manager/), a.k.a. the Windows
+  Package Manager CLI in 2022 which behaves similarly to Linux's package manager
+</GrayBox>
+
+## 4. No Reboot
+
+On Windows, you need to restart your computer a lot. On Linux, almost every package can be
+upgraded in place without a restart. Linux doesn’t need to reboot unless there are very low
+level changes like an update to the Kernel, which isn’t even the case on certain
+distributions. That’s why it’s the OS of choice for servers; in fact, many Linux servers on
+the internet have been running for years without failure or even being restarted. For
+desktop machines, this means your computer won’t randomly reboot in the middle of a workday
+before a meeting like it infamously does on Windows.
+
+A big reason for this is that due to the way the OS is designed -
+[Linux can access files that are in use while Windows cannot](https://www.reddit.com/r/linux/comments/t2gf9p/why_do_people_say_you_dont_need_to_restart_linux/hymuoff/).
+But more importantly, Linux lets you mess with the configuration depending on which
+distribution you choose, which lets you limit downtime even more, assuming that’s important
+for your use case.
+
+## 5. Task Automation
+
+<CloudinaryImg
+  mdx
+  publicId='dannyhines.io/why-linux/linux-one-liners_godyfx'
+  alt='Linux one liners'
+  width={2868}
+  height={1378}
+/>
+
+In Linux, tasks can be configured to run automatically given a time period, a specified
+time/date, or when a certain system measurement is hit. Certain distros come with automation
+out of the box, like
+[Red Hat Enterprise Linux](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/4/html/system_administration_guide/automated_tasks)
+which is pre-configured to run important system tasks to keep the everything fully
+up-to-date. Maybe you want to systematically save data about your system at the same time
+every day. Maybe every morning you open up Spotify, Notion and want to check your email.
+Tasks like these are simple to setup in Linux, and ironically you can waste tons of time
+[looking at tasks](https://linuxhandbook.com/bash-automation/) you can automate, and the
+different commands that are possible.
+
+## Conclusion
+
+If you enjoy using the command line or customizing your workflow, then you should try Linux.
+This is especially true if you're familiar with MacOS, which uses a Unix-based core. Linux
+won’t 10x your productivity and there isn’t any one particular feature that can’t be
+achieved using other operating systems, but Linux has options and tools that make it hard to
+go back to MacOS or Windows once you’re acquainted with it.
+
+One more meme for good measure.
+
+<CloudinaryImg
+  mdx
+  publicId='dannyhines.io/why-linux/linux-windows-meme_rtawot.jpg'
+  alt='Linux Windows meme'
+  width={577}
+  height={433}
+/>
