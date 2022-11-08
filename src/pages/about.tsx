@@ -8,6 +8,7 @@ import PrimaryLink from '@/components/links/PrimaryLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
 import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
+import TechStackGrid from '@/components/TechStackGrid';
 
 export default function About() {
   const isLoaded = useLoaded();
@@ -35,19 +36,15 @@ export default function About() {
                 className='text-sm text-gray-700 dark:text-gray-300 sm:w-4/5 sm:text-base'
                 data-fade='2'
               >
-                I started coding in the Spring of my freshman year at college. The class
-                taught the basics of programming and a language called Matlab: a mathy,{' '}
-                <PrimaryLink href='https://www.mathworks.com/help/matlab/learn_matlab/matrices-and-arrays.html'>
-                  matrix-based
-                </PrimaryLink>{' '}
-                language for handling data. At the time I knew the assignments were boring,
-                but I was totally hooked and changed my major from Mechanical Engineering to
-                Computer Science before the semester was over.
+                I started coding my freshman year at college in a required course for
+                mechanical engineers. The class used a relatively boring, matrix-based
+                language called Matlab. Nevertheless I loved it, changed my major to C.S.
+                and my interests have revolved around software ever since.
                 <br />
                 <br />
                 For work I&apos;ve built Chrome extensions and web apps, APIs and AWS
                 infrastructure. Personally and professionally I&apos;ve handled
-                authentication, CI/CD, database migrations, E2E testing, the whole shabang.
+                authentication, CI/CD, database migrations, E2E testing, and UI/UX.
                 <br />
                 <br />
                 Originally I made this site because I wanted to show off my side projects.
@@ -64,6 +61,15 @@ export default function About() {
                 width={2621}
                 height={2612}
               />
+            </div>
+
+            <div className='mt-10' data-fade='4'>
+              <h2>My Tech Stack</h2>
+              <p className='mt-4'>
+                My favorite languages and tools. If I&apos;m building something, I&apos;m
+                probably using a few of these.
+              </p>
+              <TechStackGrid className='mt-6' />
             </div>
 
             <div className='mt-10' data-fade='4'>
