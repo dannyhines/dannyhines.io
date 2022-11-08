@@ -56,3 +56,9 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You
 can start editing the page by modifying `src/pages/index.tsx`.
+
+## Performance
+
+I take pride in making my websites performant and acccessible, so I had to do the same for my personal website. Check out the [Page Speed Insights](https://pagespeed.web.dev/report?url=https%3A%2F%2Fdannyhines.io%2F&form_factor=desktop).
+
+![Website Performance](https://res.cloudinary.com/dannyhines/image/upload/v1667869441/dannyhines.io/website-performance.png)
