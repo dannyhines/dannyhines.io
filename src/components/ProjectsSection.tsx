@@ -8,7 +8,7 @@ function ProjectsSection(props: { projects: ProjectContent[]; fadeIn?: boolean }
   const { projects, fadeIn } = props;
   return (
     <section className='layout w-full py-4'>
-      <h1 data-fade={fadeIn ? '2' : '0'}>Projects</h1>
+      <h2 data-fade={fadeIn ? '2' : '0'}>Projects</h2>
       <p data-fade={fadeIn ? '3' : '0'} className='mt-2 text-gray-600 dark:text-gray-300'>
         Some stuff I&apos;ve been working on.
       </p>

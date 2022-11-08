@@ -61,10 +61,10 @@ export default function Header() {
         </nav>
 
         <Button
-          name='Toggle theme'
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           // variant={(theme as 'light' | 'dark') ?? 'light'}
           variant='ghost'
+          aria-label='toggle theme'
           className={clsxm(
             theme === 'dark' && 'text-light border border-gray-700 shadow-md',
             theme === 'light' && 'border  text-dark shadow-md'
