@@ -61,6 +61,7 @@ export default function Header() {
         </nav>
 
         <Button
+          name='Toggle theme'
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           // variant={(theme as 'light' | 'dark') ?? 'light'}
           variant='ghost'

@@ -44,7 +44,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
           width={600}
           height={360}
         />
-        <h4 className='mt-2 mb-2'>{project.title}</h4>
+        <h3 className='mt-2 mb-2 text-lg'>{project.title}</h3>
         <p className='mb-auto text-sm text-gray-700 dark:text-gray-300'>
           {project.description}
         </p>
@@ -59,13 +59,13 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
 
       <div className='absolute bottom-4 right-5 flex gap-4'>
         {isLoaded && project.github && (
-          <UnstyledLink href={project.github}>
+          <UnstyledLink href={project.github} aria-label='View on github'>
             <SiGithub className='mt-2 text-2xl text-primary-600 hover:scale-125 dark:text-primary-500' />
           </UnstyledLink>
         )}
 
         {isLoaded && project.link && (
-          <UnstyledLink href={`${project.link}`}>
+          <UnstyledLink href={`${project.link}`} aria-label='View this project'>
             <HiOutlineExternalLink className='mt-1 text-3xl text-primary-600 hover:scale-125 dark:text-primary-500' />
           </UnstyledLink>
         )}
