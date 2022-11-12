@@ -1,0 +1,55 @@
+---
+title: '[Git] Remove local branches that have been merged'
+description:
+  'This git command will delete your local branches that have been merged to the main
+  branch.'
+tags: 'git'
+---
+
+Git is one of the best and worst parts about software development. Typically during
+development, you create branches for features or bug fixes and merge them into the main
+branch. On my team we set Github to automatically delete the remote branch when it's merged
+into `main`.
+
+Eventually, when you run `git branch` you'll see a bunch of branches, but you can't tell
+which have been merged and which ones haven't. Here's a simple example, where I've merged
+every branch except the `feat/prisma` branch:
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/delete-local-branches/git-branch-1_x95cs2'
+  alt='git branch showing multiple branches'
+  width={1902}
+  height={308}
+/>
+
+## Delete all merged branches:
+
+Now use the following command to delete the branches that have been merged into the main
+branch.
+
+```shell
+git branch --merged main | grep -v "^\* main" | xargs -n 1 -r git branch -d
+```
+
+If your main branch is called something other than "main", change the two instances of
+"main" to whatever your main branch is called.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/delete-local-branches/delete-branches-command_vizbua'
+  alt='running the command'
+  width={1920}
+  height={230}
+/>
+
+This deletes all the branches that have been merged, leaving the only `main` and the
+`feat/prisma` branch that I'm still working on:
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/delete-local-branches/git-branch-2_rsfq8i'
+  alt='git branch showing one branch'
+  width={1906}
+  height={112}
+/>
