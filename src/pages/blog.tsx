@@ -3,6 +3,7 @@ import { InferGetStaticPropsType } from 'next';
 import * as React from 'react';
 
 import { getPostsByType } from '@/lib/mdx';
+import { sortByDate } from '@/lib/sorting';
 import useLoaded from '@/hooks/useLoaded';
 
 import BlogCard from '@/components/BlogCard';
@@ -41,7 +42,7 @@ export default function BlogPage({
 }
 
 export async function getStaticProps() {
-  const blogPosts = await getPostsByType('blog');
-
+  const unsortedBlogs = await getPostsByType('blog');
+  const blogPosts = sortByDate(unsortedBlogs);
   return { props: { blogPosts } };
 }
