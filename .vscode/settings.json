@@ -72,7 +72,11 @@
     "typeof",
     "umami",
     "unstyled",
-    "upvoted"
+    "upvoted",
+    "Bitfinex",
+    "Hoegner",
+    "boxscore",
+    "boxscores"
   ],
   "mdx-preview.preview.useVscodeMarkdownStyles": false
 }
