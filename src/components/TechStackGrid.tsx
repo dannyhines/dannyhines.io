@@ -9,7 +9,7 @@ import {
   SiVisualstudio,
 } from 'react-icons/si';
 
-import TechStackCard from '@/components/TechStackCard';
+import TechStackCard from '@/components//cards/TechStackCard';
 
 import { TechStack } from '@/types/TechStack';
 

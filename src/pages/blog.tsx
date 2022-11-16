@@ -6,7 +6,7 @@ import { getPostsByType } from '@/lib/mdx';
 import { sortByDate } from '@/lib/sorting';
 import useLoaded from '@/hooks/useLoaded';
 
-import BlogCard from '@/components/BlogCard';
+import BlogCard from '@/components/cards/BlogCard';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 
