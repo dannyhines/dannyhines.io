@@ -1,0 +1,158 @@
+---
+title: 'Encryption vs. Encoding vs. Hashing'
+description:
+  'Learn the differences between encryption, encoding and hashing, with examples using
+  Node.js'
+category: 'Guide'
+publishedAt: '2022-11-15'
+tags: 'crypto,javascript'
+headerImg: '/dannyhines.io/encryption-vs-hashing/header_nk8crt'
+---
+
+Encoding, Encryption and Hashing are all terms that mean “turning data into other data”. But
+they’re all different, and when we’re talking about software, small differences can have big
+ramifications. So here’s a quick rundown of the difference between the three along with
+examples using native Node.js libraries.
+
+<GrayBox>
+  **TL;DR**: *Encoding* is when you convert data into a string that can easily be converted
+  back, *encryption* is like encoding but the output is random and you need a password to
+  convert it back, and *hashing* converts data into the same output every time (a hash), but
+  it can’t be converted back.
+</GrayBox>
+
+## Encoding
+
+Encoding means converting data into a specialized format so it's easier to deal with. It’s
+useful when you want to convert your weird blob of data to a string to put it in a database,
+or for reducing the size of the data (i.e. audio and video files).
+
+For audio and video, each file format has a corresponding program called a _codec_ that is
+used to encode it into the appropriate format and then decodes it so the data can be read.
+
+Encoding strings can be accomplished with a
+[Buffer](https://www.tutorialspoint.com/nodejs/nodejs_buffers.htm), which is a data
+structure that converts the data into a stream of bytes that can easily be converted to
+different encodings ("ascii", "utf8", "base64" or "hex”). Here’s an example taking string of
+JSON and encoding it with the “base64” encoding type:
+
+```javascript
+let data = { person: { name: 'Danny', friends: [] } };
+let dataString = JSON.stringify(data);
+
+// Create a Buffer object
+let bufferObj = Buffer.from(dataString, 'utf8');
+
+// Encode the Buffer as a base64 string
+let base64String = bufferObj.toString('base64');
+
+console.log('Base64 encoded:', base64String);
+// Base64 encoded: eyJwZXJzb24iOnsibmFtZSI6IkRhbm55IiwiZnJpZW5kcyI6W119fQ==
+```
+
+To encode the string we create a Buffer from it using the `utf8` or Unicode encoding type,
+which is basically how a computer encodes the keyboard characters into bytes. Then we use
+the `Buffer.toString()` function with the base64 encoding type, which returns the Base64
+version of our string.
+
+Then to decode we do the opposite: create a Buffer with the base64-encoded string and decode
+it back into Unicode.
+
+```javascript
+let newBufferObj = Buffer.from(base64String, 'base64');
+let decodedString = newBufferObj.toString('utf8');
+
+console.log('The decoded data:', JSON.parse(decodedString));
+// The decoded data: { person: { name: 'Danny', friends: [] } }
+```
+
+Encoding is for transmitting or storing data, not keeping it secure. That is - if someone
+can tell it’s base64 encoded, then they can easily decode it. Which brings us to the next
+topic…
+
+## Encryption
+
+Encryption is the two-way process of turning readable text into unreadable _Ciphertext_,
+which can be converted back to the original data using a password or key. This is useful for
+sending messages without the risk of third-parties being able to read it.
+
+There are two ways to encrypt data: symmetric and asymmetric encryption. **Symmetric**
+encryption uses one key that is shared between all the people who are sending or receiving
+encrypted information. **Asymmetric** encryption, or public key encryption, uses two keys:
+one for encrypting information and one for decrypting it. The decryption key is kept
+private, while the encryption key is shared publicly.
+
+For this example we’re using the built-in [crypto](https://nodejs.org/api/crypto.html)
+module and the `Cipher` class to encrypt data.
+
+```javascript
+const { scrypt, randomFill, createCipheriv } = require('node:crypto');
+
+const msg = "Here's a super secret message to encrypt";
+
+const algorithm = 'aes-192-cbc';
+const password = 'Password used to generate key';
+
+// First, we'll generate the key. The key length is dependent on the algorithm.
+// In this case for aes192, it is 24 bytes (192 bits).
+scrypt(password, 'salt', 24, (err, key) => {
+  if (err) throw err;
+  // Then, we'll generate a random initialization vector
+  randomFill(new Uint8Array(16), (err, iv) => {
+    if (err) throw err;
+
+    const cipher = createCipheriv(algorithm, key, iv);
+
+    let encrypted = cipher.update(msg, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    console.log(encrypted);
+  });
+});
+```
+
+Here we’re using the AES encryption algorithm, which is a _symmetric_ encryption algorithm
+because it uses the same key for encrypting and decrypting. In this case, the sender and the
+receiver will both use the same secret key.
+
+In general, the strength of the encryption is based on how difficult it is to guess the key.
+To obscure the results we use an _initialization vector_ (similar to a
+[salt](<https://en.wikipedia.org/wiki/Salt_(cryptography)>)) which is a random chunk of data
+that serves as the initial state of the output. The IV gets stored with the output, allowing
+the person with the key to decrypt the message while making it harder for a hacker to crack
+it.
+
+## Hashing
+
+With a **hashing** algorithm, the data is converted to a unique "digest", “fingerprint” or
+“signature”, which is a random string. But unlike with encoding and encryption the output
+can’t be converted back to the original.
+
+This algorithm is awesome because while it’s impossible to guess the input, it will always
+produce the same result, or hash. This is useful for storing passwords in a database, for
+example, because you can ensure that the password they typed is correct without saving the
+password itself.
+
+```javascript
+const { createHash } = require('node:crypto');
+
+const msg = "Here's a super secret message to hash";
+
+const hash = createHash('sha256').update(msg).digest('hex');
+
+console.log(hash);
+// 3e0e072b5af9cf7dd022e507bbcea46ea8e0054311b713e0129937ef60cf3f4c
+```
+
+Theoretically, it sounds like it should be possible to figure out the input by trying random
+inputs and seeing if it matches the hash you're trying to guess. Assuming the passwords are
+random and not "Password123", it would take a little while to guess. The SHA-256 hash is 32
+bytes (256 bits) long, so there are a total of 2^256 possible SHA-256 hashes. That is 10^77,
+or 100000000000000000000000000000000000000000000000000000000000000000000000000000 possible
+combinations. If the password could be 25 digits long, it would take expensive computers
+billions of years to come up with a valid guess.
+
+Even with all the computers powering the Bitcoin network working together, which
+collectively guess around 15 trillion hashes per second, it would take about 650 million
+years to guess a valid password. And because multiple passwords can result in the same hash,
+the guess would probably be wrong anyway. Changing one character will result in a completely
+different hash, which makes it even harder. So yeah, it’s really hard to guess.
