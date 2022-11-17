@@ -5,9 +5,9 @@ import * as React from 'react';
 import { getPostsByType } from '@/lib/mdx';
 import useLoaded from '@/hooks/useLoaded';
 
+import SnippetCard from '@/components/cards/SnippetCard';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import SnippetCard from '@/components/SnippetCard';
 
 import { SnippetContent } from '@/types/Post';
 
