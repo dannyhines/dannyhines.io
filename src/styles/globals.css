@@ -87,6 +87,14 @@
     @apply font-primary text-sm md:text-base;
   }
 
+  figcaption {
+    @apply px-1 py-2 text-xs text-gray-500 dark:text-gray-300 md:text-sm;
+  }
+
+  figcaption > a {
+    @apply !text-gray-400 dark:!text-gray-200;
+  }
+
   /* #endregion  /**======== Typography =========== */
 
   .layout {

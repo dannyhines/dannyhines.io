@@ -17,6 +17,7 @@ type CloudinaryImgType = {
   className?: string;
   preview?: boolean;
   noStyle?: boolean;
+  caption?: string;
   aspect?: {
     width: number;
     height: number;
@@ -35,6 +36,7 @@ export default function CloudinaryImg({
   noStyle = false,
   mdx = false,
   style,
+  caption,
   aspect,
   ...rest
 }: CloudinaryImgType) {
@@ -67,10 +69,19 @@ export default function CloudinaryImg({
 
   const aspectRatio = aspect ? aspect.height / aspect.width : undefined;
 
+  const ImageCaption: JSX.Element | boolean = caption ? (
+    typeof caption === 'string' ? (
+      <figcaption>{caption}</figcaption>
+    ) : (
+      caption
+    )
+  ) : (
+    false
+  );
+
   return (
     <figure
       className={clsx(className, {
-        'overflow-hidden rounded shadow dark:shadow-none': !noStyle,
         'mx-auto w-full': mdx && width <= MAX_PROSE_WIDTH,
       })}
       style={{
@@ -80,34 +91,42 @@ export default function CloudinaryImg({
       {...rest}
     >
       <div
-        style={{
-          position: 'relative',
-          height: 0,
-          paddingTop: aspectRatio
-            ? `${aspectRatio * 100}%`
-            : `${(+height / +width) * 100}%`,
-          cursor: preview ? 'zoom-in' : 'pointer',
-        }}
-        className='img-blur'
-        onClick={preview ? () => setIsOpen(true) : undefined}
+        className={clsx(className, {
+          'overflow-hidden rounded shadow dark:shadow-none': !noStyle,
+          // 'mx-auto w-full': mdx && width <= MAX_PROSE_WIDTH,
+        })}
       >
-        <style jsx>{`
-          .img-blur::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            filter: blur(20px);
-            z-index: 0;
-            background-image: url(${urlBlurred});
-            background-position: center center;
-            background-size: 100%;
-          }
-        `}</style>
-        <div className='absolute top-0 left-0'>
-          <Image width={width} height={height} src={url} alt={alt} title={title || alt} />
+        <div
+          style={{
+            position: 'relative',
+            height: 0,
+            paddingTop: aspectRatio
+              ? `${aspectRatio * 100}%`
+              : `${(+height / +width) * 100}%`,
+            cursor: preview ? 'zoom-in' : 'pointer',
+          }}
+          className='img-blur'
+          onClick={preview ? () => setIsOpen(true) : undefined}
+        >
+          <style jsx>{`
+            .img-blur::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              filter: blur(20px);
+              z-index: 0;
+              background-image: url(${urlBlurred});
+              background-position: center center;
+              background-size: 100%;
+            }
+          `}</style>
+          <div className='absolute top-0 left-0'>
+            <Image width={width} height={height} src={url} alt={alt} title={title || alt} />
+          </div>
         </div>
+        {isOpen && <Lightbox mainSrc={url} onCloseRequest={() => setIsOpen(false)} />}
       </div>
-      {isOpen && <Lightbox mainSrc={url} onCloseRequest={() => setIsOpen(false)} />}
+      <div>{ImageCaption}</div>
     </figure>
   );
 }
