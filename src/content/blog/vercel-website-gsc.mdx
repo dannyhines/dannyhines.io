@@ -1,0 +1,84 @@
+---
+title: 'Verify your NextJS site in the Google Search Console'
+description:
+  'How to verify a website deployed on Vercel in order to appear in Google Search results'
+category: 'Guide'
+publishedAt: '2022-12-13'
+tags: 'google,seo,vercel,nextjs'
+headerImg: '/dannyhines.io/vercel-website-gsc/header'
+---
+
+To make sure that Google correctly indexes your website, you’ll need to verify it in the
+Google Search Console. This will give you access to Google’s view of your website, and lets
+you track its performance from search results.
+
+This guide assumes you have a website that’s deployed to [Vercel](https://vercel.com), which
+is my new favorite service for deploying websites due to its UX and integration with
+Vercel’s framework NextJS.
+
+1. First, go to the [Google Search Console](https://search.google.com/search-console) and
+   log in with your Google account. The account you use doesn’t matter, but you’ll need to
+   use that account in the future to view your site’s search metrics.
+2. Once you're logged in, click on the "Add Property" button and enter the URL of your
+   website that's deployed on Vercel. Click “CONTINUE”.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/vercel-website-gsc/gsc-select-property'
+  alt='Select property in Google search console'
+  width={1229}
+  height={769}
+/>
+
+3. Google will give you options to verify the domain. The easiest (and recommended) method
+   is to use the TXT record which is selected by default. Click COPY next to the record
+   configuration.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/vercel-website-gsc/gsc-txt-record'
+  alt='TXT record displayed in the Google search console'
+  width={1166}
+  height={759}
+/>
+
+4. Next, log in to your Vercel account and go to the settings for your website. In the
+   "Domains" tab, go to the DNS Records section. Leave the “Name” field blank. Under “Type”
+   choose TXT, and in the “Value” textbox paste the TXT record you copied from the GSC and
+   click “Add”.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/vercel-website-gsc/vercel-dns'
+  alt='Add DNS record in Vercel'
+  width={1306}
+  height={356}
+/>
+
+5. Finally, go back to the Google Search Console and click on the "Verify" button. Google
+   will then check your website for the verification code, and if it's found, your domain
+   will be verified. This should be pretty immediate, but Google has a disclaimer that it
+   can sometimes take hours to complete.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/vercel-website-gsc/auto-verified'
+  alt='Verified domain in Google Search console'
+  width={974}
+  height={440}
+/>
+
+That's it! Once your domain is verified, you can use the Google Search Console to see how
+your website is performing in Google's search results and make any necessary changes to
+improve its visibility.
+
+<CloudinaryImg
+  mdx
+  publicId='/dannyhines.io/vercel-website-gsc/gsc-metrics'
+  alt='Metrics for my website Reddit Time Machine'
+  caption='Metrics for my website Reddit Time Machine'
+  width={1419}
+  height={987}
+/>
+
+Big ups to the teams at both Google and Vercel for making the process so seamless.
