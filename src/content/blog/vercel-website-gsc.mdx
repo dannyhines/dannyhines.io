@@ -9,8 +9,8 @@ headerImg: '/dannyhines.io/vercel-website-gsc/header'
 ---
 
 To make sure that Google correctly indexes your website, you’ll need to verify it in the
-Google Search Console. This will give you access to Google’s view of your website, and lets
-you track its performance from search results.
+Google Search Console. This will let you track the performance of your website in Google
+search results.
 
 This guide assumes you have a website that’s deployed to [Vercel](https://vercel.com), which
 is my new favorite service for deploying websites due to its UX and integration with
@@ -76,7 +76,12 @@ improve its visibility.
   mdx
   publicId='/dannyhines.io/vercel-website-gsc/gsc-metrics'
   alt='Metrics for my website Reddit Time Machine'
-  caption='Metrics for my website Reddit Time Machine'
+  caption={
+    <figcaption>
+      Metrics for my website{' '}
+      <a href='https://reddit-time-machine.come'>Reddit Time Machine</a>
+    </figcaption>
+  }
   width={1419}
   height={987}
 />
