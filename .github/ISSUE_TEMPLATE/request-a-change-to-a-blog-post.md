@@ -1,12 +1,28 @@
 ---
 name: Request a change to a blog post
-about: Typo, broken link, or innacurate information? Please let me know!
-title: Issue in [Blog Post]
+about: Typo, broken link, or innacurate information
+title: Request change to Blog Post
 labels: typo
 assignees: danielchines
 
 ---
-
-## Blog post title (doesn't need to be exact):
-
-Describe what I need to fix:
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Typo, broken link, or innacurate information? Thanks for letting me know
+  - type: input
+    id: post-title
+    attributes:
+      label: Blog Post Title
+      description: Doesn't need to be exact
+      placeholder: ex. ChatGPT blog
+    validations:
+      required: true
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What do I need to fix?
+      placeholder: The link to Jasper.ai doesn't work
+    validations:
+      required: true
