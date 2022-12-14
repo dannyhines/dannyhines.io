@@ -1,6 +1,6 @@
 ---
 name: Request a change to a blog post
-about: Typo, broken link, or innacurate information
+description: Typo, broken link, or innacurate information in the Blog
 title: Request change to Blog Post
 labels: typo
 assignees: danielchines
