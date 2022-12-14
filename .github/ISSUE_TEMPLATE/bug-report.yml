@@ -18,9 +18,9 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: Mobile or desktop?
+    id: device
     attributes:
-      label: Version
+      label: Mobile or desktop?
       options:
         - Mobile
         - Desktop
