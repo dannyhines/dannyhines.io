@@ -4,8 +4,6 @@ about: Typo, broken link, or innacurate information
 title: Request change to Blog Post
 labels: typo
 assignees: danielchines
-
----
 body:
   - type: markdown
     attributes:
@@ -26,3 +24,4 @@ body:
       placeholder: The link to Jasper.ai doesn't work
     validations:
       required: true
+---
