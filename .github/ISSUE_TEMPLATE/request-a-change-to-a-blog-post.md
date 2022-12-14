@@ -1,4 +1,3 @@
----
 name: Request a change to a blog post
 description: Typo, broken link, or innacurate information in the Blog
 title: Request change to Blog Post
@@ -24,4 +23,3 @@ body:
       placeholder: The link to Jasper.ai doesn't work
     validations:
       required: true
----
