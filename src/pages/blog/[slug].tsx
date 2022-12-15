@@ -84,7 +84,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
             )}
             <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
               <CustomLink
-                href={`https://github.com/danielchines/dannyhines.io/blob/main/src/content/blog/${meta.slug}.mdx`}
+                href={`https://github.com/danielchines/dannyhines.io/issues/new?assignees=danielchines&labels=typo&template=typo-in-blog-post.yml&title=Request+change+to+Blog+"${meta.title}"`}
                 onClick={() =>
                   trackEvent('[Blog Post] Request an edit on Github', 'external_link')
                 }
