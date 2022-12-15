@@ -5,6 +5,7 @@ import * as React from 'react';
 import { SiGithub } from 'react-icons/si';
 
 import { getFileBySlug, getFiles } from '@/lib/mdx';
+import { trackEvent } from '@/lib/umami';
 
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/PrimaryLink';
@@ -70,7 +71,13 @@ export default function BlogPage({ code, meta }: ProjectType) {
             {meta.github && (
               <div className='my-4 flex w-full flex-row items-center justify-center gap-2'>
                 <SiGithub className='text-lg text-gray-800 dark:text-white' />
-                <UnderlineLink href={meta.github} className='mt-1'>
+                <UnderlineLink
+                  href={meta.github}
+                  className='mt-1'
+                  onClick={() =>
+                    trackEvent('[Blog Post] Navigate to Github repo', 'external_link')
+                  }
+                >
                   View the code on Github
                 </UnderlineLink>
               </div>
@@ -78,10 +85,18 @@ export default function BlogPage({ code, meta }: ProjectType) {
             <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
               <CustomLink
                 href={`https://github.com/danielchines/dannyhines.io/blob/main/src/content/blog/${meta.slug}.mdx`}
+                onClick={() =>
+                  trackEvent('[Blog Post] Request an edit on Github', 'external_link')
+                }
               >
-                Edit this on GitHub
+                Found a typo? Request a change
               </CustomLink>
-              <CustomLink href='/blog'>← Back to blog</CustomLink>
+              <CustomLink
+                href='/blog'
+                onClick={() => trackEvent('[Blog Post] Navigate to blog', 'internal_link')}
+              >
+                ← Back to blog
+              </CustomLink>
             </div>
           </div>
         </section>
