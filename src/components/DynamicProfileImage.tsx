@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import CloudinaryImg from '@/components/CloudinaryImage';
+import UnderlineLink from '@/components/links/UnderlineLink';
 
 const imageList = [
   'ai-image1',
@@ -38,7 +39,8 @@ export const DynamicProfileImage: React.FC = () => {
         height={512}
       />
       <figcaption className='hidden pt-2 text-center text-xs md:block'>
-        AI-generated with <a href='https://ai.pfpmaker.com/'>pfpmaker</a>
+        AI-generated with{' '}
+        <UnderlineLink href='https://ai.pfpmaker.com/'>pfpmaker</UnderlineLink>
       </figcaption>
     </div>
   );
