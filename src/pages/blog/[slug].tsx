@@ -13,6 +13,7 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 import MDXComponents from '@/components/MDXComponents';
 import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
+import SubscribeBox from '@/components/SubsribeBox';
 
 import { ProjectType } from '@/types/Post';
 
@@ -82,6 +83,7 @@ export default function BlogPage({ code, meta }: ProjectType) {
                 </UnderlineLink>
               </div>
             )}
+            <SubscribeBox />
             <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
               <CustomLink
                 href={`https://github.com/danielchines/dannyhines.io/issues/new?assignees=danielchines&labels=typo&template=typo-in-blog-post.yml&title=Request+change+to+Blog+"${meta.title}"`}

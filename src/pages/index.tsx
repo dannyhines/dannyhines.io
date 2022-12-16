@@ -83,7 +83,10 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
               </div>
               <DynamicProfileImage data-fade='3' />
             </div>
-            <SubscribeBox data-fade='4' />
+
+            <div className='mt-8 w-full' data-fade='4'>
+              <SubscribeBox />
+            </div>
 
             <div className='mt-10 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />

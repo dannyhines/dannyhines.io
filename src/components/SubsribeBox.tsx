@@ -46,7 +46,7 @@ export default function SubscribeBox() {
   };
 
   return (
-    <div className='mt-16 w-full rounded border border-primary-200 bg-primary-50 p-6 dark:border-gray-700 dark:bg-primary-600 dark:bg-opacity-10'>
+    <div className='mt-8 w-full rounded border border-primary-200 bg-primary-50 p-6 dark:border-gray-700 dark:bg-primary-600 dark:bg-opacity-10'>
       <h3 className=''>Subscribe to the newsletter</h3>
       <p className='my-1 text-gray-800 dark:text-gray-200'>
         Get monthly emails from me about tech, finance and more.
