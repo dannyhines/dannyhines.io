@@ -15,7 +15,6 @@ const imageList = [
   'ai-image10',
   'ai-image11',
 ];
-
 const TRANSITION_SECONDS = 5;
 
 export const DynamicProfileImage: React.FC = () => {
@@ -26,6 +25,7 @@ export const DynamicProfileImage: React.FC = () => {
       setCurrentImageIndex((currentImageIndex + 1) % imageList.length);
     }, TRANSITION_SECONDS * 1000);
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentImageIndex]);
 
   return (
@@ -37,6 +37,9 @@ export const DynamicProfileImage: React.FC = () => {
         width={512}
         height={512}
       />
+      <figcaption className='hidden pt-2 text-center text-xs md:block'>
+        AI-generated with <a href='https://ai.pfpmaker.com/'>pfpmaker</a>
+      </figcaption>
     </div>
   );
 };
