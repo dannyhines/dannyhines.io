@@ -10,7 +10,7 @@ function ProjectsSection(props: { projects: ProjectContent[]; fadeIn?: boolean }
     <section className='layout w-full py-4'>
       <h2 data-fade={fadeIn ? '2' : '0'}>Projects</h2>
       <p data-fade={fadeIn ? '3' : '0'} className='mt-2 text-gray-600 dark:text-gray-300'>
-        My public-facing work and side projects.
+        Some of my public-facing work and side projects.
       </p>
 
       <ul
