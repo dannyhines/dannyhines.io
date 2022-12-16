@@ -101,6 +101,24 @@
       "}"
     ]
   },
+  "Next Component": {
+    "prefix": "nc",
+    "body": [
+      "import * as React from 'react';",
+      "",
+      "import clsxm from '@/lib/clsxm';",
+      "",
+      "type ComponentProps = React.ComponentPropsWithoutRef<'div'>;",
+      "",
+      "export default function FeaturedPosts({ className, ...rest }: ComponentProps) {",
+      "  return (",
+      "    <div className={clsxm('', className)} {...rest}>",
+      "",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
   "Next API": {
     "prefix": "napi",
     "body": [
@@ -111,7 +129,7 @@
       "  } else {",
       "    res.status(405).json({ message: 'Method Not Allowed' });",
       "  }",
-      "}"
+      "}",
     ]
   },
   "Get Static Props": {

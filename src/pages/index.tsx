@@ -7,18 +7,21 @@ import { trackEvent } from '@/lib/umami';
 import useLoaded from '@/hooks/useLoaded';
 
 import { DynamicProfileImage } from '@/components/DynamicProfileImage';
+import FeaturedPosts from '@/components/FeaturedPosts';
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
 import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
 import SubscribeBox from '@/components/SubsribeBox';
 
-import { ProjectContent } from '@/types/Post';
+import { BlogContent, ProjectContent } from '@/types/Post';
 
 let saidHi = process.env.NODE_ENV !== 'production';
 
-export default function HomePage(props: { projects: ProjectContent[] }) {
+export default function HomePage(props: {
+  projects: ProjectContent[];
+  featuredPosts: BlogContent[];
+}) {
   const isLoaded = useLoaded();
 
   if (!saidHi) {
@@ -61,30 +64,15 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                     View it on Github
                   </ArrowLink>
                 </p>
-                <div className='flex justify-center gap-3 sm:justify-start'>
-                  <ButtonLink
-                    className='mt-6'
-                    href='/blog'
-                    data-fade='5'
-                    onClick={() => trackEvent('[Home] View blog', 'internal_link')}
-                  >
-                    Check out the blog
-                  </ButtonLink>
-                  <ButtonLink
-                    className='mt-6'
-                    href='/about'
-                    variant='outline'
-                    data-fade='5'
-                    onClick={() => trackEvent('[Home] View about', 'internal_link')}
-                  >
-                    About me
-                  </ButtonLink>
-                </div>
               </div>
               <DynamicProfileImage data-fade='3' />
             </div>
 
             <div className='mt-8 w-full' data-fade='4'>
+              <FeaturedPosts featuredPosts={props.featuredPosts} />
+            </div>
+
+            <div className='mt-8 w-full' data-fade='5'>
               <SubscribeBox />
             </div>
 
@@ -100,7 +88,11 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
 
 export async function getStaticProps() {
   const projects = await getPostsByType('projects');
+  const featuredBlogs = ['the-nikkei', 'encryption-vs-hashing', 'tether-ticking-time-bomb'];
+  const blogs = await getPostsByType('blog');
+  const featuredPosts = blogs.filter((content) => featuredBlogs.includes(content.slug));
+
   return {
-    props: { projects },
+    props: { projects, featuredPosts },
   };
 }
