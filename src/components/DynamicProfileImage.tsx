@@ -9,12 +9,11 @@ const imageList = [
   'ai-image6',
   'ai-image7',
   'ai-image2',
-  'ai-image10',
+  'ai-image9',
   'ai-image4',
   'ai-image5',
   'ai-image8',
-  'ai-image9',
-  'ai-image11',
+  'ai-image10',
 ];
 
 const TRANSITION_SECONDS = 5;
