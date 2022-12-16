@@ -13,7 +13,7 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 import MDXComponents from '@/components/MDXComponents';
 import NextImage from '@/components/NextImage';
 import Seo from '@/components/Seo';
-import SubscribeBox from '@/components/SubsribeBox';
+import SubscribeBox from '@/components/SubscribeBox';
 
 import { ProjectType } from '@/types/Post';
 

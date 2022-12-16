@@ -12,7 +12,7 @@ import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
-import SubscribeBox from '@/components/SubsribeBox';
+import SubscribeBox from '@/components/SubscribeBox';
 
 import { BlogContent, ProjectContent } from '@/types/Post';
 
@@ -65,15 +65,21 @@ export default function HomePage(props: {
                   </ArrowLink>
                 </p>
               </div>
-              <DynamicProfileImage data-fade='3' />
+
+              <div
+                className='flex w-1/2 max-w-[300px] flex-col pt-0 sm:w-1/4 sm:pt-16'
+                data-fade='3'
+              >
+                <DynamicProfileImage />
+              </div>
+            </div>
+
+            <div className='mt-4 w-full sm:mt-8' data-fade='5'>
+              <SubscribeBox />
             </div>
 
             <div className='mt-8 w-full' data-fade='4'>
               <FeaturedPosts featuredPosts={props.featuredPosts} />
-            </div>
-
-            <div className='mt-8 w-full' data-fade='5'>
-              <SubscribeBox />
             </div>
 
             <div className='mt-10 w-full' data-fade='6'>

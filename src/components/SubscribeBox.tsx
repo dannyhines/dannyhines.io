@@ -49,7 +49,7 @@ export default function SubscribeBox() {
     <div className='mt-8 mb-4 w-full rounded border border-primary-200 bg-primary-50 p-6 dark:border-gray-700 dark:bg-primary-500 dark:bg-opacity-10'>
       <h3 className=''>Subscribe to the newsletter</h3>
       <p className='my-1 text-gray-800 dark:text-gray-200'>
-        Get early access to my writing on tech, finance and more.
+        Get early access to articles on tech, finance and more.
       </p>
       <form className='relative my-4' onSubmit={subscribe}>
         <input

@@ -30,7 +30,7 @@ export const DynamicProfileImage: React.FC = () => {
   }, [currentImageIndex]);
 
   return (
-    <div className='flex w-1/2 max-w-[300px] flex-col pt-0 sm:w-1/4 sm:pt-16'>
+    <div>
       <CloudinaryImg
         publicId={'/dannyhines.io/ai-images/' + imageList[currentImageIndex]}
         alt='Portrait of me created using AI'
