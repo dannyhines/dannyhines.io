@@ -5,17 +5,18 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 
 const imageList = [
   'ai-image1',
-  'ai-image2',
   'ai-image3',
-  'ai-image4',
-  'ai-image5',
   'ai-image6',
   'ai-image7',
+  'ai-image2',
+  'ai-image10',
+  'ai-image4',
+  'ai-image5',
   'ai-image8',
   'ai-image9',
-  'ai-image10',
   'ai-image11',
 ];
+
 const TRANSITION_SECONDS = 5;
 
 export const DynamicProfileImage: React.FC = () => {
