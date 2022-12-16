@@ -6,11 +6,10 @@ import { getPostsByType } from '@/lib/mdx';
 import { trackEvent } from '@/lib/umami';
 import useLoaded from '@/hooks/useLoaded';
 
+import { DynamicProfileImage } from '@/components/DynamicProfileImage';
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import NextImage from '@/components/NextImage';
 import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
 
@@ -46,12 +45,8 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                   className='my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
                   data-fade='2'
                 >
-                  I&apos;m a software engineer at{' '}
-                  <UnderlineLink href='https://www.capitalone.com/'>
-                    Capital One
-                  </UnderlineLink>{' '}
-                  with experience building web and mobile applications, mostly with
-                  React/NextJS and iOS.
+                  I&apos;m a software engineer at Capital One with experience building web
+                  and mobile applications, mostly with React/NextJS and iOS.
                   <br />
                   <br />I built this site to keep track of what I&apos;ve learned and teach
                   others about software. It uses NextJS, TailwindCSS and is deployed with
@@ -85,15 +80,17 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                   </ButtonLink>
                 </div>
               </div>
-              <NextImage
+              {/* <NextImage
                 src='/images/me-transparent.png'
                 alt='Me'
                 className='w-2/3 max-w-[300px] p-4 sm:w-1/4 sm:p-0'
                 data-fade='3'
                 width={1795 / 3}
                 height={2032 / 3}
-              />
+              /> */}
+              <DynamicProfileImage data-fade='3' />
             </div>
+
             <div className='mt-24 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />
             </div>
