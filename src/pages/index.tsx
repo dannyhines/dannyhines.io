@@ -74,11 +74,11 @@ export default function HomePage(props: {
               </div>
             </div>
 
-            <div className='mt-4 w-full sm:mt-8' data-fade='5'>
+            <div className='mt-4 w-full sm:mt-10' data-fade='5'>
               <SubscribeBox />
             </div>
 
-            <div className='mt-8 w-full' data-fade='4'>
+            <div className='mt-10 w-full' data-fade='4'>
               <FeaturedPosts featuredPosts={props.featuredPosts} />
             </div>
 

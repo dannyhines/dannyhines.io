@@ -30,10 +30,10 @@ export default function FeaturedPosts({
       </ul>
       <ArrowLink
         href='/blog'
-        className='mt-4'
+        className='mt-5 text-lg'
         onClick={() => trackEvent('[Home] View blog', 'internal_link')}
       >
-        View all
+        View all posts
       </ArrowLink>
     </div>
   );
