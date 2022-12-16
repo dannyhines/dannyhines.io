@@ -12,6 +12,7 @@ import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
 import ProjectsSection from '@/components/ProjectsSection';
 import Seo from '@/components/Seo';
+import SubscribeBox from '@/components/SubsribeBox';
 
 import { ProjectContent } from '@/types/Post';
 
@@ -80,18 +81,11 @@ export default function HomePage(props: { projects: ProjectContent[] }) {
                   </ButtonLink>
                 </div>
               </div>
-              {/* <NextImage
-                src='/images/me-transparent.png'
-                alt='Me'
-                className='w-2/3 max-w-[300px] p-4 sm:w-1/4 sm:p-0'
-                data-fade='3'
-                width={1795 / 3}
-                height={2032 / 3}
-              /> */}
               <DynamicProfileImage data-fade='3' />
             </div>
+            <SubscribeBox data-fade='4' />
 
-            <div className='mt-24 w-full' data-fade='6'>
+            <div className='mt-10 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />
             </div>
           </div>
