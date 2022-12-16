@@ -76,7 +76,8 @@
     "Bitfinex",
     "Hoegner",
     "boxscore",
-    "boxscores"
+    "boxscores",
+    "mailchimp"
   ],
   "mdx-preview.preview.useVscodeMarkdownStyles": false
 }
