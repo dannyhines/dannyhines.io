@@ -19,7 +19,13 @@ const TECH_STACK: TechStack[] = [
   {
     title: 'NextJS',
     description: "My new favorite way to build websites. It's React, but better.",
-    icon: <SiNextdotjs size={ICON_SIZE} color='#1C252C' />,
+    icon: (
+      <SiNextdotjs
+        size={ICON_SIZE}
+        color='#1C252C'
+        className='rounded-full p-[1px] dark:bg-white'
+      />
+    ),
     link: 'https://nextjs.org/',
   },
   {
@@ -36,7 +42,7 @@ const TECH_STACK: TechStack[] = [
   },
   {
     title: 'iOS (SwiftUI)',
-    description: 'SwiftUI makes developing iOS apps smooth and more fun',
+    description: 'SwiftUI makes developing iOS apps more fun',
     icon: <SiSwift size={ICON_SIZE} color='#EC4125' />,
     link: 'https://developer.apple.com/xcode/swiftui/',
   },
@@ -48,7 +54,7 @@ const TECH_STACK: TechStack[] = [
   },
   {
     title: 'VS Code',
-    description: "VIM? Never heard of her. It's all about Extensions.",
+    description: 'Coding without VSCode extensions is like skateboarding on grass.',
     icon: <SiVisualstudio size={ICON_SIZE} color='#147EC3' />,
     link: 'https://code.visualstudio.com/',
   },
