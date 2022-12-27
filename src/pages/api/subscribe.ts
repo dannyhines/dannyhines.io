@@ -21,7 +21,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     return res.status(201).json({ error: '' });
-  } catch (error: unknown) {
-    return res.status(500).json({ error: 'Failed to add email' });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    let errorMsg = 'Something went wrong. Please try again later.';
+    if (error && error.response && error.response.body) {
+      errorMsg =
+        error.response.body.title === 'Member Exists'
+          ? `${email} is already subscribed`
+          : error.response.body.title;
+    }
+    return res.status(500).json({ error: errorMsg });
   }
 }
