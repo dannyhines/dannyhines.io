@@ -1,0 +1,85 @@
+---
+title: 'Script to periodically remove node_modules from old projects'
+description:
+  'This script will remove the node_modules folder in infrequently-accessed Node.js
+  projects.'
+category: 'Guide'
+publishedAt: '2022-12-20'
+tags: 'javascript,node,npm'
+headerImg: '/dannyhines.io/remove-node-modules/header'
+---
+
+## Background
+
+As a Node.js developer I enjoy messing around with different side projects, and I’ll
+periodically clone a repository online, install the dependencies with
+[NPM](https://www.npmjs.com/), and after a day or two I’ll move on to the next thing.
+
+In order to run a Node app you need the packages, which are downloaded and placed in the
+project's **node_modules** folder when you run `npm install` (or `yarn` if you’re a bad
+boy). You need these packages in order to run the project, but they usually take up more
+space than the project code itself.
+
+Then if you’re like me, you’re left with dozens of random projects in a folder called
+`open-source` in a folder called `Misc`, all of which containing MBs of code that is
+potentially deprecated.
+
+These folders can waste valuable space on your hard drive, and it can be tedious to manually
+search through your project directories to find and delete them.
+
+To help solve this problem, I created this script you can run on macOS to remove the
+**node_modules** folder for any project that hasn't been accessed in a given number of days
+(here I’m setting it to 30):
+
+```bash
+#!/bin/bash
+
+# Set the threshold for inactivity in days
+inactive_threshold=30
+
+# Set the path to the folder you want to scan
+proj_folder=~/Documents/Misc
+
+# Find all project directories in the Documents folder that have a node_modules folder
+# and haven't been accessed in over the inactive threshold
+for project in $(find "$proj_folder" -type d -name node_modules -mtime +"$inactive_threshold" -print); do
+  # Remove the node_modules folder for the project
+  rm -rf "$project"
+done
+```
+
+This script will go through every project in the `~/Documents/Misc` folder (this is where I
+clone projects I don’t care about). For every project has not been accessed within the
+**inactive_threshold**, it will remove the **node_modules** folder.
+
+### Running it on a schedule
+
+You can run that script once in the folder(s) you want to clean. To run it daily, you can
+use the **cron** utility.
+
+<GrayBox>
+  We'll use `0 0 * * *` for the cron job to run every night at midnight. To run it only on
+  Sundays you could do `0 0 * * 0`; use [this](https://crontab.cronhub.io/) if you need help
+  building the cron command.
+</GrayBox>
+
+Open a terminal and type `crontab -e`. This will open the crontab file in your default text
+editor. Then add this line to the file (replacing **`/path/to/script.sh`** with the actual
+path to the script):
+
+```bash
+0 0 * * * /path/to/script.sh
+```
+
+Save and close the file.
+
+> If you're unfamiliar with Vim: to edit you need to enter editing mode by pressing `i`. To
+> save, type `:` to enter the prompt bar at the bottom, then type `x` and press Enter.
+
+The script will now run daily at midnight and delete the **`node_modules`** folder for any
+project that hasn't been accessed in the past 30 days, freeing up storage on your hard
+drive.
+
+**Note**: Make sure that you understand the implications of this before setting this up.
+This will essentially break Node projects after 30 days until you run `npm install`/`yarn`.
+You may want to alter the parameters for your use case.
