@@ -3,20 +3,14 @@ import React, { useEffect, useState } from 'react';
 import CloudinaryImg from '@/components/CloudinaryImage';
 import UnderlineLink from '@/components/links/UnderlineLink';
 
-const imageList = [
-  'ai-image1',
-  'ai-image3',
-  'ai-image6',
-  'ai-image7',
-  'ai-image2',
-  'ai-image9',
-  'ai-image4',
-  'ai-image5',
-  'ai-image8',
-  'ai-image10',
-];
+const imageList: string[] = [];
+const NUM_IMAGES = 29; // images stored in Cloudinary
 
-const TRANSITION_SECONDS = 5;
+for (let i = 0; i < NUM_IMAGES; i++) {
+  imageList[i] = `ai-image${i + 1}`;
+}
+
+const TRANSITION_SECONDS = 6;
 
 export const DynamicProfileImage: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
