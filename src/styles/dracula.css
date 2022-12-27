@@ -318,8 +318,11 @@ pre[class*='language-'] {
   font-style: italic;
 }
 
-.language-bash .token {
-  color: var(--foreground) !important;
+.language-bash .token.variable {
+  color: var(--foreground);
+}
+.language-bash .token.number {
+  color: var(--foreground);
 }
 
 .token.entity {
