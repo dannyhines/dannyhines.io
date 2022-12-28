@@ -22,7 +22,9 @@ export default function SnippetPage({ code, meta }: SnippetType) {
         <section className=''>
           <div className='layout'>
             <h1 className='mt-8 lg:text-4xl'>{meta.title}</h1>
-            <p className='my-6'>{meta.description}</p>
+            <div className='prose my-6'>
+              <blockquote className='dark:text-gray-400'>{meta.description}</blockquote>
+            </div>
             <section>
               <article className='snippets mdx dark:prose-dark prose mx-auto w-full transition-colors'>
                 <Component
