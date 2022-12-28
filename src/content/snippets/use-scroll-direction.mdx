@@ -1,0 +1,104 @@
+---
+title: 'useScrollDirection React Hook'
+description:
+  "This React hook listens for when the user scrolls vertically, letting you hide the page's
+  Header when reading content."
+tags: 'react,javascript,hook'
+---
+
+## React Hook to listen for vertical scroll events
+
+The hook returns a single variable that is updated when the user scrolls up or down. This is
+useful for hiding a website's header when the user scrolls down, which is what I use for
+this website!
+
+Feel free to copy and paste in your own React/NextJS project.
+
+```javascript
+const SCROLL_THRESHOLD = 10; // The number of pixels to count as a 'scroll'
+
+function useScrollDirection() {
+  const [scrollDirection, setScrollDirection] = useState(null);
+
+  useEffect(() => {
+    let lastScrollY = window.pageYOffset;
+
+    const updateScrollDirection = () => {
+      const scrollY = window.pageYOffset;
+      const direction = scrollY > lastScrollY ? 'down' : 'up';
+      if (
+        direction !== scrollDirection &&
+        (scrollY - lastScrollY > SCROLL_THRESHOLD ||
+          scrollY - lastScrollY < -SCROLL_THRESHOLD)
+      ) {
+        setScrollDirection(direction);
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+    };
+    window.addEventListener('scroll', updateScrollDirection);
+    return () => {
+      window.removeEventListener('scroll', updateScrollDirection);
+    };
+  }, [scrollDirection]);
+
+  return scrollDirection;
+}
+```
+
+This sets up a listener for scroll events, and will update the `scrollDirection` variable
+when the screen moves up or down by 10 pixels (or whatever you set the SCROLL_THRESHOLD to).
+
+Also note that in the return of the useEffect hook we need to remove the listener. The
+return function gets called when the component dismounts, which will prevent us from adding
+multiple listeners at the same time.
+
+## Disappearing header example
+
+Here's how you can use the hook to create a header that disappears when you scroll down:
+
+```jsx
+function Header() {
+  const scrollDirection = useScrollDirection();
+
+  return (
+    <div className={`my-header ${scrollDirection === 'down' ? 'hide' : 'show'}`}>
+      {/* Header content */}
+    </div>
+  );
+}
+```
+
+With the accompanying CSS:
+
+```css
+.my-header {
+  position: sticky;
+  top: 0px;
+  background-color: purple;
+  height: 6rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+.my-header.hide {
+  top: -6rem;
+}
+```
+
+### Disappearing header with TailwindCSS
+
+```jsx
+function Header() {
+  const scrollDirection = useScrollDirection();
+
+  return (
+    <div
+      className={`sticky ${
+        scrollDirection === 'down' ? '-top-24' : 'top-0'
+      } bg-purple h-24 transition-all duration-500`}
+    >
+      {/* Header content */}
+    </div>
+  );
+}
+```
