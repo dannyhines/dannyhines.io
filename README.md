@@ -1,4 +1,7 @@
-  <h1><img alt="logo" src="/public/favicon/favicon-32x32.png" height="27" width="27">   DannyHines.io</h1>
+<h1>
+  <img alt="logo" src="/public/favicon/favicon-32x32.png" height="27" width="27">
+  DannyHines.io
+</h1>
 
 My personal website written in Typescript, which includes a blog and library of code
 snippets.
