@@ -8,7 +8,7 @@ const defaultMeta = {
   title: 'Danny Hines',
   siteName: 'Danny Hines',
   description: 'My personal website and blog, built with Next.js.',
-  url: 'https://dannyhines.io',
+  url: 'https://www.dannyhines.io',
   type: 'website',
   robots: 'follow, index',
   image: 'https://www.dannyhines.io/images/me.jpeg',

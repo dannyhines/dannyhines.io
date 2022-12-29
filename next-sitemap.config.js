@@ -3,7 +3,7 @@
  * @see https://github.com/iamvishnusankar/next-sitemap#readme
  */
 module.exports = {
-  siteUrl: 'https://dannyhines.io',
+  siteUrl: 'https://www.dannyhines.io',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
