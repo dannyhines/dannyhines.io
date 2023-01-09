@@ -26,7 +26,7 @@ export const DynamicProfileImage: React.FC = () => {
   return (
     <div>
       <CloudinaryImg
-        publicId={'/dannyhines.io/ai-images/' + imageList[currentImageIndex]}
+        publicId={'/dannyhines.io/profile-imgs/' + imageList[currentImageIndex]}
         alt='Portrait of me created using AI'
         className='rounded-full sm:rounded-md sm:p-0'
         width={512}

@@ -11,7 +11,7 @@ import path from 'path';
 const cloudinaryCloudName = await env('CLOUDINARY_CLOUD_NAME');
 const cloudinaryKey = await env('CLOUDINARY_API_KEY');
 const cloudinarySecret = await env('CLOUDINARY_API_SECRET');
-const cloudiaryConsoleId = await env('CLOUDINARY_CONSOLE_ID');
+const cloudinaryConsoleId = await env('CLOUDINARY_CONSOLE_ID');
 
 await npm('cloudinary');
 import cloudinary from 'cloudinary';
@@ -112,7 +112,7 @@ for (const image of images) {
   });
 
   // If you have multiple files then this isn't really useful unless you have
-  // clipbloard history (which I recommend you get!)
+  // clipboard history (which I recommend you get!)
   await copy(uploadedImage.secure_url);
 }
 
@@ -122,7 +122,7 @@ function openFolder(folder) {
   const encodedFolder = encodeURIComponent(folder);
   console.log('opening');
   return exec(
-    `open "https://cloudinary.com/console/${cloudiaryConsoleId}/media_library/folders/${encodedFolder}"`
+    `open "https://cloudinary.com/console/${cloudinaryConsoleId}/media_library/folders/${encodedFolder}"`
   );
 }
 
