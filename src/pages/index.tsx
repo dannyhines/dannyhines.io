@@ -49,8 +49,10 @@ export default function HomePage(props: {
                   className='my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
                   data-fade='2'
                 >
-                  I&apos;m a software engineer at Capital One with experience building web
-                  and mobile applications, mostly with React/NextJS and iOS.
+                  I&apos;m a software engineer at <strong>Capital One</strong> where I build
+                  tools for financial wellbeing. I&apos;m most proficient in web and mobile
+                  development, specifically React/NextJS and SwiftUI.
+                  <br className='md:hidden' /> I also like learning about financial markets.
                   <br />
                   <br />I built this site to keep track of what I&apos;ve learned and teach
                   others about software. It uses NextJS, TailwindCSS and is deployed with
