@@ -1,0 +1,240 @@
+---
+title: 'Most common Git commands'
+description:
+  "What's a remote repository? How do I see the diff between staged changes and commits? Here
+are the 27 most common git commands along with explanations of each, ready for you to copy
+and paste into the terminal."
+tags: 'git,command-line,bash'
+category: 'Guide'
+publishedAt: '2022-10-21'
+headerImg: '/dannyhines.io/git-header'
+---
+
+How do I change the upstream repository's url? How do I see the diff between staged changes
+and commits? Here are the 27 most common git commands along with explanations of each, ready
+for you to copy and paste into the terminal.
+
+<h1 id='git-init' className='not-prose' style={{ marginBottom: '0 !important' }}>
+  git init
+</h1>
+
+Initializes the current directory as a git repo
+
+```bash
+git init
+```
+
+# git clone
+
+Copy the repository i.e. `username/project` into a new folder called `project`:
+
+```bash
+git clone https://github.com/username/project.git
+cd project
+```
+
+Copy `username/project` into a new folder called `my-project`
+
+```bash
+git clone https://github.com/username/project.git my-project
+cd my-project
+```
+
+# git status
+
+Shows the status of the working tree
+
+```bash
+git status
+```
+
+For a less verbose alternative, add `-s` for short or `-sb` if you want to include the
+branch too:
+
+```bash
+git status -sb
+```
+
+# git pull
+
+```bash
+# Fetches the changes from the remote and merge it into local repo
+git pull origin master
+```
+
+# git add
+
+Adds the file(s) to the index, which will be committed when you run `git commit`. Also
+called "staging".
+
+```bash
+git add script.js
+```
+
+That will stage the `script.js` file. To add all files:
+
+```bash
+git add .
+```
+
+This will ignores the files listed in `.gitignore`
+
+# git commit
+
+Commits the changes to the local repository:
+
+```bash
+git commit -m "my commit message"
+```
+
+Instead of adding a new commit, this will add the changes to the most recent commit:
+
+```bash
+git commit --amend
+```
+
+# git log
+
+Shows the latest commit logs
+
+```bash
+git log
+```
+
+# git diff
+
+Shows the changes between unstaged files (what's currently in your local project) and what's
+been committed:
+
+```bash
+git diff
+```
+
+Shows the changes between staged (after running `git add`) files and what's been committed:
+
+```bash
+git diff --staged
+```
+
+# git remote
+
+A "remote" is a version of your code that's stored on the internet. By default if you create
+a Github repository it will be called "origin". Typically when you fork a repository, the
+main repo is called the "upstream" repo and has read-only access, and you commit changes to
+your local version "origin", which can be merged into the upstream repo with a pull request.
+
+To list the remotes:
+
+```bash
+git remote -v
+```
+
+### Add a remote
+
+git remote add [remote name] [remote url]
+
+```bash
+git remote add upstream https://github.com/mainOrganization/project.git
+```
+
+### Change a remote's url
+
+git remote add [remote name] [new url]
+
+```bash
+git remote set-url upstream https://github.com/main-organization/project.git
+```
+
+# git checkout
+
+Change to a branch. This will change your local filesystem to have what's on that branch.
+
+```bash
+git checkout my-branch
+```
+
+Create a new branch and check it out:
+
+```bash
+git checkout -b new-feature
+```
+
+To do this you can't have unsaved changes that will conflict with the branch you're changing
+to. To revert the unsaved changes on your current branch:
+
+```bash
+git checkout .
+```
+
+To remove the unstaged changes for a particular file:
+
+```bash
+git checkout -- script.js
+```
+
+# git push
+
+Pushes the local changes (commits) to the remote repository. This will push the main branch
+to the remote called `origin`:
+
+```bash
+git push origin main
+```
+
+If the remote repository has commits that your local repo doesn't have, you'll need to pull
+the changes from the remote first.
+
+If you're a bad boy, you can force push with `-f` which will replace the remote's files with
+whatever you've committed.
+
+```bash
+git push -f origin master
+```
+
+### Push and set the remote as upstream
+
+This is the same as `git push --set-upstream origin my-branch`
+
+```bash
+git push -u origin my-branch
+```
+
+# git branch
+
+`git branch` will list your branches.
+
+To delete a local branch:
+
+```bash
+git branch -d my-branch
+```
+
+If the branch you're trying to delete hasn't been merged, you'll need to toss an additional
+`--force` flag.
+
+If you have a lot of local branches, use [this snippet](/snippets/delete-local-branches) to
+delete the local branches that have already been merged to the main branch.
+
+# git clean
+
+Removes all the files and directories that are not yet tracked by git:
+
+```bash
+git clean -fd
+```
+
+# git merge
+
+Merges `other-branch` into the current branch:
+
+```bash
+git merge other-branch
+```
+
+# git reset
+
+This will remove all the changes to the tracked files that have not yet been committed:
+
+```bash
+git reset --hard
+```
