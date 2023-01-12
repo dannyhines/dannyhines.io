@@ -3,6 +3,11 @@
   DannyHines.io
 </h1>
 
+![GitHub branch checks state](https://img.shields.io/github/checks-status/danielchines/dannyhines.io/main)
+![GitHub repo size](https://img.shields.io/github/repo-size/danielchines/dannyhines.io)
+![GitHub](https://img.shields.io/github/license/danielchines/dannyhines.io)
+![GitHub issues](https://img.shields.io/github/issues/danielchines/dannyhines.io)
+
 My personal website written in Typescript, which includes a blog and library of code
 snippets.
 
