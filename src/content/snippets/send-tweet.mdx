@@ -10,6 +10,14 @@ First, you'll need to create a Twitter account if you don't have one already. Th
 Read and Write access under 'User authentication settings'. More info on that
 [here](https://developer.twitter.com/en/docs/apps/app-permissions).
 
+This assumes you're working in a Node.js project. If you don't have one, create an empty
+folder folder and run `npm init -y`. Then install these two dependencies:
+
+```bash
+npm install twitter-api-v2
+npm install --save-dev dotenv
+```
+
 Then create a .env file with the app's key and secret, and the client token and secret:
 
 ```text
@@ -19,6 +27,8 @@ TWITTER_API_SECRET=
 TWITTER_ACCESS_TOKEN=
 TWITTER_ACCESS_SECRET=
 ```
+
+Now you're good to go. Then put this in a file, eg `tweet.ts`:
 
 ```typescript
 require('dotenv').config();
@@ -44,4 +54,13 @@ export const sendTweet = async (text: string) => {
 };
 ```
 
-And that's all you need to send automated tweets!
+And that's all you need to send automated tweets! You'd call this function in another file
+like this:
+
+```typescript
+import { sendTweet } from './twitter';
+
+(async () => {
+  await sendTweet("I no longer have a manager. I can't be managed");
+})();
+```
