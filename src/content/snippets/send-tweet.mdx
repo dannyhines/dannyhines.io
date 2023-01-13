@@ -1,0 +1,47 @@
+---
+title: 'Send a tweet with Node.js'
+description:
+  'This script uses the twitter-api-v2 npm module to send tweets using the Twitter API.'
+tags: 'javascript,twitter,bots'
+---
+
+First, you'll need to create a Twitter account if you don't have one already. Then go to the
+[Twitter API](https://developer.twitter.com/en/docs/twitter-api) and create a new App with
+Read and Write access under 'User authentication settings'. More info on that
+[here](https://developer.twitter.com/en/docs/apps/app-permissions).
+
+Then create a .env file with the app's key and secret, and the client token and secret:
+
+```text
+TWITTER_API_KEY=
+TWITTER_API_SECRET=
+
+TWITTER_ACCESS_TOKEN=
+TWITTER_ACCESS_SECRET=
+```
+
+```typescript
+require('dotenv').config();
+import { TwitterApi } from 'twitter-api-v2';
+
+const twitterUserConfig = {
+  appKey: process.env.TWITTER_API_KEY ?? '',
+  appSecret: process.env.TWITTER_API_SECRET ?? '',
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_SECRET,
+};
+
+const userClient = new TwitterApi(twitterUserConfig);
+
+export const sendTweet = async (text: string) => {
+  try {
+    await userClient.v1.tweet(text);
+    return true;
+  } catch (err) {
+    console.log('Error sending tweet:', err);
+  }
+  return false;
+};
+```
+
+And that's all you need to send automated tweets!
