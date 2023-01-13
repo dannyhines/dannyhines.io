@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import * as React from 'react';
 
 import { getFileBySlug, getFiles } from '@/lib/mdx';
+import { trackEvent } from '@/lib/umami';
 
 import Layout from '@/components/layout/Layout';
 import CustomLink from '@/components/links/PrimaryLink';
@@ -40,7 +41,10 @@ export default function SnippetPage({ code, meta }: SnippetType) {
 
             <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
               <CustomLink
-                href={`https://github.com/danielchines/dannyhines.io/src/content/snippets/${meta.slug}.mdx`}
+                href={`https://github.com/danielchines/dannyhines.io/issues/new?assignees=danielchines&labels=typo&template=typo-in-blog-post.yml&title=Request+change+to+Snippet+"${meta.title}"`}
+                onClick={() =>
+                  trackEvent('[Snippet] Request an edit on Github', 'external_link')
+                }
               >
                 Edit this on GitHub
               </CustomLink>
