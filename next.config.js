@@ -9,7 +9,7 @@ const securityHeaders = [
   },
   {
     key: 'Content-Security-Policy',
-    value: process.env.NODE_ENV === 'prodution' ? 'default-src https:' : '',
+    value: process.env.NODE_ENV === 'production' ? 'default-src https:' : '',
   },
   {
     key: 'X-Frame-Options',
