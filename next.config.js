@@ -6,7 +6,7 @@ const CSP = [
   "base-uri 'self';",
   "connect-src 'self' https://dannyhines-io-analytics.vercel.app;",
   "font-src 'self';",
-  "frame-src 'self' https://player.cloudinary.com https://www.youtube.com;",
+  "frame-src 'self' https://player.cloudinary.com https://www.youtube.com https://giphy.com https://codesandbox.io;",
   "img-src 'self' data: https://res.cloudinary.com;",
   "manifest-src 'self';",
   "media-src 'self';",
