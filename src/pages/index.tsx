@@ -50,9 +50,9 @@ export default function HomePage(props: {
                   data-fade='2'
                 >
                   I&apos;m a software engineer at <strong>Capital One</strong> where I build
-                  tools for financial wellbeing. I&apos;m most proficient in web and mobile
-                  development, specifically React/NextJS and SwiftUI.
-                  <br className='md:hidden' /> I also like learning about financial markets.
+                  tools for financial wellbeing and customer servicing. I&apos;m most
+                  proficient in web and mobile development, specifically React/NextJS and
+                  SwiftUI.
                   <br />
                   <br />I built this site to keep track of what I&apos;ve learned and teach
                   others about software. It uses NextJS, TailwindCSS and is deployed with
