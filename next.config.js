@@ -1,3 +1,38 @@
+const securityHeaders = [
+  {
+    key: 'Cache-Control',
+    value: 'public, max-age=31536000, immutable',
+  },
+  {
+    key: 'access-control-allow-origin',
+    value: 'dannyhines.io dannyhines-io-analytics.vercel.app res.cloudinary.com',
+  },
+  {
+    key: 'Content-Security-Policy',
+    value: process.env.NODE_ENV === 'prodution' ? 'default-src https:' : '',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'same-origin',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'geolocation=(self "https://dannyhines.io")',
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
+];
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   eslint: {
@@ -25,7 +60,16 @@ module.exports = {
         },
       ],
     });
-
     return config;
+  },
+
+  async headers() {
+    return [
+      {
+        // Apply headers to all routes
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ];
   },
 };
