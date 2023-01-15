@@ -1,3 +1,18 @@
+const CSP = [
+  "default-src 'self';",
+  "script-src 'report-sample' 'self' 'unsafe-eval' 'unsafe-inline' https://dannyhines-io-analytics.vercel.app/umami.js;",
+  "style-src 'report-sample' 'self' 'unsafe-inline';",
+  "object-src 'none';",
+  "base-uri 'self';",
+  "connect-src 'self' https://dannyhines-io-analytics.vercel.app;",
+  "font-src 'self';",
+  "frame-src 'self' https://player.cloudinary.com https://www.youtube.com;",
+  "img-src 'self' data: https://res.cloudinary.com;",
+  "manifest-src 'self';",
+  "media-src 'self';",
+  "worker-src 'none';",
+];
+
 const securityHeaders = [
   {
     key: 'Cache-Control',
@@ -9,7 +24,7 @@ const securityHeaders = [
   },
   {
     key: 'Content-Security-Policy',
-    value: process.env.NODE_ENV === 'production' ? 'default-src https:' : '',
+    value: CSP.join(' '),
   },
   {
     key: 'X-Frame-Options',
