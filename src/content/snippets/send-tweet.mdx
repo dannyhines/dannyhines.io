@@ -5,10 +5,7 @@ description:
 tags: 'javascript,twitter,bots'
 ---
 
-First, you'll need to create a Twitter account if you don't have one already. Then go to the
-[Twitter API](https://developer.twitter.com/en/docs/twitter-api) and create a new App with
-Read and Write access under 'User authentication settings'. More info on that
-[here](https://developer.twitter.com/en/docs/apps/app-permissions).
+## Project setup
 
 This assumes you're working in a Node.js project. If you don't have one, create an empty
 folder folder and run `npm init -y`. Then install these two dependencies:
@@ -18,7 +15,23 @@ npm install twitter-api-v2
 npm install --save-dev dotenv
 ```
 
-Then create a .env file with the app's key and secret, and the client token and secret:
+## Setup Twitter credentials
+
+You'll need to create a Twitter account if you don't have one already.
+
+Then go to the [Twitter API](https://developer.twitter.com/en/docs/twitter-api) and create a
+new App with Read and Write access under 'User authentication settings' (more info on that
+[here](https://developer.twitter.com/en/docs/apps/app-permissions)).
+
+There are 4 credentials you need to save in order to send tweets via the API. The API key
+and secret are shown when you create the app - store those in a safe location. Those give
+you basic access to the API.
+
+Then to get the access token and secret for sending tweets: within the App settings, under
+the **Keys and tokens** tab, under **Authentication Tokens** click 'Generate' and save the
+access token & secret.
+
+Then create a .env file with the app's key and secret, and the access token and secret:
 
 ```text
 TWITTER_API_KEY=
@@ -27,6 +40,8 @@ TWITTER_API_SECRET=
 TWITTER_ACCESS_TOKEN=
 TWITTER_ACCESS_SECRET=
 ```
+
+## The sendTweet function
 
 Now you're good to go. Then put this in a file, eg `tweet.ts`:
 
