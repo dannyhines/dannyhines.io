@@ -20,7 +20,8 @@ const securityHeaders = [
   },
   {
     key: 'access-control-allow-origin',
-    value: 'dannyhines.io dannyhines-io-analytics.vercel.app res.cloudinary.com',
+    value:
+      'dannyhines.io dannyhines-io-analytics.vercel.app res.cloudinary.com play.google.com',
   },
   {
     key: 'Content-Security-Policy',
