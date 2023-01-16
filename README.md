@@ -8,6 +8,7 @@
 ![GitHub](https://img.shields.io/github/license/danielchines/dannyhines.io)
 ![GitHub issues](https://img.shields.io/github/issues/danielchines/dannyhines.io)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/danielchines/dannyhines.io)
+![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fdannyhines.io)
 
 My personal website written in Typescript, which includes a blog and library of code
 snippets.
