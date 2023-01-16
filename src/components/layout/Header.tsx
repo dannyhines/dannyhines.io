@@ -6,6 +6,7 @@ import { FiMoon, FiSun } from 'react-icons/fi';
 import clsxm from '@/lib/clsxm';
 import { trackEvent } from '@/lib/umami';
 import useOnTop from '@/hooks/useOnTop';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 import Button from '@/components/buttons/Button';
 import UnstyledLink from '@/components/links/UnstyledLink';
@@ -22,6 +23,7 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   const onTop = useOnTop();
+  const scrollDirection = useScrollDirection();
 
   // We can't show/change the theme until the client renders
   useEffect(() => {
@@ -34,7 +36,13 @@ export default function Header() {
 
   return (
     <header
-      className={clsxm('sticky top-0 z-50 bg-gray-50 dark:bg-dark', !onTop && 'shadow-sm')}
+      className={clsxm(
+        'sticky top-0 z-50 bg-gray-50 dark:bg-dark',
+        !onTop && 'shadow-sm',
+        scrollDirection === 'down' && '-top-24',
+        scrollDirection === 'up' && 'top-0',
+        'transition-all duration-500'
+      )}
     >
       <div className='layout flex h-14 items-center justify-between md:h-16'>
         <nav>
