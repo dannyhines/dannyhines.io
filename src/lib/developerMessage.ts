@@ -50,7 +50,7 @@ export default function developerMessage() {
   );
   // console.log(
   //   "%cBut seriously here's the repo if you're curious: " +
-  //     '%chttps://github.com/danielchines/dannyhines.io\n',
+  //     '%chttps://github.com/dannyhines/dannyhines.io\n',
   //   'font-family: Inter, sans-serif; font-size: 1.1rem; font-weight: 500;',
   //   'font-family: Inter, sans-serif; font-size: 1.1rem; font-weight: 500; color: #4ee5ae;'
   // );

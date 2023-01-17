@@ -3,11 +3,11 @@
   DannyHines.io
 </h1>
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/danielchines/dannyhines.io/main)
-![GitHub repo size](https://img.shields.io/github/repo-size/danielchines/dannyhines.io)
-![GitHub](https://img.shields.io/github/license/danielchines/dannyhines.io)
-![GitHub issues](https://img.shields.io/github/issues/danielchines/dannyhines.io)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/danielchines/dannyhines.io)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/dannyhines/dannyhines.io/main)
+![GitHub repo size](https://img.shields.io/github/repo-size/dannyhines/dannyhines.io)
+![GitHub](https://img.shields.io/github/license/dannyhines/dannyhines.io)
+![GitHub issues](https://img.shields.io/github/issues/dannyhines/dannyhines.io)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/dannyhines/dannyhines.io)
 ![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fdannyhines.io)
 
 My personal website written in Typescript, which includes a blog and library of code

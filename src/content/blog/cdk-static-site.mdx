@@ -5,7 +5,7 @@ category: 'Guide'
 publishedAt: '2021-12-05'
 tags: 'aws,react'
 headerImg: '/dannyhines.io/cdk-static-site/header_fokag3.png'
-github: 'https://github.com/danielchines/how-many-blimps'
+github: 'https://github.com/dannyhines/how-many-blimps'
 link: 'https://howmanyblimpsarethere.com'
 ---
 
@@ -353,7 +353,7 @@ const distribution = new cloudFront.CloudFrontWebDistribution(
 ```
 
 (If you want to see how to include CORS settings, click
-[here](https://github.com/danielchines/how-many-blimps/blob/main/infra/lib/blimps-stack.ts#L67)).
+[here](https://github.com/dannyhines/how-many-blimps/blob/main/infra/lib/blimps-stack.ts#L67)).
 
 And finally we need to take take whatever is in the build folder, put it in the S3 bucket
 and invalidate the CDN (Cloudfront) so the content will refresh immediately:

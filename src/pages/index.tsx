@@ -59,7 +59,7 @@ export default function HomePage(props: {
                   Vercel.
                   <br />
                   <ArrowLink
-                    href='https://github.com/danielchines/dannyhines.io'
+                    href='https://github.com/dannyhines/dannyhines.io'
                     className='mt-2'
                     onClick={() => trackEvent('[Home] View source code', 'external_link')}
                   >

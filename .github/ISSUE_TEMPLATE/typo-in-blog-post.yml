@@ -3,7 +3,7 @@ description: Typo, broken link, or inaccurate information in the Blog
 title: 'Request change to [Blog]'
 labels: typo
 assignees:
-  - danielchines
+  - dannyhines
 body:
   - type: markdown
     attributes:
