@@ -20,7 +20,7 @@ export default function SnippetsPage({
     <Layout>
       <Seo
         templateTitle='Snippets'
-        description='A collection of code snippets in Javascript, JSON and Swift that I thought were worth saving'
+        description='A collection of code snippets in Javascript, JSON and Swift that I thought were worth saving.'
       />
 
       <main>
