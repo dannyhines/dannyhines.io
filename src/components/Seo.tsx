@@ -7,13 +7,15 @@ const CLOUDINARY_BANNER_URL = 'https://res.cloudinary.com/dannyhines/image/uploa
 const defaultMeta = {
   title: 'Danny Hines',
   siteName: 'Danny Hines',
-  description: 'My personal website and blog, built with Next.js.',
+  description:
+    "I'm Danny Hines, a software engineer working in Finance. This is my personal website and blog, built with Next.js.",
   url: 'https://www.dannyhines.io',
   type: 'website',
   robots: 'follow, index',
   image: 'https://www.dannyhines.io/images/me.jpeg',
   isBlog: false,
 };
+
 type SeoProps = {
   date?: string;
   templateTitle?: string;

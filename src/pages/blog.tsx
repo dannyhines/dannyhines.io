@@ -21,7 +21,7 @@ export default function BlogPage({
     <Layout>
       <Seo
         templateTitle='The blog of Danny Hines'
-        description='Some of my thoughts and tutorials, mostly about software development.'
+        description="I'm an engineer working in Finance. These are some of my thoughts and tutorials, mostly about software development."
       />
       <main>
         <section className={clsx('layout w-11/12 py-4', isLoaded && 'fade-in-start')}>
