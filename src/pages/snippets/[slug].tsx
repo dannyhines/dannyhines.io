@@ -1,6 +1,7 @@
 import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import * as React from 'react';
+import { SiGithub } from 'react-icons/si';
 
 import { getFileBySlug, getFiles } from '@/lib/mdx';
 import { trackEvent } from '@/lib/umami';
@@ -48,16 +49,29 @@ export default function SnippetPage({ code, meta }: SnippetType) {
               </article>
             </section>
 
-            <div className='mt-8 flex flex-col items-start gap-4 md:flex-row-reverse md:justify-between'>
-              <CustomLink
-                href={`https://github.com/dannyhines/dannyhines.io/issues/new?assignees=dannyhines&labels=typo&template=typo-in-blog-post.yml&title=Request+change+to+Snippet+"${meta.title}"`}
-                onClick={() =>
-                  trackEvent('[Snippet] Request an edit on Github', 'external_link')
-                }
-              >
-                Edit this on GitHub
-              </CustomLink>
-              <CustomLink href='/snippets'>← Back to snippets</CustomLink>
+            <div>
+              <div className='mt-8 flex items-start justify-between gap-4 '>
+                <CustomLink href='/snippets'>← Back to snippets</CustomLink>
+                <CustomLink
+                  href={`https://github.com/dannyhines/dannyhines.io/issues/new?assignees=dannyhines&labels=typo&template=typo-in-blog-post.yml&title=Request+change+to+Snippet+"${meta.title}"`}
+                  onClick={() =>
+                    trackEvent('[Snippet] Request an edit on Github', 'external_link')
+                  }
+                  className='self-end'
+                >
+                  <SiGithub className='mr-2' /> Edit this on GitHub
+                </CustomLink>
+              </div>
+              <div className='m-4 text-center'>
+                <CustomLink
+                  href='/blog'
+                  onClick={() =>
+                    trackEvent('[Snippet] View blog from Snippet', 'external_link')
+                  }
+                >
+                  Check out the blog
+                </CustomLink>
+              </div>
             </div>
           </div>
         </section>
