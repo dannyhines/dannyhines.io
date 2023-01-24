@@ -14,11 +14,17 @@ import { SnippetType } from '@/types/Post';
 
 export default function SnippetPage({ code, meta }: SnippetType) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
+  // Add a period if there isn't one, make the description longer
+  const endsWPeriod = meta.description.charAt(meta.description.length - 1) === '.';
+  const descriptionAddOn = `${
+    endsWPeriod ? '' : '.'
+  } Feel free to copy and paste into your project.`;
+
   return (
     <Layout>
       <Seo
         templateTitle={meta.title}
-        description={meta.description + ' Feel free to copy and paste into your project.'}
+        description={meta.description + descriptionAddOn}
         type='article'
       />
 
