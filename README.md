@@ -13,14 +13,18 @@
 My personal website written in Typescript, which includes a blog and library of code
 snippets.
 
-This repo was created using Theodorus Clarence's
+<h2>
+<a href='https://www.dannyhines.io'>View dannyhines.io</a>
+</h2>
+
+To start the project I used Theodorus Clarence's
 [NextJS + TailwindCSS starter](https://www.codefactor.io/repository/github/theodorusclarence/ts-nextjs-tailwind-starter),
 which includes a bunch of features you'd normally copy + paste from previous projects,
 including:
 
 - 💨 Tailwind CSS 3 — My new favorite UI framework, with included CSS Variables for colors
 - 💎 Pre-built Components — Components that will **automatically adapt** with your brand
-  color, [check here for the demo](https://tsnext-tw.thcl.dev/components)
+  color
 - 📈 Absolute Import and Path Alias — Import components using `@/` prefix
 - 📏 ESLint + Prettier — Automated with Github Actions, with added rules to **auto sort**
   your imports
@@ -28,8 +32,7 @@ including:
 - 🤖 Conventional Commit Lint — Forces conventional commit messages to properly document
   every change you make (feat, fix, docs, chore, style, refactor, ci, test, perf, revert,
   vercel)
-- 👀 Default Open Graph — Awesome open graph generated using
-  [og.thcl.dev](https://github.com/theodorusclarence/og), fork it and deploy!
+- 👀 Default Open Graph — Awesome open graph generated using NextJS-compatible libraries
 - 🗺 Site Map — Automatically generate sitemap.xml
 
 ## Getting Started
