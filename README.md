@@ -11,11 +11,7 @@
 ![Security Headers](https://img.shields.io/security-headers?url=https%3A%2F%2Fdannyhines.io)
 
 My personal website written in Typescript, which includes a blog and library of code
-snippets.
-
-<h2>
-<a href='https://www.dannyhines.io'>View dannyhines.io</a>
-</h2>
+snippets. View it here: [dannyhines.io](https://www.dannyhines.io)
 
 To start the project I used Theodorus Clarence's
 [NextJS + TailwindCSS starter](https://www.codefactor.io/repository/github/theodorusclarence/ts-nextjs-tailwind-starter),
