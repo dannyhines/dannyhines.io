@@ -14,10 +14,13 @@ import { SnippetType } from '@/types/Post';
 
 export default function SnippetPage({ code, meta }: SnippetType) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
-
   return (
     <Layout>
-      <Seo templateTitle={meta.title} description={meta.description} type='article' />
+      <Seo
+        templateTitle={meta.title}
+        description={meta.description + ' Feel free to copy and paste into your project.'}
+        type='article'
+      />
 
       <main>
         <section className=''>
