@@ -16,7 +16,7 @@ export default function About() {
     <Layout>
       <Seo
         templateTitle='About'
-        description='Learn more about me and my favorite tech stack(s)'
+        description="I'm Danny Hines, a software engineer working in Finance. Learn more about me, my website and my favorite technologies"
       />
       <main>
         <section
