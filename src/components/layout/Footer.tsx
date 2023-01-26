@@ -11,7 +11,7 @@ export default function Footer() {
           <hr className='my-6 dark:border-gray-700' />
 
           <div className='mx-auto flex flex-wrap justify-center gap-x-8 gap-y-4 py-4 md:w-10/12 md:justify-between'>
-            <UnstyledLink href='/home' className='dark:opacity-80 dark:hover:opacity-100'>
+            <UnstyledLink href='/' className='dark:opacity-80 dark:hover:opacity-100'>
               Home
             </UnstyledLink>
             <UnstyledLink href='/about' className='dark:opacity-80 dark:hover:opacity-100'>
