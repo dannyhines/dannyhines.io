@@ -1,8 +1,8 @@
 ---
-title: 'Betting Odds to Implied Probability Chrome Extension'
+title: 'Converting American Betting Odds to Implied Probability'
 description:
   'Learn the difference between the moneyline (American odds) and implied probability, and
-  download the Chrome extension to see it in action.'
+  how I built a Chrome Extension to convert the odds for you.'
 category: 'Side Project'
 publishedAt: '2021-10-02'
 tags: 'react,nextjs,ux'
@@ -19,10 +19,10 @@ link: 'https://chrome.google.com/webstore/detail/odds-to-probability-text/nofjpb
   height={2160}
 />
 
-> View the extension on the
+> View the Chrome Extension on the
 > [Chrome Web Store](https://chrome.google.com/webstore/detail/odds-to-probability-text/nofjpbibnnkinmfndoknlbkchbecgbkb)
 
-## Background
+## Betting odds explained
 
 Betting odds are complicated on purpose. Look no further than "moneyline" (or
 **_American_**) odds, which like Fahrenheit are 1) only used in the US and 2) confuse
@@ -67,7 +67,7 @@ to know if you're getting a "fair" price.
 > in reality it's just another way that casinos try to distract you from the amount of money
 > you're losing.
 
-### Implied Probability
+## Implied Probability
 
 Assuming the odds are "fair", the implied probability is the percentage chance that the bet
 is supposed to win. In the coin example, the probability of heads is 50%. At -110 odds,
@@ -83,7 +83,7 @@ or higher. This how sportsbooks make money: _bets typically cost more than they 
 > Using the implied probability is simpler way to look at sports betting: a "good bet" is
 > one where you believe the percentage chance is higher than the implied probability.
 
-### Converting odds
+## Converting odds
 
 There are three main ways to frame odds:
 
@@ -160,14 +160,11 @@ basically searching for American odds if it's `active`, otherwise it's looking f
 inserted probabilities like "(55%)".
 
 ```js
-unction textNodeInnerHTML(textNode, active) {
+function textNodeInnerHTML(textNode, active) {
   let regex = active ? /([+-])(\d\d\d+)/g : / \(\d*\.\d\%\)/g;
-  var div = document.createElement("div");
+  var div = document.createElement('div');
   textNode.parentNode.insertBefore(div, textNode);
-  div.insertAdjacentHTML(
-    "afterend",
-    textNode.data.replace(regex, active ? replacer : "")
-  );
+  div.insertAdjacentHTML('afterend', textNode.data.replace(regex, active ? replacer : ''));
   div.remove();
   textNode.remove();
 }
@@ -193,7 +190,7 @@ Rams game, here's what happens when you click on the extension:
   height={450 / 2}
 />
 
-## Building and deploying to the Chrome Web Store
+### Building and deploying to the Chrome Web Store
 
 To deploy it I had to register as a
 [Chrome Web Store Developer](https://developer.chrome.com/docs/webstore/register/) and add a
