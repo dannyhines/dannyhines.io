@@ -27,18 +27,21 @@ export default function Footer() {
           <hr className='my-6 dark:border-gray-700' />
 
           <div className='mx-auto flex flex-wrap justify-center gap-x-8 gap-y-4 py-4 md:w-10/12 md:justify-between'>
-            {links.map(({ href, label }) => (
-              <li key={`${href}${label}`}>
+            {links.map(({ href, label, internal }) => (
+              <div key={`${href}${label}`}>
                 <UnstyledLink
                   href={href}
                   className='dark:opacity-80 dark:hover:opacity-100'
                   onClick={() =>
-                    trackEvent('[Footer] Navigate to ' + label, 'internal_link')
+                    trackEvent(
+                      '[Footer] Navigate to ' + label,
+                      `${internal ? 'internal' : 'external'}_link`
+                    )
                   }
                 >
                   {label}
                 </UnstyledLink>
-              </li>
+              </div>
             ))}
           </div>
 
