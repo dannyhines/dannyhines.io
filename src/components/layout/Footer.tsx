@@ -46,7 +46,6 @@ export default function Footer() {
           </div>
 
           <div className='w-full flex-col py-6 text-center'>
-            {/* <h5 className='my-4 text-xl font-semibold opacity-90'>Let&apos;s connect</h5> */}
             <div className='flex justify-center gap-4'>
               <PrimaryLink
                 className='align-center dark:text-red h-10 w-10 items-center justify-center rounded-full bg-white p-2 font-normal  shadow-lg outline-none focus:outline-none dark:bg-gray-800 md:h-12 md:w-12'
