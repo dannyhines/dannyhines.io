@@ -1,7 +1,23 @@
 import { SiGithub, SiGmail, SiLinkedin, SiTwitter } from 'react-icons/si';
 
+import { trackEvent } from '@/lib/umami';
+
 import PrimaryLink from '@/components/links/PrimaryLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
+
+const links = [
+  { href: '/', label: 'Home', internal: true },
+  { href: '/about', label: 'About', internal: true },
+  { href: '/blog', label: 'Blog', internal: true },
+  { href: '/projects', label: 'Projects', internal: true },
+  { href: '/snippets', label: 'Snippets', internal: true },
+  {
+    href: 'https://github.com/dannyhines/dannyhines.io',
+    label: 'Source code',
+    internal: false,
+  },
+  { href: 'mailto:royalty_pitons_0v@icloud.com', label: 'Contact me', internal: false },
+];
 
 export default function Footer() {
   return (
@@ -11,39 +27,19 @@ export default function Footer() {
           <hr className='my-6 dark:border-gray-700' />
 
           <div className='mx-auto flex flex-wrap justify-center gap-x-8 gap-y-4 py-4 md:w-10/12 md:justify-between'>
-            <UnstyledLink href='/' className='dark:opacity-80 dark:hover:opacity-100'>
-              Home
-            </UnstyledLink>
-            <UnstyledLink href='/about' className='dark:opacity-80 dark:hover:opacity-100'>
-              About
-            </UnstyledLink>
-            <UnstyledLink href='/blog' className='dark:opacity-80 dark:hover:opacity-100'>
-              Blog
-            </UnstyledLink>
-            <UnstyledLink
-              href='/projects'
-              className='dark:opacity-80 dark:hover:opacity-100'
-            >
-              Projects
-            </UnstyledLink>
-            <UnstyledLink
-              href='/snippets'
-              className='dark:opacity-80 dark:hover:opacity-100'
-            >
-              Snippets
-            </UnstyledLink>
-            <UnstyledLink
-              href='https://github.com/dannyhines/dannyhines.io'
-              className='dark:opacity-80 dark:hover:opacity-100'
-            >
-              Source code
-            </UnstyledLink>
-            <UnstyledLink
-              href='mailto:royalty_pitons_0v@icloud.com'
-              className='dark:opacity-80 dark:hover:opacity-100'
-            >
-              Contact me
-            </UnstyledLink>
+            {links.map(({ href, label }) => (
+              <li key={`${href}${label}`}>
+                <UnstyledLink
+                  href={href}
+                  className='dark:opacity-80 dark:hover:opacity-100'
+                  onClick={() =>
+                    trackEvent('[Footer] Navigate to ' + label, 'internal_link')
+                  }
+                >
+                  {label}
+                </UnstyledLink>
+              </li>
+            ))}
           </div>
 
           <div className='w-full flex-col py-6 text-center'>
