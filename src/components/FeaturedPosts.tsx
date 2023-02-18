@@ -23,7 +23,7 @@ export default function FeaturedPosts({
       {/* <p className='mt-2 text-gray-600 dark:text-gray-300'>
         Some stuff I&apos;ve been working on.
       </p> */}
-      <ul className='mt-6 grid gap-4 '>
+      <ul className='mt-6 grid gap-4 text-left'>
         {featuredPosts.map((post: BlogContent) => (
           <BlogCard key={post.slug} blog={post} />
         ))}

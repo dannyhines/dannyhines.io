@@ -62,7 +62,7 @@ export default function SubscribeBox() {
           className='mt-1 block w-full rounded-md border-gray-300 bg-white px-4 py-2 pr-32 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-800 dark:text-gray-100'
         />
         <button
-          className='absolute right-1 top-1 my-0 flex h-[34px] w-28 items-center justify-center rounded bg-gray-100 px-4 py-1 font-medium text-gray-900 dark:bg-gray-700 dark:text-gray-100'
+          className='absolute right-1 top-1 my-0 flex h-[34px] w-24 items-center justify-center rounded bg-gray-100 py-1 font-medium text-gray-900 dark:bg-gray-700 dark:text-gray-100 sm:w-28'
           type='submit'
         >
           {form.state === Form.Loading ? <LoadingSpinner /> : 'Subscribe'}
