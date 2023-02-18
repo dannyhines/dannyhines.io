@@ -46,7 +46,7 @@ export default function HomePage(props: {
                   Danny Hines
                 </h1>
                 <p
-                  className='my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
+                  className='my-5 text-sm text-gray-700 dark:text-gray-200 md:text-base 2xl:text-lg'
                   data-fade='2'
                 >
                   I&apos;m a software engineer at <strong>Balyasny Asset Management</strong>{' '}
@@ -75,15 +75,15 @@ export default function HomePage(props: {
               </div>
             </div>
 
-            <div className='mt-4 w-full sm:mt-10' data-fade='5'>
+            <div className='mt-4 w-full sm:mt-14' data-fade='5'>
               <SubscribeBox />
             </div>
 
-            <div className='mt-10 w-full' data-fade='4'>
+            <div className='mt-14 w-full' data-fade='4'>
               <FeaturedPosts featuredPosts={props.featuredPosts} />
             </div>
 
-            <div className='mt-10 w-full' data-fade='6'>
+            <div className='mt-14 w-full' data-fade='6'>
               <ProjectsSection projects={props.projects} />
             </div>
           </div>
