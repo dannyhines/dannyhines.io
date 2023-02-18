@@ -20,6 +20,20 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
     return null;
   }
   const { blog, github, link, headerImg } = project;
+
+  const ReadMoreText = (
+    <>
+      {project.blog ? (
+        <p className='animated-underline mt-1 inline-block font-semibold'>Read more →</p>
+      ) : project.github ? (
+        <p className='animated-underline mt-1 inline-block font-semibold'>
+          View on Github →
+        </p>
+      ) : project.link ? (
+        <p className='animated-underline mt-1 inline-block font-semibold'>Check it out →</p>
+      ) : null}
+    </>
+  );
   return (
     <li
       className={clsx(
@@ -49,24 +63,28 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
           {project.description}
         </p>
         <div className='mt-2 flex w-full max-w-sm justify-start space-x-4 align-middle'>
-          {project.blog && (
-            <p className='animated-underline mt-1 inline-block font-semibold'>
-              Read more →
-            </p>
-          )}
+          {ReadMoreText}
         </div>
       </UnstyledLink>
 
-      <div className='absolute bottom-4 right-5 flex gap-4'>
+      <div className='absolute bottom-2 right-5 flex gap-4'>
         {isLoaded && project.github && (
-          <UnstyledLink href={project.github} aria-label='View on github'>
-            <SiGithub className='mt-2 text-2xl text-primary-600 hover:scale-125 dark:text-primary-500' />
+          <UnstyledLink
+            href={project.github}
+            aria-label='View on github'
+            className='flex min-h-[40px] min-w-[40px] items-center justify-end'
+          >
+            <SiGithub className='text-2xl text-primary-600 hover:scale-125 dark:text-primary-500' />
           </UnstyledLink>
         )}
 
         {isLoaded && project.link && (
-          <UnstyledLink href={`${project.link}`} aria-label='View this project'>
-            <HiOutlineExternalLink className='mt-1 text-3xl text-primary-600 hover:scale-125 dark:text-primary-500' />
+          <UnstyledLink
+            href={`${project.link}`}
+            aria-label='View this project'
+            className='flex min-h-[40px] min-w-[40px] items-center justify-end'
+          >
+            <HiOutlineExternalLink className='text-3xl text-primary-600 hover:scale-125 dark:text-primary-500' />
           </UnstyledLink>
         )}
       </div>
