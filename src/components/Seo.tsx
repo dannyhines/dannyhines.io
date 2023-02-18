@@ -8,7 +8,7 @@ const defaultMeta = {
   title: 'Danny Hines - Software Engineer',
   siteName: 'Danny Hines',
   description:
-    "I'm Danny Hines, a software engineer at Capital One. This is my personal website and blog, built with Next.js.",
+    "I'm Danny Hines, a software engineer at Balyasny Asset Management. This is my personal website and blog, built with Next.js.",
   url: 'https://www.dannyhines.io',
   type: 'website',
   robots: 'follow, index',

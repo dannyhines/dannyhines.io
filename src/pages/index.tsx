@@ -49,10 +49,9 @@ export default function HomePage(props: {
                   className='my-5 text-sm text-gray-700 dark:text-gray-300 md:text-base 2xl:text-lg'
                   data-fade='2'
                 >
-                  I&apos;m a software engineer at <strong>Capital One</strong> where I build
-                  tools for financial wellbeing and customer servicing. I&apos;m most
-                  proficient in web and mobile development, specifically React/NextJS and
-                  SwiftUI.
+                  I&apos;m a software engineer at <strong>Balyasny Asset Management</strong>{' '}
+                  where I work on internal trading tools. I&apos;m most proficient in web
+                  and mobile development, specifically React/NextJS and SwiftUI.
                   <br />
                   <br />I built this site to keep track of what I&apos;ve learned and teach
                   others about software. It uses NextJS, TailwindCSS and is deployed with
