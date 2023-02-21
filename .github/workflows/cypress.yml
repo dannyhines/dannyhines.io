@@ -7,16 +7,17 @@ jobs:
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Print URL 🖨
+      - name: Testing URL
         run: echo Testing URL ${{ github.event.deployment_status.target_url }}
 
-      # - name: Print GitHub env variables 🖨
-      #   run: npx @bahmutov/print-env GITHUB
+      # TODO: Delete
+      - name: gh variables
+        run: npx @bahmutov/print-env GITHUB
 
-      - name: Checkout 🛎
-        uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Run Cypress 🌲
+      - name: Run E2E Tests
         uses: cypress-io/github-action@v2
         # with:
         #   record: true
