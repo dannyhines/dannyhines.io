@@ -17,7 +17,9 @@
     "release": "standard-version",
     "push-release": "git push --follow-tags origin main",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cy": "cypress open",
+    "cy-local": "cypress run"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
@@ -54,6 +56,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "autoprefixer": "^10.4.7",
+    "cypress": "^12.6.0",
     "esbuild": "^0.14.49",
     "eslint": "^8.17.0",
     "eslint-config-next": "^12.1.6",
