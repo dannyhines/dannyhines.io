@@ -18,8 +18,8 @@
     "push-release": "git push --follow-tags origin main",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "prepare": "husky install",
-    "cy": "cypress open",
-    "cy-local": "cypress run"
+    "cypress": "cypress open",
+    "cypress:ci": "cypress run"
   },
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
