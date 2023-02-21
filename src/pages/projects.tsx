@@ -19,7 +19,7 @@ export default function ProjectsPage({
       <Seo templateTitle='Projects' description='Showcase of my side projects.' />
       <main>
         <div className={clsx(isLoaded && 'fade-in-start')}>
-          <ProjectsSection projects={projects} fadeIn={true} />
+          <ProjectsSection projects={projects} isStandalone={true} />
         </div>
       </main>
     </Layout>
